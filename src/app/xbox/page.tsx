@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/data/catalog";
 import { CollectionPage } from "@/components/plp/collection-page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/xbox" },
   title: "Xbox — Series X|S & Elite controller grips",
   description:
     "Controller grips, thumb grips and accessories for the Xbox Wireless Controller and Elite Series 2. Moulded per controller, fitted without adhesive.",

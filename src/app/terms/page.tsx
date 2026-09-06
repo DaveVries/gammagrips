@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/terms" },
   title: 'Terms',
   description: 'The terms that apply when you order from GammaGrips.',
 };

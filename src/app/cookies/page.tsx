@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageShell } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/cookies" },
   title: 'Cookies',
   description: 'The two things we store in your browser, and why.',
 };

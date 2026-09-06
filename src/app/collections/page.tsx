@@ -6,6 +6,7 @@ import { Rule } from "@/components/ui/primitives";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/collections" },
   title: "Designs & collections",
   description:
     "Six grip designs across three families — cellular, linear and solid. The pattern is the moulded relief, not print.",

@@ -3,6 +3,7 @@ import { Configurator } from "@/components/configurator/configurator";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/customize" },
   title: "Configurator — build your controller",
   description:
     "Pick your controller, grip and design, and see the result before you buy. Three steps, no account needed.",

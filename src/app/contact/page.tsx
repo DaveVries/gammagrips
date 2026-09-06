@@ -3,6 +3,7 @@ import { ContactForm } from "@/components/site/contact-form";
 import { PageShell, AsideCard } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Contact",
   description: "Reach GammaGrips support — a person replies within one working day.",
 };

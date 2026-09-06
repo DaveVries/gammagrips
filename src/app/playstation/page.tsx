@@ -3,6 +3,7 @@ import { PRODUCTS } from "@/data/catalog";
 import { CollectionPage } from "@/components/plp/collection-page";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/playstation" },
   title: "PlayStation 5 — DualSense grips & accessories",
   description:
     "Controller grips, thumb grips and accessories for the PS5 DualSense and DualSense Edge. Moulded per controller, fitted without adhesive.",

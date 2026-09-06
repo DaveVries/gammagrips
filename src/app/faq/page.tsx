@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell, AsideCard } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/faq" },
   title: "FAQ",
   description: "Common questions about fit, fitting, surfaces, delivery and returns.",
 };

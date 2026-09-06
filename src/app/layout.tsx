@@ -11,6 +11,25 @@ import { Reveal } from "@/components/site/reveal";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "swap" });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
 
+/** Sitewide structured data. Product and BreadcrumbList live on their own
+    pages; this is the publisher-level pair that every page can share. */
+const organizationLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "GammaGrips",
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon.svg`,
+  description:
+    "Moulded controller grip shells for the PS5 DualSense and the Xbox Wireless Controller.",
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "GammaGrips",
+  url: SITE_URL,
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
@@ -56,6 +75,10 @@ export default function RootLayout({
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationLd, websiteLd]) }}
+        />
         <CartProvider>
           <Header />
           <main id="main">{children}</main>

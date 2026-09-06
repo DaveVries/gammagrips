@@ -5,6 +5,7 @@ import { CollectionPage } from "@/components/plp/collection-page";
 import { ControllerRender } from "@/components/product/controller-render";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/controller-grips" },
   title: "Controller grips",
   description:
     "Six moulded controller grip shells for DualSense, DualSense Edge, Xbox Wireless and Elite Series 2. Five surfaces from soft matte to deep open cell.",

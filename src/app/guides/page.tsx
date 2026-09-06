@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/primitives";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/guides" },
   title: "Guides",
   description:
     "Choosing a grip surface, fitting grips to a DualSense, comparing textures, and which controllers we fit.",

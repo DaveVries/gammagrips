@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell, AsideCard } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/shipping" },
   title: "Shipping",
   description: "Delivery costs, times and carriers for GammaGrips orders.",
 };

@@ -17,7 +17,14 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const g = guideBySlug((await params).slug);
-  return g ? { title: g.title, description: g.deck } : { title: "Guide" };
+  return g
+    ? {
+        title: g.title,
+        description: g.deck,
+        alternates: { canonical: `/guides/${g.slug}` },
+        openGraph: { title: g.title, description: g.deck, type: "article" },
+      }
+    : { title: "Guide" };
 }
 
 export default async function GuidePage({

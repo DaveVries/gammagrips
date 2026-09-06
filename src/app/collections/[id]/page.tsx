@@ -20,6 +20,7 @@ export async function generateMetadata({
   const c = collectionById((await params).id);
   if (!c) return { title: "Collection" };
   return {
+    alternates: { canonical: `/collections/${c.id}` },
     title: `${c.name} — ${c.tagline}`,
     description: c.description,
   };

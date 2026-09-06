@@ -4,6 +4,7 @@ import { PageShell, AsideCard } from "@/components/site/page-shell";
 import { Button } from "@/components/ui/primitives";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/account" },
   title: "Account",
   description: "Sign in, or track an order without an account.",
 };

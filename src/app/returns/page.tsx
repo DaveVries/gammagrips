@@ -3,6 +3,7 @@ import Link from "next/link";
 import { PageShell, AsideCard } from "@/components/site/page-shell";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/returns" },
   title: "Returns & refunds",
   description: "60-day returns on every GammaGrips order, including fitted grips.",
 };

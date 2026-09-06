@@ -330,10 +330,28 @@ files["avatar-gradient.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
   )}</g>
 </svg>`;
 
-files["favicon.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <rect width="120" height="120" fill="${VOID}"/>
-  <g transform="translate(10 10)">${keyMark("fv", 100)}</g>
+/* Tab icon. Full-bleed yellow so the mark is as large as the canvas allows —
+   the old version sat the tile on a black square, which spent a third of a
+   16px favicon on padding. The cut corner survives; the knurl does not, so
+   below 48px the second G goes solid. */
+const faviconSvg = (knurled) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <title>GammaGrips</title>
+  <path d="M22 0H120V98L98 120H0V22Z" fill="${YELLOW}"/>
+  <g transform="translate(${(60 - (MONO_W * 0.66) / 2).toFixed(2)} ${(60 - (MONO_H * 0.66) / 2).toFixed(2)}) scale(0.66)">
+    ${
+      knurled
+        ? monogram("fv", ON_YELLOW, "none", { mono: ON_YELLOW })
+        : `<g transform="translate(${-MONO_L} ${-MONO_T})">
+             <path d="${M1.d}" fill="${ON_YELLOW}"/>
+             <path d="${M2.d}" fill="${ON_YELLOW}"/>
+           </g>`
+    }
+  </g>
 </svg>`;
+
+files["favicon.svg"] = faviconSvg(true);
+/* The 16/32 rungs of the .ico — knurl dropped, letterforms kept. */
+files["favicon-small.svg"] = faviconSvg(false);
 
 /* --- 5. social chrome ------------------------------------------------------- */
 files["og-layer.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
@@ -407,7 +425,9 @@ const raster = [
   ["avatar-gradient.svg", "avatar-gradient-1024.png", 1024, 1024],
   ["favicon.svg", "icon-512.png", 512, 512],
   ["favicon.svg", "apple-touch-icon.png", 180, 180],
-  ["favicon.svg", "favicon-32.png", 32, 32],
+  ["favicon.svg", "favicon-48.png", 48, 48],
+  ["favicon-small.svg", "favicon-32.png", 32, 32],
+  ["favicon-small.svg", "favicon-16.png", 16, 16],
 ];
 for (const [src, out, w, h] of raster) {
   const img = sharp(join(SVG, src), { density: 600 });

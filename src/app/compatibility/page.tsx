@@ -3,6 +3,7 @@ import { CompatibilityChecker } from "@/components/site/compatibility-checker";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/compatibility" },
   title: "Will these fit my controller?",
   description:
     "Identify your controller in two questions and see exactly which GammaGrips shells fit it.",
