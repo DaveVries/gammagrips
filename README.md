@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GammaGrips
 
-## Getting Started
+Storefront for GammaGrips — six moulded controller grips for the PS5 DualSense
+and the Xbox Wireless Controller.
 
-First, run the development server:
+Next.js (App Router) + TypeScript + Tailwind v4. No database and no runtime
+environment variables: the catalog is data in the repo, so the whole site
+builds static.
+
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev          # dev server
+npm run build        # production build
+npm run media:scan   # re-read public/products/ and rebuild the media manifest
+npm run brand        # regenerate logo geometry, SVGs and PNGs from Geist Black
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Layout
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `src/data/catalog.ts` — the six grips, their designs, textures and platforms.
+  The single source of truth; `media:scan` reads design ids straight out of it.
+- `src/data/media.generated.ts` — generated. Drop renders in `public/products/`
+  named after the design id and run `npm run media:scan`.
+- `src/lib/tiles.ts` — generated Voronoi geometry, baked at build time by
+  `scripts/gen-tiles.mjs` so the pattern engine costs nothing at runtime.
+- `src/lib/logo-mark.ts` — generated glyph outlines, so the header and the
+  exported brand assets cannot drift apart.
+- `src/lib/patterns.tsx` / `src/components/product/controller-render.tsx` —
+  the SVG product renderer. Server components; no client JS on a card grid.
+- `src/app/globals.css` — the design system. Two surfaces only: `.glass` for
+  panels, `.tile` for the dark screens product media sits in.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Vercel. `NEXT_PUBLIC_SITE_URL` sets the canonical origin for OG tags, the
+sitemap and robots.txt; without it, production falls back to the Vercel
+project URL and then to `https://gammagrips.com`.
