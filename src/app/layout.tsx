@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
+import { SITE_URL } from "@/lib/site";
 import { CartDrawer } from "@/components/cart/cart-drawer";
 import { Reveal } from "@/components/site/reveal";
 
@@ -11,7 +12,7 @@ const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], dis
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://gammagrips.com"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "GammaGrips — Controller grips for DualSense and Xbox",
     template: "%s | GammaGrips",
