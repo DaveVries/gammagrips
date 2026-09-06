@@ -1,26 +1,472 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ============================================================================
+   GammaGrips — PS1-inspired, built modern
+   ----------------------------------------------------------------------------
+   The first pass drifted into Windows: grey everywhere, title bars with
+   minimise/maximise/close, .EXE captions, Verdana. Those are desktop-OS
+   signals, not console ones.
+
+   The console's own screens were DARK. Grey was the hardware, not the UI. So:
+   a near-black canvas, console-grey used as a real material on top of it, and
+   the era's actual devices — hard offset shadows, skewed header bars, chamfers,
+   the four face-button shapes, saturated gradient accents.
+
+   Modern is carried by the grid, the spacing and the type: one contemporary
+   grotesk, generous rhythm, no skeuomorphic chrome.
+   ========================================================================= */
+
+@theme {
+  /* --- the page: console grey under a soft aurora wash ------------------- */
+  --color-page: #c9c8c4;
+  --color-plate: #d8d7d3;      /* raised grey surface                       */
+  --color-plate-hi: #e6e5e2;
+  --color-plate-lo: #c4c3bf;   /* lightened: muted text could not clear AA on it */
+  --color-plate-edge: #9c9b96;
+
+  /* --- dark tiles: product media and cards keep the screen look ---------- */
+  --color-void: #0b0c10;
+  --color-deep: #131620;
+  --color-deep-2: #1b1f2c;
+  --color-edge: #262b38;
+  --color-edge-hi: #39415a;
+
+  /* --- ink ---------------------------------------------------------------- */
+  --color-ink: #16171b;        /* default: on grey                          */
+  --color-ink-dim: #3a3c42;
+  --color-ink-mute: #494b51;   /* clears 4.5:1 on every grey surface          */
+  --color-on-dark: #f2f3f7;    /* inside a .tile                            */
+  --color-on-dark-dim: #a7adbd;
+  --color-on-dark-mute: #7d8494;
+
+  /* --- bevel, for physical controls -------------------------------------- */
+  --color-bev-1: #ffffff;
+  --color-bev-3: #93928d;
+  --color-bev-4: #4a4945;
+
+  /* --- accents ------------------------------------------------------------ */
+  --color-ps-blue: #17479f;    /* dark enough to be a link on grey            */
+  --color-ps-green: #0a5c2c;   /* dark enough as text on the deepest grey    */
+  --color-ps-yellow: #d98f06;
+  --color-ps-red: #a81f1a;     /* text-safe red: 5.6:1 on the header glass  */
+  --color-on-ps-blue: #ffffff;
+
+  --color-gl-tri: #12854a;
+  --color-gl-cir: #c0332c;
+  --color-gl-crs: #2059c4;
+  --color-gl-sqr: #a8508a;
+
+  /* Block colours — used as fills, badges and the four-segment rule. Brighter
+     than the text tokens above because they never carry small type. */
+  --color-blk-blue: #2059c4;
+  --color-blk-green: #12854a;
+  --color-blk-yellow: #f0b419;
+  --color-blk-red: #d1332b;
+  --color-on-blk: #ffffff;
+  --color-on-yellow: #3a2a00;
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+  :root { color-scheme: light; }
+
+  html {
+    background: var(--color-page);
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  /* Grey base under a slow aurora in the accent ramp — the glass surfaces
+     above it have something to refract, which is what stops a flat grey page
+     reading as a 1998 desktop. Fixed so it does not travel on scroll. */
+  body {
+    background:
+      radial-gradient(1100px 620px at 6% -10%, rgba(32, 89, 196, 0.22), transparent 62%),
+      radial-gradient(900px 560px at 96% 0%, rgba(209, 51, 43, 0.15), transparent 62%),
+      radial-gradient(980px 640px at 58% 106%, rgba(18, 133, 74, 0.17), transparent 62%),
+      radial-gradient(620px 420px at 82% 52%, rgba(240, 180, 25, 0.10), transparent 64%),
+      var(--color-page);
+    background-attachment: fixed;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Structure behind the glass. A flat grey page makes backdrop-blur look like
+     a grey rectangle; a fine grid gives the blur something to smear, which is
+     what actually reads as glass. Fixed, non-interactive, behind all content. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(22, 23, 27, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22, 23, 27, 0.055) 1px, transparent 1px);
+    background-size: 46px 46px, 46px 46px;
+    mask-image: radial-gradient(1200px 900px at 50% 12%, #000 0%, transparent 78%);
+  }
+
+  /* Slow chromatic aurora. Movement is what stops the page reading as static
+     print — kept to a 34s drift so it is felt rather than watched. */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: -25%;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.55;
+    background:
+      radial-gradient(38% 46% at 22% 30%, rgba(32, 89, 196, 0.30), transparent 70%),
+      radial-gradient(34% 40% at 78% 26%, rgba(209, 51, 43, 0.20), transparent 70%),
+      radial-gradient(40% 44% at 60% 78%, rgba(18, 133, 74, 0.24), transparent 70%);
+    filter: blur(38px);
+    animation: drift 34s var(--ease-out) infinite alternate;
+  }
+
+  @keyframes drift {
+    from { transform: translate3d(-3%, -2%, 0) scale(1); }
+    to   { transform: translate3d(3%, 2%, 0) scale(1.09); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body::after { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+
+  h1, h2, h3, h4 {
+    letter-spacing: -0.03em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ps-blue);
+    outline-offset: 2px;
+  }
+  .tile :focus-visible,
+  .on-dark :focus-visible { outline-color: var(--color-grad-1); }
+
+  img, svg, video { max-width: 100%; }
+  ::selection { background: var(--color-ps-blue); color: #fff; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  /* --- the era's devices --------------------------------------------------
+     Hard offset shadows and cut corners. Console menus never blurred a shadow
+     and never rounded a corner. */
+
+  .drop {
+    box-shadow: 6px 6px 0 rgba(22, 23, 27, 0.32);
+  }
+  .drop-sm {
+    box-shadow: 3px 3px 0 rgba(22, 23, 27, 0.28);
+  }
+  .drop-accent {
+    box-shadow: 5px 5px 0 var(--color-grad-2);
+  }
+
+  /** Cut corners — the single strongest console-menu signal. */
+  .cut {
+    clip-path: polygon(
+      14px 0, 100% 0, 100% calc(100% - 14px),
+      calc(100% - 14px) 100%, 0 100%, 0 14px
+    );
+  }
+  .cut-sm {
+    clip-path: polygon(
+      7px 0, 100% 0, 100% calc(100% - 7px),
+      calc(100% - 7px) 100%, 0 100%, 0 7px
+    );
+  }
+  /** One cut, top-right — for bars and strips. */
+  .cut-tr {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+  }
+
+  /** Skewed header bar. Parallelograms are pure console menu. */
+  .skew-bar {
+    transform: skewX(-14deg);
+  }
+  .skew-bar > * {
+    transform: skewX(14deg);
+  }
+
+  /** Four equal segments — the console's colour set as a rule or a spine.
+      This is what the violet gradient used to do, and it is far more the
+      thing the brand is actually about. */
+  .ps-rule {
+    background: linear-gradient(
+      90deg,
+      var(--color-blk-blue) 0 25%,
+      var(--color-blk-green) 25% 50%,
+      var(--color-blk-yellow) 50% 75%,
+      var(--color-blk-red) 75% 100%
+    );
+  }
+  /** Same set, as a skewed tab fill. */
+  .ps-tab {
+    background: linear-gradient(
+      100deg,
+      var(--color-blk-blue) 0 26%,
+      var(--color-blk-green) 26% 52%,
+      var(--color-blk-yellow) 52% 76%,
+      var(--color-blk-red) 76% 100%
+    );
+  }
+
+  /* --- physical controls: bevel survives, used sparingly ---------------- */
+  .bevel {
+    box-shadow:
+      inset 1px 1px 0 var(--color-bev-1),
+      inset -1px -1px 0 var(--color-bev-4),
+      inset 2px 2px 0 rgba(255, 255, 255, 0.55),
+      inset -2px -2px 0 var(--color-bev-3);
+  }
+  .bevel-in {
+    box-shadow:
+      inset 1px 1px 0 var(--color-bev-4),
+      inset -1px -1px 0 var(--color-bev-1),
+      inset 2px 2px 0 var(--color-bev-3),
+      inset -2px -2px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* --- surfaces ------------------------------------------------------------
+     Two only. `.glass` is the frosted grey panel most content sits on, and
+     `.tile` is the dark screen that product media and product cards live in.
+     Each scopes its own text colours, so components never have to remember
+     which one they are inside. */
+
+  /** Frosted panel. Three things make this read as glass rather than as a grey
+      box: saturation lift on the backdrop (so the aurora behind it colours the
+      panel), a bright specular top edge, and a dark bottom inset so the slab
+      has thickness. The grid in body::before supplies the refraction. */
+  .glass {
+    position: relative;
+    isolation: isolate;
+    background:
+      linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.34) 0%,
+        rgba(255, 255, 255, 0.06) 32%,
+        rgba(232, 231, 228, 0.10) 100%
+      ),
+      rgba(232, 231, 228, 0.52);
+    backdrop-filter: blur(22px) saturate(1.7);
+    -webkit-backdrop-filter: blur(22px) saturate(1.7);
+    border: 1px solid rgba(255, 255, 255, 0.62);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.95) inset,
+      0 -1px 0 rgba(22, 23, 27, 0.10) inset,
+      0 24px 56px -30px rgba(20, 22, 30, 0.62);
+    color: var(--color-ink);
+  }
+
+  /** Hero-weight glass: same slab, more light and a wider bloom. */
+  .glass-hi {
+    background:
+      linear-gradient(
+        155deg,
+        rgba(255, 255, 255, 0.48) 0%,
+        rgba(255, 255, 255, 0.10) 38%,
+        rgba(232, 231, 228, 0.06) 100%
+      ),
+      rgba(234, 233, 230, 0.44);
+    backdrop-filter: blur(30px) saturate(1.9);
+    -webkit-backdrop-filter: blur(30px) saturate(1.9);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 1) inset,
+      0 -1px 0 rgba(22, 23, 27, 0.12) inset,
+      0 40px 90px -46px rgba(20, 22, 30, 0.7);
+  }
+
+  /** A light band that crosses the surface on hover. This is the whole
+      "expensive hardware" trick: glass only looks like glass when something
+      moves across it. Pure CSS, no JS, and it sits under the content. */
+  .sheen { position: relative; overflow: hidden; isolation: isolate; }
+  .sheen::before {
+    content: "";
+    position: absolute;
+    top: -60%;
+    bottom: -60%;
+    left: -75%;
+    width: 42%;
+    /* Negative z-index inside the isolated stacking context: the band paints
+       above the element's own background but below its in-flow content, so it
+       crosses the surface without ever washing over the label. */
+    z-index: -1;
+    pointer-events: none;
+    transform: skewX(-18deg) translateX(0);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.55),
+      transparent
+    );
+    opacity: 0;
+    transition: transform 0.75s var(--ease-out), opacity 0.25s linear;
+  }
+  .sheen:hover::before,
+  .sheen:focus-within::before {
+    opacity: 1;
+    transform: skewX(-18deg) translateX(340%);
+  }
+  /* On a dark tile the same band has to be dimmer or it blows out the render. */
+  .tile.sheen::before,
+  .card.sheen::before {
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.16),
+      transparent
+    );
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sheen::before { display: none; }
+  }
+
+  /** Coloured bloom keyed to the four. Used behind product media and on the
+      active states of controls, never behind body copy. */
+  .bloom { position: relative; }
+  .bloom::after {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.35s var(--ease-out);
+    background: radial-gradient(
+      70% 90% at 50% 0%,
+      var(--bloom, rgba(32, 89, 196, 0.55)),
+      transparent 72%
+    );
+    filter: blur(18px);
+  }
+  .bloom:hover::after,
+  .bloom:focus-within::after { opacity: 1; }
+
+  /** Console keys should depress. Cheap, and it is the difference between a
+      button that looks like hardware and one that looks like a div. */
+  .press { transition: transform 0.1s var(--ease-out), box-shadow 0.1s var(--ease-out); }
+  .press:active { transform: translateY(1px); }
+
+  /** Hover lift for cards. Paired with .drop the offset shadow grows, so the
+      card reads as rising off the page rather than glowing. */
+  .lift { transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
+  .lift:hover { transform: translateY(-4px); }
+  .lift.drop:hover { box-shadow: 10px 10px 0 rgba(22, 23, 27, 0.34); }
+  @media (prefers-reduced-motion: reduce) {
+    .lift:hover { transform: none; }
+  }
+
+  .plate {
+    background: var(--color-plate);
+    color: var(--color-ink);
+    border: 1px solid var(--color-plate-edge);
+  }
+  .plate-in {
+    background: var(--color-plate-lo);
+    box-shadow:
+      inset 1px 1px 0 var(--color-bev-4),
+      inset -1px -1px 0 #ffffff;
+  }
+
+  /** Dark screen. Everything inside flips to light ink automatically. */
+  .tile,
+  .card {
+    background:
+      radial-gradient(120% 90% at 50% -18%, rgba(120, 150, 220, 0.16), transparent 62%),
+      var(--color-deep);
+    border: 1px solid var(--color-edge);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10) inset;
+    color: var(--color-on-dark);
+  }
+  .tile .text-ink,
+  .card .text-ink { color: var(--color-on-dark); }
+  .tile .text-ink-dim,
+  .card .text-ink-dim { color: var(--color-on-dark-dim); }
+  .tile .text-ink-mute,
+  .card .text-ink-mute { color: var(--color-on-dark-mute); }
+  .card-hi { border-color: var(--color-edge-hi); }
+  /* Links keep their job inside a dark tile, but need a lighter blue there. */
+  .tile .text-ps-blue,
+  .card .text-ps-blue { color: #7fb0ff; }
+
+  /* --- typography --------------------------------------------------------- */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  /** Display type: heavy, tight, slightly oblique — console logo energy. */
+  .display {
+    font-weight: 800;
+    letter-spacing: -0.035em;
+  }
+  .oblique {
+    transform: skewX(-8deg);
+    display: inline-block;
+  }
+
+  /* --- layout ------------------------------------------------------------ */
+  .gutter { padding-inline: 1rem; }
+  @media (min-width: 768px) { .gutter { padding-inline: 2rem; } }
+  @media (min-width: 1280px) { .gutter { padding-inline: 3rem; } }
+
+  .shell { margin-inline: auto; width: 100%; max-width: 1440px; }
+
+  .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
+  .no-bar::-webkit-scrollbar { display: none; }
+
+  /** CRT veil for product wells — subtle, it should read as a screen. */
+  .scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.13) 0px, rgba(0, 0, 0, 0.13) 1px,
+      transparent 1px, transparent 3px
+    );
+    opacity: 0.55;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ============================================================================
+   Scroll reveal
+   ========================================================================= */
+[data-reveal] { opacity: 1; }
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+}
+html.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html.js [data-reveal] { opacity: 1; transform: none; }
+  .scanlines::after { display: none; }
 }

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "media:scan": "node scripts/scan-media.mjs",
+    "brand": "node brand/build.mjs"
   },
   "dependencies": {
     "next": "16.3.4",
@@ -18,8 +20,12 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "d3-delaunay": "^6.0.4",
     "eslint": "^9",
     "eslint-config-next": "16.3.4",
+    "geist": "^1.7.2",
+    "opentype.js": "^2.0.0",
+    "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
