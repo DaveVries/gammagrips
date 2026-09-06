@@ -176,8 +176,10 @@ export function Logo({
       )}
       aria-label="GammaGrips — home"
     >
-      <KeyMark size={30} />
-      {!compact && <Wordmark height={17} bg={bg} />}
+      <KeyMark size={30} className="!h-[26px] !w-[26px] sm:!h-[30px] sm:!w-[30px]" />
+      {!compact && (
+        <Wordmark height={17} bg={bg} className="h-[13.5px] w-auto sm:h-[17px]" />
+      )}
     </Link>
   );
 }

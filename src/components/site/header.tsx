@@ -76,7 +76,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="cut-sm plate flex h-9 w-9 items-center justify-center lg:hidden"
+              className="cut-sm plate flex h-9 w-9 shrink-0 items-center justify-center lg:hidden"
               aria-label="Open menu"
               aria-expanded={mobileOpen}
             >
@@ -85,7 +85,7 @@ export function Header() {
               </svg>
             </button>
 
-            <Logo className="mr-3 shrink-0" />
+            <Logo className="mr-2 min-w-0 shrink sm:mr-3" />
 
             {/* --- nav as bevelled tabs; the active one is pressed in ------ */}
             <nav aria-label="Main" className="hidden lg:block">
@@ -133,7 +133,7 @@ export function Header() {
               </ul>
             </nav>
 
-            <div className="ml-auto flex items-center gap-[3px]">
+            <div className="ml-auto flex shrink-0 items-center gap-[3px]">
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
