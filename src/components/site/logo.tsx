@@ -137,35 +137,37 @@ export function Monogram({
 
 /* --- the mark ---------------------------------------------------------------
    Console plastic, not a coloured chip: a bevelled grey key with the cut
-   corner, the first G in ink and the second carrying the four logo colours.
-   Drawn as one SVG rather than a clipped <span> because the bevel needs four
-   separate stroked edges, which CSS borders cannot do on a chamfer. */
+   corner and the GG in ink.
+
+   The four colours used to run through the second G as a knurl. Rendered
+   natively at 26/30/34/40/48 that never resolved into a letterform — the bars
+   cut the strokes and it read as confetti, at brand sizes too. So the colours
+   moved off the glyph and onto a rule across the foot of the key, where each
+   segment is a quarter of the tile instead of a 1px stripe. Same four, same
+   PS1 signature, and the monogram stays a monogram at every size.
+
+   Drawn as one SVG because the bevel needs four separately stroked edges,
+   which CSS borders cannot do on a chamfer. */
 
 const PLATE_T = "#cfcec9";
 const PLATE_T_HI = "#ffffff";
 const PLATE_T_LO = "#8e8d88";
 const PLATE_T_LO2 = "#46453f";
 const ON_PLATE_T = "#16171b";
-/** Green, red, blue, yellow — the four, coarse enough to survive the mark. */
+/** Green, red, blue, yellow — the same order as the site's .ps-rule. */
 const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
-const FOUR_PITCH = 30;
-const FOUR_BAR = 18;
-
-/** Below this the four colour bars stop reading as a letterform and turn to
- *  confetti — verified by rendering the mark natively at 26/30/34/40/48px.
- *  Small marks get a solid second G; the colours return on brand assets. */
-const FOUR_MIN_PX = 56;
 
 export function KeyMark({ size = 34, className }: { size?: number; className?: string }) {
-  const four = size >= FOUR_MIN_PX;
   const box = 120;
   const c = box * 0.22;
-  const inner = box * 0.56;
-  const [, , mw, mh] = MONOGRAM_VIEWBOX.split(" ").map(Number);
-  const k = Math.min(inner / mw, inner / mh);
   const b = box * 0.018;
+  const bar = box * 0.115;
+  /* The glyph sits in the plate above the rule, not in the whole tile. */
+  const inner = box * 0.58;
+  const [, , mw, mh] = MONOGRAM_VIEWBOX.split(" ").map(Number);
+  const k = Math.min(inner / mw, (box * 0.46) / mh);
   const tile = `M${c} 0H${box}V${box - c}L${box - c} ${box}H0V${c}Z`;
-  const id = "km-grey";
+  const id = "km";
 
   return (
     <svg
@@ -176,50 +178,43 @@ export function KeyMark({ size = 34, className }: { size?: number; className?: s
       aria-hidden="true"
     >
       <defs>
-        <pattern
-          id={`${id}-four`}
-          width={FOUR_PITCH * 4}
-          height={FOUR_PITCH}
-          patternUnits="userSpaceOnUse"
-          patternTransform="rotate(45)"
-        >
-          {FOUR.map((col, i) => (
-            <rect
-              key={col}
-              x={i * FOUR_PITCH}
-              width={FOUR_BAR}
-              height={FOUR_PITCH}
-              rx={FOUR_BAR / 2}
-              fill={col}
-            />
-          ))}
-        </pattern>
         <clipPath id={`${id}-clip`}>
           <path d={tile} />
         </clipPath>
       </defs>
 
       <path d={tile} fill={PLATE_T} />
-      {/* Four stroked edges: lit top-left, shadowed bottom-right, twice. */}
-      <g clipPath={`url(#${id}-clip)`} fill="none" strokeWidth={b * 2}>
-        <path d={`M0 ${box}V${c}L${c} 0H${box}`} stroke={PLATE_T_HI} />
-        <path d={`M${box} 0V${box - c}L${box - c} ${box}H0`} stroke={PLATE_T_LO2} />
-        <path d={`M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}`} stroke="rgba(255,255,255,0.6)" />
-        <path d={`M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0`} stroke={PLATE_T_LO} />
+
+      <g clipPath={`url(#${id}-clip)`}>
+        {/* four-colour rule across the foot */}
+        {FOUR.map((col, i) => (
+          <rect
+            key={col}
+            x={((box - c) / 4) * i}
+            y={box - bar}
+            width={(box - c) / 4 + 0.5}
+            height={bar}
+            fill={col}
+          />
+        ))}
+        {/* bevel: lit top-left, shadowed bottom-right, twice */}
+        <g fill="none" strokeWidth={b * 2}>
+          <path d={`M0 ${box}V${c}L${c} 0H${box}`} stroke={PLATE_T_HI} />
+          <path d={`M${box} 0V${box - c}L${box - c} ${box}H0`} stroke={PLATE_T_LO2} />
+          <path d={`M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}`} stroke="rgba(255,255,255,0.6)" />
+          <path
+            d={`M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0`}
+            stroke={PLATE_T_LO}
+          />
+        </g>
       </g>
 
-      <g transform={`translate(${(box - mw * k) / 2} ${(box - mh * k) / 2}) scale(${k})`}>
+      <g
+        transform={`translate(${(box - mw * k) / 2} ${(box - bar - mh * k) / 2 + b}) scale(${k})`}
+      >
         <g transform={`translate(${MONOGRAM_X} ${MONOGRAM_Y})`}>
           <path d={MONOGRAM_SOLID} fill={ON_PLATE_T} />
-          {four ? (
-            <>
-              {/* Underlay holds the letterform where the bars leave gaps. */}
-              <path d={MONOGRAM_KNURLED} fill={ON_PLATE_T} opacity={0.42} />
-              <path d={MONOGRAM_KNURLED} fill={`url(#${id}-four)`} />
-            </>
-          ) : (
-            <path d={MONOGRAM_KNURLED} fill={ON_PLATE_T} />
-          )}
+          <path d={MONOGRAM_KNURLED} fill={ON_PLATE_T} />
         </g>
       </g>
     </svg>

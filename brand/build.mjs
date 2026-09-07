@@ -55,6 +55,7 @@ const PLATE_LO = "#8e8d88";
 const PLATE_LO2 = "#46453f";
 const ON_PLATE = "#16171b";
 const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
+const FOUR_RULE = FOUR;
 
 const FONT = opentype.parse(
   readFileSync(join(HERE, "..", "node_modules/geist/dist/fonts/geist-sans/Geist-Black.ttf")).buffer,
@@ -200,37 +201,34 @@ const MONO_VB = `0 0 ${MONO_W.toFixed(1)} ${MONO_H.toFixed(1)}`;
  */
 function keyMark(id, box) {
   const c = box * 0.22;
-  const inner = box * 0.56;
-  const k = Math.min(inner / MONO_W, inner / MONO_H);
-  const w = MONO_W * k;
-  const h = MONO_H * k;
   const b = box * 0.018;
+  const bar = box * 0.115;
+  const inner = box * 0.58;
+  const k = Math.min(inner / MONO_W, (box * 0.46) / MONO_H);
   const tile = `M${c} 0H${box}V${box - c}L${box - c} ${box}H0V${c}Z`;
   return `
-  <defs>
-    ${knurlFour(`kf-${id}`)}
-    <clipPath id="kc-${id}"><path d="${tile}"/></clipPath>
-  </defs>
+  <defs><clipPath id="kc-${id}"><path d="${tile}"/></clipPath></defs>
   <path d="${tile}" fill="${PLATE}"/>
-  <g clip-path="url(#kc-${id})" fill="none" stroke-width="${b * 2}">
-    <path d="M0 ${box}V${c}L${c} 0H${box}" stroke="${PLATE_HI}"/>
-    <path d="M${box} 0V${box - c}L${box - c} ${box}H0" stroke="${PLATE_LO2}"/>
-    <path d="M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}" stroke="rgba(255,255,255,0.6)"/>
-    <path d="M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0" stroke="${PLATE_LO}"/>
+  <g clip-path="url(#kc-${id})">
+    ${FOUR_RULE.map(
+      (col, i) =>
+        `<rect x="${((box - c) / 4) * i}" y="${box - bar}" width="${(box - c) / 4 + 0.5}" height="${bar}" fill="${col}"/>`,
+    ).join("")}
+    <g fill="none" stroke-width="${b * 2}">
+      <path d="M0 ${box}V${c}L${c} 0H${box}" stroke="${PLATE_HI}"/>
+      <path d="M${box} 0V${box - c}L${box - c} ${box}H0" stroke="${PLATE_LO2}"/>
+      <path d="M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}" stroke="rgba(255,255,255,0.6)"/>
+      <path d="M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0" stroke="${PLATE_LO}"/>
+    </g>
   </g>
-  <g transform="translate(${(box - w) / 2} ${(box - h) / 2}) scale(${k})">
+  <g transform="translate(${(box - MONO_W * k) / 2} ${(box - bar - MONO_H * k) / 2 + b}) scale(${k})">
     <g transform="translate(${-MONO_L} ${-MONO_T})">
       <path d="${M1.d}" fill="${ON_PLATE}"/>
-      <path d="${M2.d}" fill="url(#kf-${id})"/>
+      <path d="${M2.d}" fill="${ON_PLATE}"/>
     </g>
   </g>`;
 }
 
-/**
- * The mark: the GG monogram on a cut-corner gradient tile. The cut corner and
- * the cyan→blue→violet ramp are the same two devices the interface uses, so
- * the logo is built out of the site rather than bolted onto it.
- */
 function keyMarkYellow(id, box) {
   const c = box * 0.22;
   const inner = box * 0.56;
@@ -328,36 +326,12 @@ files["avatar-gradient.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
    the old version sat the tile on a black square, which spent a third of a
    16px favicon on padding. The cut corner survives; the knurl does not, so
    below 48px the second G goes solid. */
-const faviconSvg = (four) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
-  <title>GammaGrips</title>
-  ${
-    four
-      ? keyMark("fv", 120)
-      : (() => {
-          const c = 120 * 0.22;
-          const k = Math.min((120 * 0.62) / MONO_W, (120 * 0.62) / MONO_H);
-          const b = 120 * 0.018;
-          const tile = `M${c} 0H120V${120 - c}L${120 - c} 120H0V${c}Z`;
-          return `<path d="${tile}" fill="${PLATE}"/>
-  <g clip-path="url(#fvs-c)" fill="none" stroke-width="${b * 2}">
-    <path d="M0 120V${c}L${c} 0H120" stroke="${PLATE_HI}"/>
-    <path d="M120 0V${120 - c}L${120 - c} 120H0" stroke="${PLATE_LO2}"/>
-  </g>
-  <defs><clipPath id="fvs-c"><path d="${tile}"/></clipPath></defs>
-  <g transform="translate(${(120 - MONO_W * k) / 2} ${(120 - MONO_H * k) / 2}) scale(${k})">
-    <g transform="translate(${-MONO_L} ${-MONO_T})">
-      <path d="${M1.d}" fill="${ON_PLATE}"/>
-      <path d="${M2.d}" fill="${ON_PLATE}"/>
-    </g>
-  </g>`;
-        })()
-  }
+/* Tab icon: the mark, full canvas. Nothing to simplify at small sizes now
+   that the colours are a rule rather than a knurl through the glyph. */
+files["favicon.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <title>GammaGrips</title>${keyMark("fv", 120)}
 </svg>`;
-
-files["favicon.svg"] = faviconSvg(true);
-/* The 16/32 rungs of the .ico — four-colour bars drop, letterforms stay. */
-files["favicon-small.svg"] = faviconSvg(false);
-
+files["favicon-small.svg"] = files["favicon.svg"];
 /* --- 5. social chrome ------------------------------------------------------- */
 files["og-layer.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <g transform="translate(62 50)">${keyMark("ogk", 62)}</g>

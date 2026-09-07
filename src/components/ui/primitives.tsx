@@ -13,19 +13,15 @@ import { Glyph } from "@/components/ui/glyphs";
 const btnBase =
   "sheen cut-sm relative inline-flex select-none items-center justify-center gap-2 " +
   "font-bold uppercase tracking-[0.06em] transition-[transform,background] duration-100 " +
-  "active:translate-x-[2px] active:translate-y-[2px] " +
   "disabled:cursor-not-allowed disabled:opacity-45";
 
 const btnTone = {
   /* Solid console blue. The primary action is one colour, not a ramp. */
   primary:
-    "bg-[var(--color-blk-blue)] text-white drop-sm hover:brightness-110 active:shadow-none " +
-    "shadow-[0_0_0_0_rgba(32,89,196,0)] hover:shadow-[3px_3px_0_rgba(22,23,27,0.28),0_10px_28px_-10px_rgba(32,89,196,0.85)]",
+    "key bg-[var(--color-blk-blue)] text-white [--key-glow:rgba(47,111,224,0.95)]",
   default:
-    "plate text-ink drop-sm hover:bg-[var(--color-plate-hi)] active:shadow-none",
-  go:
-    "bg-[var(--color-blk-green)] text-white drop-sm hover:brightness-110 active:shadow-none " +
-    "hover:shadow-[3px_3px_0_rgba(22,23,27,0.28),0_10px_28px_-10px_rgba(18,133,74,0.85)]",
+    "key plate text-ink [--key-glow:rgba(0,0,0,0)] hover:bg-[var(--color-plate-hi)]",
+  go: "key bg-[var(--color-blk-green)] text-white [--key-glow:rgba(18,160,90,0.95)]",
   /* On console plastic. */
   panel: "plate text-ink hover:bg-[var(--color-plate-hi)]",
   quiet: "text-ps-blue hover:text-ink active:translate-x-0 active:translate-y-0",

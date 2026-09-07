@@ -121,10 +121,11 @@ export function Header() {
                   <Link
                     href="/customize"
                     className={cn(
-                      "cut-sm drop-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
+                      "key cut-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
+                      "[--key-glow:rgba(18,160,90,0.95)]",
                       pathname === "/customize"
                         ? "bg-[#0b5230] text-white"
-                        : "bg-[var(--color-blk-green)] text-white hover:brightness-110",
+                        : "bg-[var(--color-blk-green)] text-white",
                     )}
                   >
                     ▶ FIND MY GRIP
