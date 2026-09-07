@@ -122,10 +122,10 @@ export function Header() {
                     href="/customize"
                     className={cn(
                       "key cut-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
-                      "[--key-glow:rgba(255,59,48,0.9)]",
+                      "[--key-glow:rgba(200,215,240,0.4)]",
                       pathname === "/customize"
-                        ? "bg-[var(--color-hot-dim)] text-[var(--color-ink)]"
-                        : "bg-[var(--color-hot)] text-[var(--color-hot-ink)]",
+                        ? "bg-[var(--color-steel)] text-[var(--color-on-ice)]"
+                        : "bg-[var(--color-ice)] text-[var(--color-on-ice)]",
                     )}
                   >
                     ▶ FIND MY GRIP
@@ -215,13 +215,13 @@ export function Header() {
                             <li key={l.href + l.label}>
                               <Link
                                 href={l.href}
-                                className="group -mx-2 block px-2.5 py-2 transition-colors hover:bg-[var(--color-blk-blue)]"
+                                className="group -mx-2 block px-2.5 py-2 transition-colors hover:bg-[var(--color-plate-hi)]"
                               >
-                                <span className="block text-[13.5px] font-semibold text-ink group-hover:text-[var(--color-on-blk-blue)]">
+                                <span className="block text-[13.5px] font-semibold text-ink group-hover:text-ink">
                                   {l.label}
                                 </span>
                                 {l.note && (
-                                  <span className="mt-0.5 block text-[12px] leading-snug text-ink-mute group-hover:text-[var(--color-on-blk-blue)]/80">
+                                  <span className="mt-0.5 block text-[12px] leading-snug text-ink-mute group-hover:text-ink-dim">
                                     {l.note}
                                   </span>
                                 )}

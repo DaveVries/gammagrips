@@ -182,9 +182,10 @@ export function KeyMark({ size = 34, className }: { size?: number; className?: s
       <path d={tile} fill={ICE} />
 
       <g clipPath={`url(#${id}-clip)`}>
-        {/* the accent, as one run rather than four segments */}
-        <rect x={0} y={box - bar} width={box - c} height={bar} fill={HOT} />
-        <rect x={box - c - box * 0.055} y={box - bar} width={box * 0.02} height={bar} fill={ON_ICE} />
+        {/* Foot rule: mostly the page colour, with one short hot tick. The
+            full-width red slab read as a warning label at small sizes. */}
+        <rect x={0} y={box - bar} width={box - c} height={bar} fill={ON_ICE} />
+        <rect x={0} y={box - bar} width={(box - c) * 0.34} height={bar} fill={HOT} />
         <g fill="none" strokeWidth={b * 2}>
           <path d={`M0 ${box}V${c}L${c} 0H${box}`} stroke={ICE_HI} />
           <path d={`M${box} 0V${box - c}L${box - c} ${box}H0`} stroke={ICE_LO2} />

@@ -19,11 +19,14 @@ const btnTone = {
   /* Solid console blue. The primary action is one colour, not a ramp. */
   /* One loud action per view. `primary` is the hot key, `go` is its cold
      inverse for confirmations, `default` is graphite. */
+  /* On a near-black page white is the loudest thing available, so it carries
+     the primary action. The accent is spent only on add-to-cart, which is the
+     one moment it should mean something. */
   primary:
-    "key bg-[var(--color-hot)] text-[var(--color-hot-ink)] [--key-glow:rgba(255,59,48,0.9)]",
+    "key bg-[var(--color-ice)] text-[var(--color-on-ice)] [--key-glow:rgba(200,215,240,0.4)]",
   default:
     "key plate text-ink [--key-glow:rgba(0,0,0,0)] hover:bg-[var(--color-plate-hi)]",
-  go: "key bg-[var(--color-ice)] text-[var(--color-on-ice)] [--key-glow:rgba(238,242,248,0.55)]",
+  go: "key bg-[var(--color-hot)] text-[var(--color-hot-ink)] [--key-glow:rgba(255,59,48,0.85)]",
   /* On console plastic. */
   panel: "plate text-ink hover:bg-[var(--color-plate-hi)]",
   quiet: "text-ps-blue hover:text-ink active:translate-x-0 active:translate-y-0",
@@ -111,13 +114,14 @@ export function Win({
     <Tag className={cn("relative", className)}>
       {title !== undefined && (
         <div className="mb-[-1px] flex items-end gap-3">
-          <span className="skew-bar inline-flex items-stretch bg-[var(--color-blk-green)]">
-            <span className="label flex items-center px-5 py-1.5 text-[10px] text-[var(--color-on-blk-green)]">
+          <span className="skew-bar inline-flex items-stretch border border-[var(--color-plate-edge)] bg-[var(--color-plate-hi)]">
+            <span className="label flex items-center px-5 py-1.5 text-[10px] text-ink">
               {title}
             </span>
-            {/* four-segment spine: the console colour set, as a fixed motif */}
+            {/* Spine: steel, steel, hot. Was three console colours; the accent
+                now appears once, at the end, as a terminator. */}
             <span className="flex w-8 flex-col" aria-hidden="true">
-              {["--color-blk-blue", "--color-blk-yellow", "--color-blk-red"].map((c) => (
+              {["--color-edge-hi", "--color-steel", "--color-hot"].map((c) => (
                 <span key={c} className="flex-1" style={{ background: `var(${c})` }} />
               ))}
             </span>
@@ -392,7 +396,7 @@ export function SectionHead({
       <div className="max-w-2xl">
         {eyebrow && (
           <p className="mb-3 inline-flex items-center">
-            <span className="skew-bar label inline-flex items-center gap-1.5 bg-[var(--color-hot)] px-3 py-1.5 text-[var(--color-hot-ink)]">
+            <span className="skew-bar label inline-flex items-center gap-1.5 border-l-2 border-[var(--color-hot)] bg-[var(--color-plate-hi)] px-3 py-1.5 text-ink">
               <Glyph name="tri" size={9} colour="#fff" />
               {eyebrow}
             </span>

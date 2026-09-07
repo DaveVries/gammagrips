@@ -59,7 +59,7 @@ export function Hero() {
           <h1 className="shout text-[38px] sm:text-[48px] xl:text-[55px]">
             More grip.
             <br />
-            <span className="oblique text-[var(--color-hot-text)]">
+            <span className="oblique text-ink-dim">
               Your controller.
             </span>
           </h1>

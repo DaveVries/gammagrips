@@ -34,7 +34,7 @@ mkdirSync(PNG, { recursive: true });
 const INK = "#eef2f8";        /* on dark                                   */
 const INK_DIM = "#aeb7c6";
 const INK_MUTE = "#8b94a4";
-const VOID = "#0d0e12";
+const VOID = "#090a0d";
 const DEEP = "#131620";
 const EDGE = "#262b38";
 
@@ -53,7 +53,7 @@ const PLATE = "#eef2f8";
 const PLATE_HI = "#ffffff";
 const PLATE_LO = "#9aa3b2";
 const PLATE_LO2 = "#5b6472";
-const ON_PLATE = "#0d0e12";
+const ON_PLATE = "#090a0d";
 const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
 const FOUR_RULE = FOUR;
 
@@ -210,8 +210,8 @@ function keyMark(id, box) {
   <defs><clipPath id="kc-${id}"><path d="${tile}"/></clipPath></defs>
   <path d="${tile}" fill="${PLATE}"/>
   <g clip-path="url(#kc-${id})">
-    <rect x="0" y="${box - bar}" width="${box - c}" height="${bar}" fill="${RED}"/>
-    <rect x="${box - c - box * 0.055}" y="${box - bar}" width="${box * 0.02}" height="${bar}" fill="${ON_PLATE}"/>
+    <rect x="0" y="${box - bar}" width="${box - c}" height="${bar}" fill="${ON_PLATE}"/>
+    <rect x="0" y="${box - bar}" width="${(box - c) * 0.34}" height="${bar}" fill="${RED}"/>
     <g fill="none" stroke-width="${b * 2}">
       <path d="M0 ${box}V${c}L${c} 0H${box}" stroke="${PLATE_HI}"/>
       <path d="M${box} 0V${box - c}L${box - c} ${box}H0" stroke="${PLATE_LO2}"/>

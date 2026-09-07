@@ -21,18 +21,18 @@
      Dropped the four-colour console palette. One hot accent against a cold
      monochrome base carries further than four colours competing, and it lets
      six brightly coloured grips be the only saturated thing on screen. */
-  --color-page: #0d0e12;
-  --color-plate: #191b21;      /* raised surface                            */
-  --color-plate-hi: #23262e;   /* hover — ink-mute must still clear 4.5 here */
-  --color-plate-lo: #131519;
-  --color-plate-edge: #3a3f4a;
+  --color-page: #090a0d;
+  --color-plate: #14161c;      /* raised surface                            */
+  --color-plate-hi: #1d2029;   /* hover — ink-mute must still clear 4.5 here */
+  --color-plate-lo: #101217;
+  --color-plate-edge: #333845;
 
   /* --- deep tiles: product media sits in a well below the page ----------- */
-  --color-void: #050609;
-  --color-deep: #0a0b0e;
-  --color-deep-2: #101218;
-  --color-edge: #262a33;
-  --color-edge-hi: #3d434f;
+  --color-void: #030407;
+  --color-deep: #07080b;
+  --color-deep-2: #0d0f14;
+  --color-edge: #222630;
+  --color-edge-hi: #363c49;
 
   /* --- ink: cool white, three steps ---------------------------------------- */
   --color-ink: #eef2f8;
@@ -51,41 +51,44 @@
      `hot` is the fill; `hot-ink` is what sits on it; `hot-text` is the lifted
      variant for type, because the fill red only reaches 4.26:1 on plate-hi. */
   --color-hot: #ff3b30;
-  --color-hot-ink: #180402;
+  --color-hot-ink: #170301;
   --color-hot-text: #ff5b52;
   --color-hot-dim: #b32820;
 
   /* Neutral fills for controls that are not the primary action. */
   --color-ice: #eef2f8;
-  --color-on-ice: #0d0e12;
+  --color-on-ice: #090a0d;
   --color-steel: #c3ccd9;
 
-  /* Kept as aliases so the accent has one source of truth; every former
-     four-colour usage now points at the hot/ink pair. */
+  /* The palette is monochrome. These aliases used to point three different
+     names at the accent, which turned every badge, meter, notice and hover
+     state red at once — the site read as "red", not "black with an accent".
+     They are neutral now; `hot` is spent only where it carries meaning:
+     add-to-cart, the cart count, a price drop, and the mark. */
   --color-ps-blue: #aeb7c6;
   --color-ps-green: #aeb7c6;
-  --color-ps-yellow: #ff5b52;
+  --color-ps-yellow: #aeb7c6;
   --color-ps-red: #ff5b52;
-  --color-on-ps-blue: #0d0e12;
+  --color-on-ps-blue: #090a0d;
 
-  --color-gl-tri: #aeb7c6;
-  --color-gl-cir: #ff3b30;
+  --color-gl-tri: #8b94a4;
+  --color-gl-cir: #8b94a4;
   --color-gl-crs: #8b94a4;
-  --color-gl-sqr: #aeb7c6;
+  --color-gl-sqr: #8b94a4;
 
-  --color-blk-blue: #eef2f8;
-  --color-blk-green: #ff3b30;
-  --color-blk-yellow: #ff3b30;
-  --color-blk-red: #ff3b30;
-  --color-on-blk-blue: #0d0e12;
-  --color-on-blk-green: #180402;
+  --color-blk-blue: #eef2f8;   /* selected / primary surface — ice          */
+  --color-blk-green: #eef2f8;  /* was success; neutral now                  */
+  --color-blk-yellow: #c3ccd9; /* steel                                     */
+  --color-blk-red: #ff3b30;    /* genuinely red things only                 */
+  --color-on-blk-blue: #090a0d;
+  --color-on-blk-green: #090a0d;
   --color-on-blk-red: #180402;
-  --color-on-blk: #0d0e12;
-  --color-on-yellow: #180402;
+  --color-on-blk: #090a0d;
+  --color-on-yellow: #090a0d;
 
-  --color-note-green: #12181f;
-  --color-note-blue: #12181f;
-  --color-pip-off: #333944;
+  --color-note-green: #0f1218;
+  --color-note-blue: #0f1218;
+  --color-pip-off: #2b303b;
 
   --radius-xs: 0px;
   --radius-sm: 0px;
@@ -113,7 +116,7 @@
   body {
     background:
       radial-gradient(1200px 680px at 8% -12%, rgba(120, 150, 200, 0.10), transparent 64%),
-      radial-gradient(900px 560px at 92% 4%, rgba(255, 59, 48, 0.13), transparent 60%),
+      radial-gradient(900px 560px at 92% 4%, rgba(255, 59, 48, 0.055), transparent 60%),
       radial-gradient(1000px 640px at 60% 108%, rgba(90, 120, 170, 0.10), transparent 64%),
       var(--color-page);
     background-attachment: fixed;
@@ -149,9 +152,9 @@
     pointer-events: none;
     opacity: 0.85;
     background:
-      radial-gradient(40% 48% at 20% 28%, rgba(255, 59, 48, 0.22), transparent 72%),
-      radial-gradient(36% 42% at 80% 30%, rgba(110, 145, 210, 0.16), transparent 72%),
-      radial-gradient(42% 46% at 58% 80%, rgba(255, 59, 48, 0.12), transparent 74%);
+      radial-gradient(40% 48% at 20% 28%, rgba(120, 155, 215, 0.17), transparent 72%),
+      radial-gradient(36% 42% at 80% 30%, rgba(150, 170, 205, 0.12), transparent 72%),
+      radial-gradient(42% 46% at 58% 80%, rgba(255, 59, 48, 0.07), transparent 74%);
     filter: blur(38px);
     animation: drift 34s var(--ease-out) infinite alternate;
   }
@@ -232,17 +235,17 @@
   .ps-rule {
     background: linear-gradient(
       90deg,
-      var(--color-hot) 0 26%,
-      var(--color-ink) 26% 30%,
-      var(--color-edge-hi) 30% 44%,
-      var(--color-edge) 44% 100%
+      var(--color-ink) 0 18%,
+      var(--color-edge-hi) 18% 30%,
+      var(--color-hot) 30% 34%,
+      var(--color-edge) 34% 100%
     );
   }
   .ps-tab {
     background: linear-gradient(
       100deg,
-      var(--color-hot) 0 62%,
-      var(--color-hot-dim) 62% 100%
+      var(--color-plate-hi) 0 88%,
+      var(--color-hot) 88% 100%
     );
   }
 
