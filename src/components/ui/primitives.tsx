@@ -17,11 +17,13 @@ const btnBase =
 
 const btnTone = {
   /* Solid console blue. The primary action is one colour, not a ramp. */
+  /* One loud action per view. `primary` is the hot key, `go` is its cold
+     inverse for confirmations, `default` is graphite. */
   primary:
-    "key bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)] [--key-glow:rgba(74,140,255,0.9)]",
+    "key bg-[var(--color-hot)] text-[var(--color-hot-ink)] [--key-glow:rgba(255,59,48,0.9)]",
   default:
     "key plate text-ink [--key-glow:rgba(0,0,0,0)] hover:bg-[var(--color-plate-hi)]",
-  go: "key bg-[var(--color-blk-green)] text-[var(--color-on-blk-green)] [--key-glow:rgba(34,197,94,0.85)]",
+  go: "key bg-[var(--color-ice)] text-[var(--color-on-ice)] [--key-glow:rgba(238,242,248,0.55)]",
   /* On console plastic. */
   panel: "plate text-ink hover:bg-[var(--color-plate-hi)]",
   quiet: "text-ps-blue hover:text-ink active:translate-x-0 active:translate-y-0",
@@ -390,13 +392,13 @@ export function SectionHead({
       <div className="max-w-2xl">
         {eyebrow && (
           <p className="mb-3 inline-flex items-center">
-            <span className="skew-bar label inline-flex items-center gap-1.5 bg-[var(--color-blk-blue)] px-3 py-1.5 text-[var(--color-on-blk-blue)]">
+            <span className="skew-bar label inline-flex items-center gap-1.5 bg-[var(--color-hot)] px-3 py-1.5 text-[var(--color-hot-ink)]">
               <Glyph name="tri" size={9} colour="#fff" />
               {eyebrow}
             </span>
           </p>
         )}
-        <h2 className="display text-[26px] leading-[1.05] md:text-[34px]">{title}</h2>
+        <h2 className="shout text-[28px] md:text-[38px]">{title}</h2>
         {copy && (
           <p className="mt-3 text-[15px] leading-relaxed text-ink-dim">{copy}</p>
         )}

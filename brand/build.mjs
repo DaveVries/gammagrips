@@ -31,17 +31,17 @@ mkdirSync(PNG, { recursive: true });
 /* The store is a light console-grey UI, so INK is dark. INK_ON_DARK is only
    for the social cards, which stay black. Getting this wrong silently renders
    the wordmark white on grey — it did, once. */
-const INK = "#f2f3f7";        /* on dark                                   */
-const INK_DIM = "#a7adbd";
-const INK_MUTE = "#7d8494";
-const VOID = "#0b0c10";
+const INK = "#eef2f8";        /* on dark                                   */
+const INK_DIM = "#aeb7c6";
+const INK_MUTE = "#8b94a4";
+const VOID = "#0d0e12";
 const DEEP = "#131620";
 const EDGE = "#262b38";
 
 /* The accent gradient. Anything sitting ON it is inked dark — white cannot
    pass on the cyan stop (1.65:1). */
 const YELLOW = "#f0b419";   /* the mark tile                            */
-const RED = "#a81f1a";      /* the GRIPS knurl                          */
+const RED = "#ff3b30";      /* the GRIPS knurl                          */
 const ON_YELLOW = "#3a2a00";
 const G1 = "#22e0d6";
 const G2 = "#5a7bff";
@@ -49,11 +49,11 @@ const G3 = "#b44cff";
 const ON_GRAD = "#08131c";
 
 /* Console plastic, and the four logo colours. */
-const PLATE = "#cfcec9";
+const PLATE = "#eef2f8";
 const PLATE_HI = "#ffffff";
-const PLATE_LO = "#8e8d88";
-const PLATE_LO2 = "#46453f";
-const ON_PLATE = "#16171b";
+const PLATE_LO = "#9aa3b2";
+const PLATE_LO2 = "#5b6472";
+const ON_PLATE = "#0d0e12";
 const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
 const FOUR_RULE = FOUR;
 
@@ -210,14 +210,11 @@ function keyMark(id, box) {
   <defs><clipPath id="kc-${id}"><path d="${tile}"/></clipPath></defs>
   <path d="${tile}" fill="${PLATE}"/>
   <g clip-path="url(#kc-${id})">
-    ${FOUR_RULE.map(
-      (col, i) =>
-        `<rect x="${((box - c) / 4) * i}" y="${box - bar}" width="${(box - c) / 4 + 0.5}" height="${bar}" fill="${col}"/>`,
-    ).join("")}
+    <rect x="0" y="${box - bar}" width="${box - c}" height="${bar}" fill="${RED}"/>
+    <rect x="${box - c - box * 0.055}" y="${box - bar}" width="${box * 0.02}" height="${bar}" fill="${ON_PLATE}"/>
     <g fill="none" stroke-width="${b * 2}">
       <path d="M0 ${box}V${c}L${c} 0H${box}" stroke="${PLATE_HI}"/>
       <path d="M${box} 0V${box - c}L${box - c} ${box}H0" stroke="${PLATE_LO2}"/>
-      <path d="M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}" stroke="rgba(255,255,255,0.6)"/>
       <path d="M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0" stroke="${PLATE_LO}"/>
     </g>
   </g>

@@ -56,10 +56,10 @@ export function Hero() {
             <span className="ps-rule inline-block h-[3px] w-10" />
             CONTROLLER GRIPS
           </p>
-          <h1 className="display text-[46px] leading-[0.94] sm:text-[62px]">
+          <h1 className="shout text-[38px] sm:text-[48px] xl:text-[55px]">
             More grip.
             <br />
-            <span className="oblique text-ps-blue">
+            <span className="oblique text-[var(--color-hot-text)]">
               Your controller.
             </span>
           </h1>

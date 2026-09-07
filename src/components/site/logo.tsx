@@ -136,33 +136,29 @@ export function Monogram({
 }
 
 /* --- the mark ---------------------------------------------------------------
-   Console plastic, not a coloured chip: a bevelled grey key with the cut
-   corner and the GG in ink.
+   Same shape as before — cut-corner key, GG, a rule across the foot — but the
+   four console colours are gone with the rest of the palette.
 
-   The four colours used to run through the second G as a knurl. Rendered
-   natively at 26/30/34/40/48 that never resolved into a letterform — the bars
-   cut the strokes and it read as confetti, at brand sizes too. So the colours
-   moved off the glyph and onto a rule across the foot of the key, where each
-   segment is a quarter of the tile instead of a 1px stripe. Same four, same
-   PS1 signature, and the monogram stays a monogram at every size.
+   On a near-black page the strongest thing a small mark can be is the page
+   inverted, so the key is ice and the monogram is the page colour. One hot
+   rule at the foot carries the accent. That is 17.6:1 against the background,
+   which is why it stays crisp at 26px where the coloured version could not.
 
-   Drawn as one SVG because the bevel needs four separately stroked edges,
-   which CSS borders cannot do on a chamfer. */
+   Drawn as one SVG because the bevel needs separately stroked edges, which
+   CSS borders cannot do on a chamfer. */
 
-const PLATE_T = "#cfcec9";
-const PLATE_T_HI = "#ffffff";
-const PLATE_T_LO = "#8e8d88";
-const PLATE_T_LO2 = "#46453f";
-const ON_PLATE_T = "#16171b";
-/** Green, red, blue, yellow — the same order as the site's .ps-rule. */
-const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
+const ICE = "#eef2f8";
+const ICE_HI = "#ffffff";
+const ICE_LO = "#9aa3b2";
+const ICE_LO2 = "#5b6472";
+const ON_ICE = "#0d0e12";
+const HOT = "#ff3b30";
 
 export function KeyMark({ size = 34, className }: { size?: number; className?: string }) {
   const box = 120;
   const c = box * 0.22;
   const b = box * 0.018;
   const bar = box * 0.115;
-  /* The glyph sits in the plate above the rule, not in the whole tile. */
   const inner = box * 0.58;
   const [, , mw, mh] = MONOGRAM_VIEWBOX.split(" ").map(Number);
   const k = Math.min(inner / mw, (box * 0.46) / mh);
@@ -183,38 +179,23 @@ export function KeyMark({ size = 34, className }: { size?: number; className?: s
         </clipPath>
       </defs>
 
-      <path d={tile} fill={PLATE_T} />
+      <path d={tile} fill={ICE} />
 
       <g clipPath={`url(#${id}-clip)`}>
-        {/* four-colour rule across the foot */}
-        {FOUR.map((col, i) => (
-          <rect
-            key={col}
-            x={((box - c) / 4) * i}
-            y={box - bar}
-            width={(box - c) / 4 + 0.5}
-            height={bar}
-            fill={col}
-          />
-        ))}
-        {/* bevel: lit top-left, shadowed bottom-right, twice */}
+        {/* the accent, as one run rather than four segments */}
+        <rect x={0} y={box - bar} width={box - c} height={bar} fill={HOT} />
+        <rect x={box - c - box * 0.055} y={box - bar} width={box * 0.02} height={bar} fill={ON_ICE} />
         <g fill="none" strokeWidth={b * 2}>
-          <path d={`M0 ${box}V${c}L${c} 0H${box}`} stroke={PLATE_T_HI} />
-          <path d={`M${box} 0V${box - c}L${box - c} ${box}H0`} stroke={PLATE_T_LO2} />
-          <path d={`M${b * 2} ${box}V${c + b}L${c + b} ${b * 2}H${box}`} stroke="rgba(255,255,255,0.6)" />
-          <path
-            d={`M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0`}
-            stroke={PLATE_T_LO}
-          />
+          <path d={`M0 ${box}V${c}L${c} 0H${box}`} stroke={ICE_HI} />
+          <path d={`M${box} 0V${box - c}L${box - c} ${box}H0`} stroke={ICE_LO2} />
+          <path d={`M${box} ${b * 2}V${box - c - b}L${box - c - b} ${box - b * 2}H0`} stroke={ICE_LO} />
         </g>
       </g>
 
-      <g
-        transform={`translate(${(box - mw * k) / 2} ${(box - bar - mh * k) / 2 + b}) scale(${k})`}
-      >
+      <g transform={`translate(${(box - mw * k) / 2} ${(box - bar - mh * k) / 2 + b}) scale(${k})`}>
         <g transform={`translate(${MONOGRAM_X} ${MONOGRAM_Y})`}>
-          <path d={MONOGRAM_SOLID} fill={ON_PLATE_T} />
-          <path d={MONOGRAM_KNURLED} fill={ON_PLATE_T} />
+          <path d={MONOGRAM_SOLID} fill={ON_ICE} />
+          <path d={MONOGRAM_KNURLED} fill={ON_ICE} />
         </g>
       </g>
     </svg>

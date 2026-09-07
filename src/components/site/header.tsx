@@ -122,10 +122,10 @@ export function Header() {
                     href="/customize"
                     className={cn(
                       "key cut-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
-                      "[--key-glow:rgba(34,197,94,0.85)]",
+                      "[--key-glow:rgba(255,59,48,0.9)]",
                       pathname === "/customize"
-                        ? "bg-[#1aa54f] text-[var(--color-on-blk-green)]"
-                        : "bg-[var(--color-blk-green)] text-[var(--color-on-blk-green)]",
+                        ? "bg-[var(--color-hot-dim)] text-[var(--color-ink)]"
+                        : "bg-[var(--color-hot)] text-[var(--color-hot-ink)]",
                     )}
                   >
                     ▶ FIND MY GRIP

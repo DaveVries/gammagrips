@@ -17,80 +17,75 @@
    ========================================================================= */
 
 @theme {
-  /* --- the page: console grey in shadow, under the same aurora wash ------
-     The ramp is the light one shifted down, not a different palette: the same
-     warm-neutral hue the console plastic had, read at night. */
-  --color-page: #2e2d2a;
-  --color-plate: #3e3d38;      /* raised grey surface                       */
-  --color-plate-hi: #4b4a44;
-  --color-plate-lo: #343330;
-  --color-plate-edge: #63625b;
+  /* --- the page: cool near-black ------------------------------------------
+     Dropped the four-colour console palette. One hot accent against a cold
+     monochrome base carries further than four colours competing, and it lets
+     six brightly coloured grips be the only saturated thing on screen. */
+  --color-page: #0d0e12;
+  --color-plate: #191b21;      /* raised surface                            */
+  --color-plate-hi: #23262e;   /* hover — ink-mute must still clear 4.5 here */
+  --color-plate-lo: #131519;
+  --color-plate-edge: #3a3f4a;
 
-  /* --- dark tiles: product media and cards keep the screen look ---------- */
-  --color-void: #0b0c10;
-  --color-deep: #131620;
-  --color-deep-2: #1b1f2c;
-  --color-edge: #262b38;
-  --color-edge-hi: #39415a;
+  /* --- deep tiles: product media sits in a well below the page ----------- */
+  --color-void: #050609;
+  --color-deep: #0a0b0e;
+  --color-deep-2: #101218;
+  --color-edge: #262a33;
+  --color-edge-hi: #3d434f;
 
-  /* --- ink ---------------------------------------------------------------- */
-  --color-ink: #f1efe8;        /* default: on grey — warm, to match the plastic */
-  --color-ink-dim: #cfccc1;
-  /* Must clear 4.5:1 on plate-hi, the lightest surface it ever lands on —
-     that is the hover state of every plate control, and the old value only
-     reached 4.09 there. Still a clear step below ink-dim. */
-  --color-ink-mute: #c0bdb1;
-  --color-on-dark: #f2f3f7;    /* inside a .tile                            */
-  --color-on-dark-dim: #a7adbd;
-  --color-on-dark-mute: #7d8494;
+  /* --- ink: cool white, three steps ---------------------------------------- */
+  --color-ink: #eef2f8;
+  --color-ink-dim: #aeb7c6;
+  --color-ink-mute: #8b94a4;
+  --color-on-dark: #eef2f8;
+  --color-on-dark-dim: #aeb7c6;
+  --color-on-dark-mute: #8b94a4;
 
-  /* --- bevel, for physical controls --------------------------------------
-     A lit edge on dark plastic is a pale grey, not white; pure white reads as
-     a glow rather than a chamfer. */
-  --color-bev-1: #6f6e66;
-  --color-bev-3: #2a2926;
-  --color-bev-4: #1c1b19;
+  /* --- bevel: a lit edge on cold plastic is steel, never white ----------- */
+  --color-bev-1: #454b57;
+  --color-bev-3: #101218;
+  --color-bev-4: #08090c;
 
-  /* --- accents ------------------------------------------------------------ */
-  /* Text-safe accents. These are the only tokens that had to move *up* the
-     ramp rather than down — a link colour picked to be dark enough on light
-     grey is unreadable on dark grey. Same hues, raised lightness. */
-  --color-ps-blue: #8db4ff;
-  --color-ps-green: #63d197;
-  --color-ps-yellow: #f0b419;
-  --color-ps-red: #ff8a80;
-  --color-on-ps-blue: #ffffff;
+  /* --- the accent. One. ----------------------------------------------------
+     `hot` is the fill; `hot-ink` is what sits on it; `hot-text` is the lifted
+     variant for type, because the fill red only reaches 4.26:1 on plate-hi. */
+  --color-hot: #ff3b30;
+  --color-hot-ink: #180402;
+  --color-hot-text: #ff5b52;
+  --color-hot-dim: #b32820;
 
-  --color-gl-tri: #56c98d;
-  --color-gl-cir: #f0736a;
-  --color-gl-crs: #7ba9ff;
-  --color-gl-sqr: #d68fbe;
+  /* Neutral fills for controls that are not the primary action. */
+  --color-ice: #eef2f8;
+  --color-on-ice: #0d0e12;
+  --color-steel: #c3ccd9;
 
-  /* Block colours — used as fills, badges and the four-segment rule. Brighter
-     than the text tokens above because they never carry small type. */
-  /* On a dark page a white label caps how bright a fill can be: the deepest
-     blue that still clears 4.5:1 under white only separates from the page by
-     2.93:1, which is *less* than the light theme managed and is why the solid
-     buttons read dull. Inverting the label removes the cap — these are the
-     brightest each hue goes while its dark ink clears AA comfortably, and all
-     of them beat the old light theme's 3.82:1. The yellow tile already worked
-     this way, so the language was already here. */
-  --color-blk-blue: #4a8cff;
-  --color-blk-green: #22c55e;
-  --color-blk-yellow: #f0b419;
-  --color-blk-red: #ff6b5e;
-  --color-on-blk-blue: #0a1730;
-  --color-on-blk-green: #04240f;
-  --color-on-blk-red: #330a06;
-  --color-on-blk: #0a1730;
-  --color-on-yellow: #3a2a00;
+  /* Kept as aliases so the accent has one source of truth; every former
+     four-colour usage now points at the hot/ink pair. */
+  --color-ps-blue: #aeb7c6;
+  --color-ps-green: #aeb7c6;
+  --color-ps-yellow: #ff5b52;
+  --color-ps-red: #ff5b52;
+  --color-on-ps-blue: #0d0e12;
 
-  /* Tinted notice panels and the unlit half of a meter. These were hardcoded
-     light hexes and were the only things the dark pass could not reach — they
-     are tokens now so the next theme move catches them. */
-  --color-note-green: #1b3a2c;
-  --color-note-blue: #1e2c47;
-  --color-pip-off: #56554f;
+  --color-gl-tri: #aeb7c6;
+  --color-gl-cir: #ff3b30;
+  --color-gl-crs: #8b94a4;
+  --color-gl-sqr: #aeb7c6;
+
+  --color-blk-blue: #eef2f8;
+  --color-blk-green: #ff3b30;
+  --color-blk-yellow: #ff3b30;
+  --color-blk-red: #ff3b30;
+  --color-on-blk-blue: #0d0e12;
+  --color-on-blk-green: #180402;
+  --color-on-blk-red: #180402;
+  --color-on-blk: #0d0e12;
+  --color-on-yellow: #180402;
+
+  --color-note-green: #12181f;
+  --color-note-blue: #12181f;
+  --color-pip-off: #333944;
 
   --radius-xs: 0px;
   --radius-sm: 0px;
@@ -117,10 +112,9 @@
      reading as a 1998 desktop. Fixed so it does not travel on scroll. */
   body {
     background:
-      radial-gradient(1100px 620px at 6% -10%, rgba(32, 89, 196, 0.30), transparent 62%),
-      radial-gradient(900px 560px at 96% 0%, rgba(209, 51, 43, 0.20), transparent 62%),
-      radial-gradient(980px 640px at 58% 106%, rgba(18, 133, 74, 0.22), transparent 62%),
-      radial-gradient(620px 420px at 82% 52%, rgba(240, 180, 25, 0.13), transparent 64%),
+      radial-gradient(1200px 680px at 8% -12%, rgba(120, 150, 200, 0.10), transparent 64%),
+      radial-gradient(900px 560px at 92% 4%, rgba(255, 59, 48, 0.13), transparent 60%),
+      radial-gradient(1000px 640px at 60% 108%, rgba(90, 120, 170, 0.10), transparent 64%),
       var(--color-page);
     background-attachment: fixed;
     color: var(--color-ink);
@@ -139,8 +133,8 @@
     z-index: -2;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      linear-gradient(rgba(174, 183, 198, 0.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(174, 183, 198, 0.055) 1px, transparent 1px);
     background-size: 46px 46px, 46px 46px;
     mask-image: radial-gradient(1200px 900px at 50% 12%, #000 0%, transparent 78%);
   }
@@ -153,11 +147,11 @@
     inset: -25%;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.7;
+    opacity: 0.85;
     background:
-      radial-gradient(38% 46% at 22% 30%, rgba(32, 89, 196, 0.42), transparent 70%),
-      radial-gradient(34% 40% at 78% 26%, rgba(209, 51, 43, 0.28), transparent 70%),
-      radial-gradient(40% 44% at 60% 78%, rgba(18, 133, 74, 0.32), transparent 70%);
+      radial-gradient(40% 48% at 20% 28%, rgba(255, 59, 48, 0.22), transparent 72%),
+      radial-gradient(36% 42% at 80% 30%, rgba(110, 145, 210, 0.16), transparent 72%),
+      radial-gradient(42% 46% at 58% 80%, rgba(255, 59, 48, 0.12), transparent 74%);
     filter: blur(38px);
     animation: drift 34s var(--ease-out) infinite alternate;
   }
@@ -233,23 +227,22 @@
   /** Four equal segments — the console's colour set as a rule or a spine.
       This is what the violet gradient used to do, and it is far more the
       thing the brand is actually about. */
+  /** Signal bar. Was four equal console colours; now one hot run, a steel
+      tick, then a dim tail — the same footprint reading as a level meter. */
   .ps-rule {
     background: linear-gradient(
       90deg,
-      var(--color-blk-blue) 0 25%,
-      var(--color-blk-green) 25% 50%,
-      var(--color-blk-yellow) 50% 75%,
-      var(--color-blk-red) 75% 100%
+      var(--color-hot) 0 26%,
+      var(--color-ink) 26% 30%,
+      var(--color-edge-hi) 30% 44%,
+      var(--color-edge) 44% 100%
     );
   }
-  /** Same set, as a skewed tab fill. */
   .ps-tab {
     background: linear-gradient(
       100deg,
-      var(--color-blk-blue) 0 26%,
-      var(--color-blk-green) 26% 52%,
-      var(--color-blk-yellow) 52% 76%,
-      var(--color-blk-red) 76% 100%
+      var(--color-hot) 0 62%,
+      var(--color-hot-dim) 62% 100%
     );
   }
 
@@ -289,7 +282,7 @@
         rgba(255, 255, 255, 0.03) 32%,
         rgba(20, 20, 18, 0.10) 100%
       ),
-      rgba(62, 61, 56, 0.58);
+      rgba(30, 33, 41, 0.62);
     backdrop-filter: blur(22px) saturate(1.7);
     -webkit-backdrop-filter: blur(22px) saturate(1.7);
     border: 1px solid rgba(255, 255, 255, 0.14);
@@ -309,7 +302,7 @@
         rgba(255, 255, 255, 0.05) 38%,
         rgba(20, 20, 18, 0.08) 100%
       ),
-      rgba(66, 65, 60, 0.50);
+      rgba(34, 37, 46, 0.54);
     backdrop-filter: blur(30px) saturate(1.9);
     -webkit-backdrop-filter: blur(30px) saturate(1.9);
     border: 1px solid rgba(255, 255, 255, 0.20);
@@ -488,11 +481,22 @@
   /** Display type: heavy, tight, slightly oblique — console logo energy. */
   .display {
     font-weight: 800;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.045em;
+    text-transform: none;
+  }
+  /** Loud block caps for section openers and the hero — the one type move
+      that carries the energy-brand look without any extra chrome. */
+  .shout {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.92;
   }
   .oblique {
     transform: skewX(-8deg);
     display: inline-block;
+    /* the skew throws the glyphs right of their own box */
+    padding-right: 0.08em;
   }
 
   /* --- layout ------------------------------------------------------------ */

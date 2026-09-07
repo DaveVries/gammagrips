@@ -150,7 +150,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
             <Link
               href="/customize"
               onClick={onClose}
-              className="key cut-sm mb-2.5 flex h-12 items-center justify-center bg-[var(--color-blk-green)] text-[14px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-blk-green)] [--key-glow:rgba(34,197,94,0.85)]"
+              className="key cut-sm mb-2.5 flex h-12 items-center justify-center bg-[var(--color-hot)] text-[14px] font-bold uppercase tracking-[0.06em] text-[var(--color-hot-ink)] [--key-glow:rgba(255,59,48,0.9)]"
             >
               ▶ Find my grip
             </Link>
