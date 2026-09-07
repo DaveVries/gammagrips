@@ -145,8 +145,8 @@ const KNURL_SPAN = KNURL_PITCH;
 
 /** Four-colour knurl. Reads as colour layering at mark scale; it was tried on
     the wordmark and rejected there, where it looked like confetti. */
-const FOUR_PITCH = 17;
-const FOUR_BAR = 9.5;
+const FOUR_PITCH = 30;   /* coarse enough to survive a 30px mark */
+const FOUR_BAR = 18;
 const knurlFour = (id) => `
     <pattern id="${id}" width="${FOUR_PITCH * 4}" height="${FOUR_PITCH}"
              patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
@@ -198,7 +198,7 @@ const MONO_VB = `0 0 ${MONO_W.toFixed(1)} ${MONO_H.toFixed(1)}`;
  * four logo colours. This is the "hardware" mark; the gradient one is the
  * "interface" mark. Same geometry, same cut corner.
  */
-function keyMarkGrey(id, box) {
+function keyMark(id, box) {
   const c = box * 0.22;
   const inner = box * 0.56;
   const k = Math.min(inner / MONO_W, inner / MONO_H);
@@ -231,7 +231,7 @@ function keyMarkGrey(id, box) {
  * the cyan→blue→violet ramp are the same two devices the interface uses, so
  * the logo is built out of the site rather than bolted onto it.
  */
-function keyMark(id, box) {
+function keyMarkYellow(id, box) {
   const c = box * 0.22;
   const inner = box * 0.56;
   const k = Math.min(inner / MONO_W, inner / MONO_H);
@@ -261,18 +261,13 @@ files["mark-on-dark.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 
   <g transform="translate(40 40)">${keyMark("mkd", 240)}</g>
 </svg>`;
 
-files["mark-grey.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
-  <title>GammaGrips</title>${keyMarkGrey("mg", 240)}
-</svg>`;
-
-files["mark-grey-on-dark.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320">
-  <title>GammaGrips</title>
-  <rect width="320" height="320" fill="${VOID}"/>
-  <g transform="translate(40 40)">${keyMarkGrey("mgd", 240)}</g>
+/* Alternate: the yellow chip, kept for places that need one flat colour. */
+files["mark-yellow.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
+  <title>GammaGrips</title>${keyMarkYellow("my", 240)}
 </svg>`;
 
 /* --- 2. the lockup: mark + wordmark --------------------------------------- */
-const lockup = (id, bg, grey = false, ink = INK) => {
+const lockup = (id, bg, _unused = false, ink = INK) => {
   const key = 96;
   const s2 = (key * 0.62) / CAP;
   const gap = 34;
@@ -283,7 +278,7 @@ const lockup = (id, bg, grey = false, ink = INK) => {
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w.toFixed(0)} ${h}">
   <title>GammaGrips</title>
   ${bg ? `<rect width="${w.toFixed(0)}" height="${h}" fill="${bg}"/>` : ""}
-  <g transform="translate(${x0} ${y0})">${(grey ? keyMarkGrey : keyMark)(id + "k", key)}</g>
+  <g transform="translate(${x0} ${y0})">${keyMark(id + "k", key)}</g>
   <g transform="translate(${x0 + key + gap} ${y0 + (key - CAP * s2) / 2}) scale(${s2})">${wordmark(
     id,
     ink,
@@ -294,11 +289,10 @@ const lockup = (id, bg, grey = false, ink = INK) => {
 };
 files["lockup.svg"] = lockup("lk", null);
 files["lockup-on-dark.svg"] = lockup("lkd", VOID);
-files["lockup-grey.svg"] = lockup("lkg", null, true);
-files["lockup-grey-on-dark.svg"] = lockup("lkgd", VOID, true);
 /* For grey / light backgrounds: dark type, deeper cyan so it holds on plastic. */
-files["lockup-grey-ink.svg"] = lockup("lkgi", null, true, ON_PLATE);
-/* Primary lockup: yellow tile, dark type, red knurl — matches the header. */
+
+/* Dark-type lockup, for light backgrounds. The site header uses the
+   light-type one, since the page is dark. */
 files["lockup-ink.svg"] = lockup("lki", null, false, ON_PLATE);
 files["lockup-ink-on-grey.svg"] = lockup("lkig", "#d3d2ce", false, ON_PLATE);
 files["lockup-grey-ink-on-plate.svg"] = lockup("lkgip", PLATE, true, ON_PLATE);
@@ -334,23 +328,34 @@ files["avatar-gradient.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox=
    the old version sat the tile on a black square, which spent a third of a
    16px favicon on padding. The cut corner survives; the knurl does not, so
    below 48px the second G goes solid. */
-const faviconSvg = (knurled) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+const faviconSvg = (four) => `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
   <title>GammaGrips</title>
-  <path d="M22 0H120V98L98 120H0V22Z" fill="${YELLOW}"/>
-  <g transform="translate(${(60 - (MONO_W * 0.66) / 2).toFixed(2)} ${(60 - (MONO_H * 0.66) / 2).toFixed(2)}) scale(0.66)">
-    ${
-      knurled
-        ? monogram("fv", ON_YELLOW, "none", { mono: ON_YELLOW })
-        : `<g transform="translate(${-MONO_L} ${-MONO_T})">
-             <path d="${M1.d}" fill="${ON_YELLOW}"/>
-             <path d="${M2.d}" fill="${ON_YELLOW}"/>
-           </g>`
-    }
+  ${
+    four
+      ? keyMark("fv", 120)
+      : (() => {
+          const c = 120 * 0.22;
+          const k = Math.min((120 * 0.62) / MONO_W, (120 * 0.62) / MONO_H);
+          const b = 120 * 0.018;
+          const tile = `M${c} 0H120V${120 - c}L${120 - c} 120H0V${c}Z`;
+          return `<path d="${tile}" fill="${PLATE}"/>
+  <g clip-path="url(#fvs-c)" fill="none" stroke-width="${b * 2}">
+    <path d="M0 120V${c}L${c} 0H120" stroke="${PLATE_HI}"/>
+    <path d="M120 0V${120 - c}L${120 - c} 120H0" stroke="${PLATE_LO2}"/>
   </g>
+  <defs><clipPath id="fvs-c"><path d="${tile}"/></clipPath></defs>
+  <g transform="translate(${(120 - MONO_W * k) / 2} ${(120 - MONO_H * k) / 2}) scale(${k})">
+    <g transform="translate(${-MONO_L} ${-MONO_T})">
+      <path d="${M1.d}" fill="${ON_PLATE}"/>
+      <path d="${M2.d}" fill="${ON_PLATE}"/>
+    </g>
+  </g>`;
+        })()
+  }
 </svg>`;
 
 files["favicon.svg"] = faviconSvg(true);
-/* The 16/32 rungs of the .ico — knurl dropped, letterforms kept. */
+/* The 16/32 rungs of the .ico — four-colour bars drop, letterforms stay. */
 files["favicon-small.svg"] = faviconSvg(false);
 
 /* --- 5. social chrome ------------------------------------------------------- */
@@ -425,7 +430,7 @@ const raster = [
   ["avatar-gradient.svg", "avatar-gradient-1024.png", 1024, 1024],
   ["favicon.svg", "icon-512.png", 512, 512],
   ["favicon.svg", "apple-touch-icon.png", 180, 180],
-  ["favicon.svg", "favicon-48.png", 48, 48],
+  ["favicon-small.svg", "favicon-48.png", 48, 48],
   ["favicon-small.svg", "favicon-32.png", 32, 32],
   ["favicon-small.svg", "favicon-16.png", 16, 16],
 ];
