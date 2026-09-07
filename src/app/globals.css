@@ -17,12 +17,14 @@
    ========================================================================= */
 
 @theme {
-  /* --- the page: console grey under a soft aurora wash ------------------- */
-  --color-page: #c9c8c4;
-  --color-plate: #d8d7d3;      /* raised grey surface                       */
-  --color-plate-hi: #e6e5e2;
-  --color-plate-lo: #c4c3bf;   /* lightened: muted text could not clear AA on it */
-  --color-plate-edge: #9c9b96;
+  /* --- the page: console grey in shadow, under the same aurora wash ------
+     The ramp is the light one shifted down, not a different palette: the same
+     warm-neutral hue the console plastic had, read at night. */
+  --color-page: #2e2d2a;
+  --color-plate: #3e3d38;      /* raised grey surface                       */
+  --color-plate-hi: #4b4a44;
+  --color-plate-lo: #343330;
+  --color-plate-edge: #63625b;
 
   /* --- dark tiles: product media and cards keep the screen look ---------- */
   --color-void: #0b0c10;
@@ -32,29 +34,34 @@
   --color-edge-hi: #39415a;
 
   /* --- ink ---------------------------------------------------------------- */
-  --color-ink: #16171b;        /* default: on grey                          */
-  --color-ink-dim: #3a3c42;
-  --color-ink-mute: #494b51;   /* clears 4.5:1 on every grey surface          */
+  --color-ink: #f1efe8;        /* default: on grey — warm, to match the plastic */
+  --color-ink-dim: #cfccc1;
+  --color-ink-mute: #b3b0a4;   /* clears 4.5:1 on every grey surface          */
   --color-on-dark: #f2f3f7;    /* inside a .tile                            */
   --color-on-dark-dim: #a7adbd;
   --color-on-dark-mute: #7d8494;
 
-  /* --- bevel, for physical controls -------------------------------------- */
-  --color-bev-1: #ffffff;
-  --color-bev-3: #93928d;
-  --color-bev-4: #4a4945;
+  /* --- bevel, for physical controls --------------------------------------
+     A lit edge on dark plastic is a pale grey, not white; pure white reads as
+     a glow rather than a chamfer. */
+  --color-bev-1: #6f6e66;
+  --color-bev-3: #2a2926;
+  --color-bev-4: #1c1b19;
 
   /* --- accents ------------------------------------------------------------ */
-  --color-ps-blue: #17479f;    /* dark enough to be a link on grey            */
-  --color-ps-green: #0a5c2c;   /* dark enough as text on the deepest grey    */
-  --color-ps-yellow: #d98f06;
-  --color-ps-red: #a81f1a;     /* text-safe red: 5.6:1 on the header glass  */
+  /* Text-safe accents. These are the only tokens that had to move *up* the
+     ramp rather than down — a link colour picked to be dark enough on light
+     grey is unreadable on dark grey. Same hues, raised lightness. */
+  --color-ps-blue: #8db4ff;
+  --color-ps-green: #63d197;
+  --color-ps-yellow: #f0b419;
+  --color-ps-red: #ff8a80;
   --color-on-ps-blue: #ffffff;
 
-  --color-gl-tri: #12854a;
-  --color-gl-cir: #c0332c;
-  --color-gl-crs: #2059c4;
-  --color-gl-sqr: #a8508a;
+  --color-gl-tri: #56c98d;
+  --color-gl-cir: #f0736a;
+  --color-gl-crs: #7ba9ff;
+  --color-gl-sqr: #d68fbe;
 
   /* Block colours — used as fills, badges and the four-segment rule. Brighter
      than the text tokens above because they never carry small type. */
@@ -64,6 +71,13 @@
   --color-blk-red: #d1332b;
   --color-on-blk: #ffffff;
   --color-on-yellow: #3a2a00;
+
+  /* Tinted notice panels and the unlit half of a meter. These were hardcoded
+     light hexes and were the only things the dark pass could not reach — they
+     are tokens now so the next theme move catches them. */
+  --color-note-green: #1b3a2c;
+  --color-note-blue: #1e2c47;
+  --color-pip-off: #56554f;
 
   --radius-xs: 0px;
   --radius-sm: 0px;
@@ -77,7 +91,7 @@
 }
 
 @layer base {
-  :root { color-scheme: light; }
+  :root { color-scheme: dark; }
 
   html {
     background: var(--color-page);
@@ -90,10 +104,10 @@
      reading as a 1998 desktop. Fixed so it does not travel on scroll. */
   body {
     background:
-      radial-gradient(1100px 620px at 6% -10%, rgba(32, 89, 196, 0.22), transparent 62%),
-      radial-gradient(900px 560px at 96% 0%, rgba(209, 51, 43, 0.15), transparent 62%),
-      radial-gradient(980px 640px at 58% 106%, rgba(18, 133, 74, 0.17), transparent 62%),
-      radial-gradient(620px 420px at 82% 52%, rgba(240, 180, 25, 0.10), transparent 64%),
+      radial-gradient(1100px 620px at 6% -10%, rgba(32, 89, 196, 0.30), transparent 62%),
+      radial-gradient(900px 560px at 96% 0%, rgba(209, 51, 43, 0.20), transparent 62%),
+      radial-gradient(980px 640px at 58% 106%, rgba(18, 133, 74, 0.22), transparent 62%),
+      radial-gradient(620px 420px at 82% 52%, rgba(240, 180, 25, 0.13), transparent 64%),
       var(--color-page);
     background-attachment: fixed;
     color: var(--color-ink);
@@ -112,8 +126,8 @@
     z-index: -2;
     pointer-events: none;
     background-image:
-      linear-gradient(rgba(22, 23, 27, 0.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(22, 23, 27, 0.055) 1px, transparent 1px);
+      linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
     background-size: 46px 46px, 46px 46px;
     mask-image: radial-gradient(1200px 900px at 50% 12%, #000 0%, transparent 78%);
   }
@@ -126,11 +140,11 @@
     inset: -25%;
     z-index: -1;
     pointer-events: none;
-    opacity: 0.55;
+    opacity: 0.7;
     background:
-      radial-gradient(38% 46% at 22% 30%, rgba(32, 89, 196, 0.30), transparent 70%),
-      radial-gradient(34% 40% at 78% 26%, rgba(209, 51, 43, 0.20), transparent 70%),
-      radial-gradient(40% 44% at 60% 78%, rgba(18, 133, 74, 0.24), transparent 70%);
+      radial-gradient(38% 46% at 22% 30%, rgba(32, 89, 196, 0.42), transparent 70%),
+      radial-gradient(34% 40% at 78% 26%, rgba(209, 51, 43, 0.28), transparent 70%),
+      radial-gradient(40% 44% at 60% 78%, rgba(18, 133, 74, 0.32), transparent 70%);
     filter: blur(38px);
     animation: drift 34s var(--ease-out) infinite alternate;
   }
@@ -168,10 +182,10 @@
      and never rounded a corner. */
 
   .drop {
-    box-shadow: 6px 6px 0 rgba(22, 23, 27, 0.32);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
   }
   .drop-sm {
-    box-shadow: 3px 3px 0 rgba(22, 23, 27, 0.28);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
   }
   .drop-accent {
     box-shadow: 5px 5px 0 var(--color-grad-2);
@@ -258,18 +272,18 @@
     background:
       linear-gradient(
         160deg,
-        rgba(255, 255, 255, 0.34) 0%,
-        rgba(255, 255, 255, 0.06) 32%,
-        rgba(232, 231, 228, 0.10) 100%
+        rgba(255, 255, 255, 0.13) 0%,
+        rgba(255, 255, 255, 0.03) 32%,
+        rgba(20, 20, 18, 0.10) 100%
       ),
-      rgba(232, 231, 228, 0.52);
+      rgba(62, 61, 56, 0.58);
     backdrop-filter: blur(22px) saturate(1.7);
     -webkit-backdrop-filter: blur(22px) saturate(1.7);
-    border: 1px solid rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.95) inset,
-      0 -1px 0 rgba(22, 23, 27, 0.10) inset,
-      0 24px 56px -30px rgba(20, 22, 30, 0.62);
+      0 1px 0 rgba(255, 255, 255, 0.16) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.35) inset,
+      0 24px 56px -30px rgba(0, 0, 0, 0.8);
     color: var(--color-ink);
   }
 
@@ -278,18 +292,18 @@
     background:
       linear-gradient(
         155deg,
-        rgba(255, 255, 255, 0.48) 0%,
-        rgba(255, 255, 255, 0.10) 38%,
-        rgba(232, 231, 228, 0.06) 100%
+        rgba(255, 255, 255, 0.19) 0%,
+        rgba(255, 255, 255, 0.05) 38%,
+        rgba(20, 20, 18, 0.08) 100%
       ),
-      rgba(234, 233, 230, 0.44);
+      rgba(66, 65, 60, 0.50);
     backdrop-filter: blur(30px) saturate(1.9);
     -webkit-backdrop-filter: blur(30px) saturate(1.9);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.20);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 1) inset,
-      0 -1px 0 rgba(22, 23, 27, 0.12) inset,
-      0 40px 90px -46px rgba(20, 22, 30, 0.7);
+      0 1px 0 rgba(255, 255, 255, 0.24) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.4) inset,
+      0 40px 90px -46px rgba(0, 0, 0, 0.85);
   }
 
   /** A light band that crosses the surface on hover. This is the whole
@@ -367,7 +381,7 @@
       card reads as rising off the page rather than glowing. */
   .lift { transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
   .lift:hover { transform: translateY(-4px); }
-  .lift.drop:hover { box-shadow: 10px 10px 0 rgba(22, 23, 27, 0.34); }
+  .lift.drop:hover { box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.55); }
   @media (prefers-reduced-motion: reduce) {
     .lift:hover { transform: none; }
   }
@@ -381,7 +395,7 @@
     background: var(--color-plate-lo);
     box-shadow:
       inset 1px 1px 0 var(--color-bev-4),
-      inset -1px -1px 0 #ffffff;
+      inset -1px -1px 0 var(--color-bev-1);
   }
 
   /** Dark screen. Everything inside flips to light ink automatically. */

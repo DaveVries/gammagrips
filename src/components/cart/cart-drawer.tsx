@@ -61,7 +61,7 @@ export function CartDrawer() {
       />
       <div
         ref={panelRef}
-        className="card absolute inset-y-0 right-0 flex w-[min(440px,100vw)] flex-col glass p-[3px]"
+        className="absolute inset-y-0 right-0 flex w-[min(440px,100vw)] flex-col glass p-[3px] shadow-[-18px_0_60px_-20px_rgba(0,0,0,0.8)]"
       >
         <div className="titlebar flex h-[26px] shrink-0 items-center justify-between px-2">
           <h2 className="label text-[10px]">

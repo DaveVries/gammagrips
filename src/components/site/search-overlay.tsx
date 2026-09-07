@@ -55,7 +55,7 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
         aria-label="Close search"
         tabIndex={-1}
       />
-      <div className="card relative mx-auto mt-[8vh] w-[min(680px,92vw)] glass p-[3px] shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
+      <div className="relative mx-auto mt-[8vh] w-[min(680px,92vw)] glass cut p-[3px] shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
         <div className="titlebar flex h-[24px] items-center px-2">
           <span className="label text-[10px]">FIND</span>
         </div>

@@ -18,11 +18,9 @@ export default function ContactPage() {
         <div className="space-y-4 lg:sticky lg:top-24">
           <AsideCard title="Direct">
             <p>
-              Support · <a href="mailto:support@gammagrips.com">support@gammagrips.com</a>
+              <a href="mailto:info@gammagrips.com">info@gammagrips.com</a>
               <br />
-              Returns · <a href="mailto:returns@gammagrips.com">returns@gammagrips.com</a>
-              <br />
-              Wholesale · <a href="mailto:trade@gammagrips.com">trade@gammagrips.com</a>
+              Support, returns and wholesale all reach the same inbox.
             </p>
             <p>Monday to Friday, 09:00–17:30 CET.</p>
           </AsideCard>

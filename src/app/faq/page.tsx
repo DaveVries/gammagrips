@@ -55,7 +55,7 @@ export default function FaqPage() {
         <div className="space-y-4 lg:sticky lg:top-24">
           <AsideCard title="Still stuck?">
             <p>
-              <a href="mailto:support@gammagrips.com">support@gammagrips.com</a>
+              <a href="mailto:info@gammagrips.com">info@gammagrips.com</a>
               <br />
               Monday to Friday, 09:00–17:30 CET.
             </p>

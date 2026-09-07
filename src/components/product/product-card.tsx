@@ -142,7 +142,7 @@ export function ProductCard({
                   key={n}
                   className={cn(
                     "h-[9px] w-[5px]",
-                    n <= texture.grip ? "bg-[var(--color-blk-green)]" : "bg-[#a8a7a2]",
+                    n <= texture.grip ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
                   )}
                 />
               ))}

@@ -68,7 +68,7 @@ export function Header() {
       <div className="ps-rule h-[4px] w-full" />
 
       <header
-        className="sticky top-0 z-50 border-b border-white/60 bg-[rgba(232,231,228,0.7)] backdrop-blur-xl backdrop-saturate-150"
+        className="sticky top-0 z-50 border-b border-white/12 bg-[rgba(46,45,42,0.72)] backdrop-blur-xl backdrop-saturate-150"
         onMouseLeave={hoverClose}
       >
         <div className="gutter">
@@ -184,7 +184,7 @@ export function Header() {
           item.panel && openIdx === i ? (
             <div
               key={item.label}
-              className="absolute inset-x-0 top-full hidden border-b-2 border-[var(--color-plate-edge)] bg-[rgba(226,225,222,0.97)] shadow-[0_26px_60px_-18px_rgba(20,22,30,0.7)] backdrop-blur-2xl lg:block"
+              className="absolute inset-x-0 top-full hidden border-b-2 border-[var(--color-plate-edge)] bg-[rgba(52,51,47,0.97)] shadow-[0_26px_60px_-18px_rgba(20,22,30,0.7)] backdrop-blur-2xl lg:block"
               onMouseEnter={clear}
             >
               <div className="ps-rule h-[3px] w-full" />
@@ -202,7 +202,7 @@ export function Header() {
                         {col.headingHref ? (
                           <Link
                             href={col.headingHref}
-                            className="label mb-3 block border-b-2 border-[var(--color-plate-edge)] pb-2 text-ink hover:text-[var(--color-blk-blue)]"
+                            className="label mb-3 block border-b-2 border-[var(--color-plate-edge)] pb-2 text-ink hover:text-ps-blue"
                           >
                             {col.heading} →
                           </Link>

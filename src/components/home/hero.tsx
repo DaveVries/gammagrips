@@ -44,7 +44,7 @@ export function Hero() {
         />
         <span
           aria-hidden="true"
-          className="display pointer-events-none absolute -right-6 -top-10 z-0 select-none text-[190px] leading-none tracking-[-0.06em] text-[rgba(22,23,27,0.045)] sm:text-[260px]"
+          className="display pointer-events-none absolute -right-6 -top-10 z-0 select-none text-[190px] leading-none tracking-[-0.06em] text-[rgba(255,255,255,0.05)] sm:text-[260px]"
         >
           GG
         </span>
@@ -59,7 +59,7 @@ export function Hero() {
           <h1 className="display text-[46px] leading-[0.94] sm:text-[62px]">
             More grip.
             <br />
-            <span className="oblique text-[var(--color-blk-blue)]">
+            <span className="oblique text-ps-blue">
               Your controller.
             </span>
           </h1>

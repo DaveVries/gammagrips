@@ -143,7 +143,7 @@ export function CheckoutFlow() {
           </div>
 
           {/* Guest is not an option among options — it is the path. */}
-          <div className="cut-sm mb-5 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[#dcece1] p-3">
+          <div className="cut-sm mb-5 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[var(--color-note-green)] p-3">
             <p className="text-[13px] font-bold">Checking out as a guest</p>
             <p className="mt-1 text-[12px] leading-relaxed text-ink-dim">
               No account needed. After the order you can turn it into one with a
@@ -269,7 +269,7 @@ export function CheckoutFlow() {
                         platformId={l.platformId as PlatformId}
                         className="w-full"
                       />
-                      <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold tabular-nums text-white">
+                      <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold tabular-nums text-page">
                         {l.qty}
                       </span>
                     </span>

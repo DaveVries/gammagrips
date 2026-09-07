@@ -307,7 +307,7 @@ export function FilterDrawer({
         </svg>
         Filters
         {activeCount > 0 && (
-          <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold tabular-nums text-white">
+          <span className="flex h-4 min-w-4 items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold tabular-nums text-page">
             {activeCount}
           </span>
         )}
@@ -361,7 +361,7 @@ export function FilterDrawer({
             <div className="shrink-0 border-t border-edge p-4">
               <button
                 onClick={() => setOpen(false)}
-                className="h-12 w-full rounded-[var(--radius-md)] bg-ink text-[15px] font-medium text-white"
+                className="h-12 w-full rounded-[var(--radius-md)] bg-ink text-[15px] font-medium text-page"
               >
                 Show {total} {total === 1 ? "product" : "products"}
               </button>

@@ -53,7 +53,7 @@ export default function Page() {
       <p>
         Under the GDPR you can ask for a copy of what we hold, ask us to correct
         it, or ask us to delete it. Email{" "}
-        <a href="mailto:privacy@gammagrips.com">privacy@gammagrips.com</a> and we
+        <a href="mailto:info@gammagrips.com">info@gammagrips.com</a> and we
         will action it within 30 days, usually within two working days. Deletion
         does not remove invoices we are legally required to retain.
       </p>

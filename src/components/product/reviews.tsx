@@ -193,7 +193,7 @@ export function Reviews({ product, reviews }: { product: Product; reviews: Revie
 
                     {/* Brand replies are styled distinctly from customer text */}
                     {r.response && (
-                      <div className="cut-sm mt-3.5 border border-ps-blue/30 border-l-[3px] border-l-ps-blue bg-[#dde5f4] p-3">
+                      <div className="cut-sm mt-3.5 border border-ps-blue/30 border-l-[3px] border-l-ps-blue bg-[var(--color-note-blue)] p-3">
                         <div className="flex flex-wrap items-baseline gap-x-3">
                           <p className="text-[13px] font-semibold">{r.response.from}</p>
                           <span className="label text-ink-mute">

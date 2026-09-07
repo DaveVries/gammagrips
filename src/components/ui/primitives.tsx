@@ -303,7 +303,7 @@ export function Stars({ value, size = 13 }: { value: number; size?: number }) {
       style={{ width: size * 5 + 8, height: size }}
       aria-hidden="true"
     >
-      <span className="absolute inset-0 flex gap-[2px] text-[#a3a29d]">
+      <span className="absolute inset-0 flex gap-[2px] text-[var(--color-pip-off)]">
         {[0, 1, 2, 3, 4].map((i) => (
           <Star key={i} size={size} />
         ))}

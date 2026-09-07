@@ -26,7 +26,7 @@ export default function ReturnsPage() {
           </AsideCard>
           <AsideCard title="Start a return">
             <p>
-              Email <a href="mailto:returns@gammagrips.com">returns@gammagrips.com</a>{" "}
+              Email <a href="mailto:info@gammagrips.com">info@gammagrips.com</a>{" "}
               with your order number. A prepaid label comes back the same working
               day. No form, no reason required.
             </p>

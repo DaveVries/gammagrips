@@ -185,7 +185,7 @@ export function ProductPurchase({
           </div>
 
           {/* Compatibility above the selectors, never buried in specs */}
-          <div className="cut-sm mt-4 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[#dcece1] p-3">
+          <div className="cut-sm mt-4 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[var(--color-note-green)] p-3">
             <div className="flex items-start gap-2.5">
               <svg
                 width="18"
@@ -327,7 +327,7 @@ export function ProductPurchase({
                           key={n}
                           className={cn(
                             "h-[10px] flex-1",
-                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[#a8a7a2]",
+                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
                           )}
                         />
                       ))}
@@ -345,7 +345,7 @@ export function ProductPurchase({
                 "h-2.5 w-2.5",
                 stock.tone === "ok" && "bg-[var(--color-blk-green)]",
                 stock.tone === "low" && "bg-[var(--color-blk-yellow)]",
-                stock.tone === "out" && "bg-[#a8a7a2]",
+                stock.tone === "out" && "bg-[var(--color-pip-off)]",
               )}
               aria-hidden="true"
             />

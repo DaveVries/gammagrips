@@ -139,7 +139,7 @@ export default async function ProductPage({
                   <div
                     key={s.label}
                     className={`flex items-baseline justify-between gap-6 px-3 py-2 ${
-                      i % 2 ? "bg-[#c6c5c0]" : "bg-[#d4d3ce]"
+                      i % 2 ? "bg-[var(--color-plate-lo)]" : "bg-[var(--color-plate)]"
                     }`}
                   >
                     <dt className="text-[12.5px] text-ink-dim">{s.label}</dt>

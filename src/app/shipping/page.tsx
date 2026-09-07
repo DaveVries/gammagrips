@@ -26,7 +26,7 @@ export default function ShippingPage() {
           </AsideCard>
           <AsideCard title="Need it faster?">
             <p>
-              Email <a href="mailto:support@gammagrips.com">support@gammagrips.com</a>{" "}
+              Email <a href="mailto:info@gammagrips.com">info@gammagrips.com</a>{" "}
               before 15:00 CET with your order number and we will upgrade it to
               express at cost.
             </p>

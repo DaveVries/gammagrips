@@ -242,7 +242,7 @@ export function Configurator({
             </ul>
 
             {recommended?.pick && (
-              <div className="cut-sm mt-3 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[#dcece1] p-3">
+              <div className="cut-sm mt-3 border border-ps-green/35 border-l-[3px] border-l-ps-green bg-[var(--color-note-green)] p-3">
                 <div className="flex items-center gap-2">
                   <Badge tone="green">Recommended</Badge>
                   <p className="text-[13.5px] font-semibold">
@@ -324,7 +324,7 @@ export function Configurator({
                   "h-2.5 w-2.5",
                   stock.tone === "ok" && "bg-[var(--color-blk-green)]",
                   stock.tone === "low" && "bg-[var(--color-blk-yellow)]",
-                  stock.tone === "out" && "bg-[#a8a7a2]",
+                  stock.tone === "out" && "bg-[var(--color-pip-off)]",
                 )}
                 aria-hidden="true"
               />

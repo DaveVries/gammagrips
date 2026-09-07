@@ -391,7 +391,7 @@ export function TextureTech() {
                           key={n}
                           className={cn(
                             "h-[9px] flex-1",
-                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[#a8a7a2]",
+                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
                           )}
                         />
                       ))}

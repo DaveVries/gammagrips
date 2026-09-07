@@ -73,7 +73,7 @@ export function Footer() {
               />
               <button
                 type="submit"
-                className="h-11 shrink-0 rounded-[var(--radius-md)] bg-ink px-5 text-[14px] font-medium text-white transition-colors hover:plate-in"
+                className="h-11 shrink-0 rounded-[var(--radius-md)] bg-ink px-5 text-[14px] font-medium text-page transition-colors hover:plate-in"
               >
                 Sign up
               </button>
