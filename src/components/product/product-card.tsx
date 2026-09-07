@@ -102,7 +102,7 @@ export function ProductCard({
                 className={cn(
                   "cut-sm label px-2 py-1 backdrop-blur transition-colors",
                   shownFamily === f
-                    ? "bg-[var(--color-blk-blue)] text-white"
+                    ? "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]"
                     : "plate text-ink hover:bg-[var(--color-plate-hi)]",
                 )}
               >
@@ -159,7 +159,7 @@ export function ProductCard({
               </p>
             )}
           </div>
-          <span className="cut-sm label relative z-10 bg-[var(--color-blk-blue)] px-3 py-2 text-white transition-[filter] group-hover:brightness-115">
+          <span className="cut-sm label relative z-10 bg-[var(--color-blk-blue)] px-3 py-2 text-[var(--color-on-blk-blue)] transition-[filter] group-hover:brightness-115">
             View →
           </span>
         </div>

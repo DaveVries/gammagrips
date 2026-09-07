@@ -122,10 +122,10 @@ export function Header() {
                     href="/customize"
                     className={cn(
                       "key cut-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
-                      "[--key-glow:rgba(18,160,90,0.95)]",
+                      "[--key-glow:rgba(34,197,94,0.85)]",
                       pathname === "/customize"
-                        ? "bg-[#0b5230] text-white"
-                        : "bg-[var(--color-blk-green)] text-white",
+                        ? "bg-[#1aa54f] text-[var(--color-on-blk-green)]"
+                        : "bg-[var(--color-blk-green)] text-[var(--color-on-blk-green)]",
                     )}
                   >
                     ▶ FIND MY GRIP
@@ -170,7 +170,7 @@ export function Header() {
                 <span
                   className={cn(
                     "min-w-[20px] px-1 text-center text-[11px] font-bold tabular-nums",
-                    cart.count > 0 ? "bg-[var(--color-blk-green)] px-1.5 text-white" : "text-ink-mute",
+                    cart.count > 0 ? "bg-[var(--color-blk-green)] px-1.5 text-[var(--color-on-blk-green)]" : "text-ink-mute",
                   )}
                 >
                   {cart.ready ? cart.count : 0}
@@ -217,11 +217,11 @@ export function Header() {
                                 href={l.href}
                                 className="group -mx-2 block px-2.5 py-2 transition-colors hover:bg-[var(--color-blk-blue)]"
                               >
-                                <span className="block text-[13.5px] font-semibold text-ink group-hover:text-white">
+                                <span className="block text-[13.5px] font-semibold text-ink group-hover:text-[var(--color-on-blk-blue)]">
                                   {l.label}
                                 </span>
                                 {l.note && (
-                                  <span className="mt-0.5 block text-[12px] leading-snug text-ink-mute group-hover:text-white/90">
+                                  <span className="mt-0.5 block text-[12px] leading-snug text-ink-mute group-hover:text-[var(--color-on-blk-blue)]/80">
                                     {l.note}
                                   </span>
                                 )}

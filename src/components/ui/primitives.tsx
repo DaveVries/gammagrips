@@ -18,10 +18,10 @@ const btnBase =
 const btnTone = {
   /* Solid console blue. The primary action is one colour, not a ramp. */
   primary:
-    "key bg-[var(--color-blk-blue)] text-white [--key-glow:rgba(47,111,224,0.95)]",
+    "key bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)] [--key-glow:rgba(74,140,255,0.9)]",
   default:
     "key plate text-ink [--key-glow:rgba(0,0,0,0)] hover:bg-[var(--color-plate-hi)]",
-  go: "key bg-[var(--color-blk-green)] text-white [--key-glow:rgba(18,160,90,0.95)]",
+  go: "key bg-[var(--color-blk-green)] text-[var(--color-on-blk-green)] [--key-glow:rgba(34,197,94,0.85)]",
   /* On console plastic. */
   panel: "plate text-ink hover:bg-[var(--color-plate-hi)]",
   quiet: "text-ps-blue hover:text-ink active:translate-x-0 active:translate-y-0",
@@ -110,7 +110,7 @@ export function Win({
       {title !== undefined && (
         <div className="mb-[-1px] flex items-end gap-3">
           <span className="skew-bar inline-flex items-stretch bg-[var(--color-blk-green)]">
-            <span className="label flex items-center px-5 py-1.5 text-[10px] text-white">
+            <span className="label flex items-center px-5 py-1.5 text-[10px] text-[var(--color-on-blk-green)]">
               {title}
             </span>
             {/* four-segment spine: the console colour set, as a fixed motif */}
@@ -179,10 +179,10 @@ export function Well({
 
 const badgeTone = {
   neutral: "plate text-ink",
-  blue: "bg-[var(--color-blk-blue)] text-white",
-  green: "bg-[var(--color-blk-green)] text-white",
+  blue: "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]",
+  green: "bg-[var(--color-blk-green)] text-[var(--color-on-blk-green)]",
   yellow: "bg-[var(--color-blk-yellow)] text-[var(--color-on-yellow)]",
-  red: "bg-[var(--color-blk-red)] text-white",
+  red: "bg-[var(--color-blk-red)] text-[var(--color-on-blk-red)]",
 };
 
 export function Badge({
@@ -390,7 +390,7 @@ export function SectionHead({
       <div className="max-w-2xl">
         {eyebrow && (
           <p className="mb-3 inline-flex items-center">
-            <span className="skew-bar label inline-flex items-center gap-1.5 bg-[var(--color-blk-blue)] px-3 py-1.5 text-white">
+            <span className="skew-bar label inline-flex items-center gap-1.5 bg-[var(--color-blk-blue)] px-3 py-1.5 text-[var(--color-on-blk-blue)]">
               <Glyph name="tri" size={9} colour="#fff" />
               {eyebrow}
             </span>

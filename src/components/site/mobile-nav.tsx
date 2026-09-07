@@ -73,7 +73,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                         className={cn(
                           "flex w-full items-center justify-between px-3.5 py-3.5 text-left text-[15px] font-bold transition-colors",
                           isOpen
-                            ? "bg-[var(--color-blk-blue)] text-white"
+                            ? "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]"
                             : "text-ink active:bg-[var(--color-plate-hi)]",
                         )}
                       >
@@ -136,7 +136,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                     <Link
                       href={item.href}
                       onClick={onClose}
-                      className="block px-3.5 py-3.5 text-[15px] font-bold text-ink transition-colors active:bg-[var(--color-blk-blue)] active:text-white"
+                      className="block px-3.5 py-3.5 text-[15px] font-bold text-ink transition-colors active:bg-[var(--color-blk-blue)] active:text-[var(--color-on-blk-blue)]"
                     >
                       {item.label}
                     </Link>
@@ -150,7 +150,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
             <Link
               href="/customize"
               onClick={onClose}
-              className="cut-sm drop-sm press mb-2.5 flex h-12 items-center justify-center bg-[var(--color-blk-green)] text-[14px] font-bold uppercase tracking-[0.06em] text-white"
+              className="key cut-sm mb-2.5 flex h-12 items-center justify-center bg-[var(--color-blk-green)] text-[14px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-blk-green)] [--key-glow:rgba(34,197,94,0.85)]"
             >
               ▶ Find my grip
             </Link>

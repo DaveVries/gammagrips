@@ -36,7 +36,10 @@
   /* --- ink ---------------------------------------------------------------- */
   --color-ink: #f1efe8;        /* default: on grey — warm, to match the plastic */
   --color-ink-dim: #cfccc1;
-  --color-ink-mute: #b3b0a4;   /* clears 4.5:1 on every grey surface          */
+  /* Must clear 4.5:1 on plate-hi, the lightest surface it ever lands on —
+     that is the hover state of every plate control, and the old value only
+     reached 4.09 there. Still a clear step below ink-dim. */
+  --color-ink-mute: #c0bdb1;
   --color-on-dark: #f2f3f7;    /* inside a .tile                            */
   --color-on-dark-dim: #a7adbd;
   --color-on-dark-mute: #7d8494;
@@ -65,11 +68,21 @@
 
   /* Block colours — used as fills, badges and the four-segment rule. Brighter
      than the text tokens above because they never carry small type. */
-  --color-blk-blue: #2f6fe0;
-  --color-blk-green: #12854a;
+  /* On a dark page a white label caps how bright a fill can be: the deepest
+     blue that still clears 4.5:1 under white only separates from the page by
+     2.93:1, which is *less* than the light theme managed and is why the solid
+     buttons read dull. Inverting the label removes the cap — these are the
+     brightest each hue goes while its dark ink clears AA comfortably, and all
+     of them beat the old light theme's 3.82:1. The yellow tile already worked
+     this way, so the language was already here. */
+  --color-blk-blue: #4a8cff;
+  --color-blk-green: #22c55e;
   --color-blk-yellow: #f0b419;
-  --color-blk-red: #d1332b;
-  --color-on-blk: #ffffff;
+  --color-blk-red: #ff6b5e;
+  --color-on-blk-blue: #0a1730;
+  --color-on-blk-green: #04240f;
+  --color-on-blk-red: #330a06;
+  --color-on-blk: #0a1730;
   --color-on-yellow: #3a2a00;
 
   /* Tinted notice panels and the unlit half of a meter. These were hardcoded

@@ -183,8 +183,8 @@ function SearchRow({
       className={cn(
         "flex items-center gap-3 px-2.5 py-2",
         active
-          ? "bg-[var(--color-blk-blue)] text-white"
-          : "hover:bg-[var(--color-blk-blue)] hover:text-white",
+          ? "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]"
+          : "hover:bg-[var(--color-blk-blue)] hover:text-[var(--color-on-blk-blue)]",
       )}
     >
       <span className="border border-edge flex h-9 w-9 shrink-0 items-center justify-center glass">
