@@ -40,9 +40,15 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
       setActive((i) => (i - 1 + hits.length) % hits.length);
     }
     if (e.key === "Enter") {
-      const a = listRef.current?.querySelectorAll("a")[active] as HTMLAnchorElement | undefined;
-      a?.click();
+      e.preventDefault();
+      openActive();
     }
+  };
+
+  /** Enter and the visible Go button must do the same thing. */
+  const openActive = () => {
+    const a = listRef.current?.querySelectorAll("a")[active] as HTMLAnchorElement | undefined;
+    a?.click();
   };
 
   return (
@@ -80,6 +86,16 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
           <kbd className="border border-edge label hidden glass px-1.5 py-1 text-ink-dim sm:block">
             ESC
           </kbd>
+          {/* An explicit submit target: on mobile there is no visible ESC hint
+              and users do not reliably reach for the keyboard's search key. */}
+          <button
+            type="button"
+            onClick={openActive}
+            disabled={!hits.length}
+            className="key cut-sm my-1.5 h-9 shrink-0 bg-[var(--color-ice)] px-3.5 text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)] disabled:opacity-40 sm:hidden"
+          >
+            Go
+          </button>
         </div>
 
         <div className="max-h-[58vh] overflow-y-auto glass">

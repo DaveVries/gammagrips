@@ -235,8 +235,8 @@ export function QtyStepper({
   label: string;
   size?: "sm" | "md";
 }) {
-  const h = size === "sm" ? "h-8" : "h-11";
-  const w = size === "sm" ? "w-8" : "w-11";
+  const h = size === "sm" ? "h-11 sm:h-8" : "h-11";
+  const w = size === "sm" ? "w-11 sm:w-8" : "w-11";
   return (
     <div
       className={cn("border border-edge inline-flex items-center plate-in", h)}
@@ -246,7 +246,7 @@ export function QtyStepper({
       <button
         type="button"
         onClick={() => onChange(qty - 1)}
-        className={cn("card m-[2px] flex items-center justify-center glass text-ink active:translate-x-[1px]", h === "h-8" ? "h-6" : "h-8", w)}
+        className={cn("card m-[2px] flex items-center justify-center glass text-ink active:translate-x-[1px]", size === "sm" ? "h-9 sm:h-6" : "h-8", w)}
         aria-label="Decrease quantity"
       >
         <svg width="11" height="11" viewBox="0 0 12 12" aria-hidden="true">
@@ -265,7 +265,7 @@ export function QtyStepper({
         disabled={qty >= 10}
         className={cn(
           "card m-[2px] flex items-center justify-center glass text-ink active:translate-x-[1px] disabled:opacity-40",
-          h === "h-8" ? "h-6" : "h-8",
+          size === "sm" ? "h-9 sm:h-6" : "h-8",
           w,
         )}
         aria-label="Increase quantity"

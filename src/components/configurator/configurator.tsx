@@ -121,7 +121,7 @@ export function Configurator({
     <div className="gutter">
       <div className="shell grid gap-4 py-3 lg:grid-cols-12 lg:gap-5">
         {/* ============ live preview ============ */}
-        <div className="lg:col-span-7">
+        <div className="min-w-0 lg:col-span-7">
           <div className="lg:sticky lg:top-[70px]">
             <Win title="LIVE PREVIEW" right={<WinDots />} bodyClass="p-[3px]">
               <Well>
@@ -160,7 +160,7 @@ export function Configurator({
         </div>
 
         {/* ============ steps ============ */}
-        <div className="lg:col-span-5">
+        <div className="min-w-0 lg:col-span-5">
           <div className="glass cut p-5">
           <h1 className="text-[24px] font-bold md:text-[28px]">Find your grip</h1>
           <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">

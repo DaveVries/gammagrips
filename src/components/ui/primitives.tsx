@@ -113,20 +113,18 @@ export function Win({
   return (
     <Tag className={cn("relative", className)}>
       {title !== undefined && (
-        <div className="mb-[-1px] flex items-end gap-3">
-          <span className="skew-bar inline-flex items-stretch border border-[var(--color-plate-edge)] bg-[var(--color-plate-hi)]">
-            <span className="label flex items-center px-5 py-1.5 text-[10px] text-ink">
-              {title}
-            </span>
-            {/* Spine: steel, steel, hot. Was three console colours; the accent
-                now appears once, at the end, as a terminator. */}
-            <span className="flex w-8 flex-col" aria-hidden="true">
-              {["--color-edge-hi", "--color-steel", "--color-hot"].map((c) => (
-                <span key={c} className="flex-1" style={{ background: `var(${c})` }} />
-              ))}
+        <div className="mb-[-1px] flex min-w-0 items-end gap-3">
+          <span className="inline-flex min-w-0 max-w-full items-stretch rounded-[var(--radius-sm)] border border-[var(--color-plate-edge)] bg-[var(--color-plate-hi)]">
+            <span className="label flex min-w-0 items-center gap-2 px-3.5 py-2 text-[10px] text-ink">
+              <span
+                className="h-2.5 w-[3px] shrink-0 rounded-full bg-[var(--color-hot)]"
+                aria-hidden="true"
+              />
+              {/* truncate has to sit on the text, not on the flex container —
+                  on the container it constrains nothing. */}
+              <span className="min-w-0 truncate">{title}</span>
             </span>
           </span>
-          {right && <span className="ml-auto pb-1">{right}</span>}
         </div>
       )}
       <div className={cn("glass cut", bodyClass)}>{children}</div>

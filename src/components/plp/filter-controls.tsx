@@ -79,7 +79,7 @@ export function AppliedFilters({
         <button
           key={`${c.key}:${c.value}`}
           onClick={() => clearOne(c.key, c.value)}
-          className="group inline-flex items-center gap-1.5 rounded-[var(--radius-sm)] border border-edge glass py-1.5 pl-2.5 pr-2 text-[12.5px] text-ink transition-colors hover:border-ink-mute"
+          className="group inline-flex min-h-[36px] items-center gap-1.5 rounded-[var(--radius-sm)] border border-edge glass py-2 pl-3 pr-2.5 text-[12.5px] text-ink transition-colors hover:border-ink-mute sm:min-h-0 sm:py-1.5 sm:pl-2.5 sm:pr-2"
         >
           {c.label}
           <svg
@@ -114,7 +114,7 @@ export function SortSelect({ value }: { value: string }) {
       <select
         value={value}
         onChange={(e) => setSort(e.target.value)}
-        className="h-9 max-w-[10.5rem] rounded-[var(--radius-sm)] border border-edge glass px-2.5 pr-7 text-[13px] text-ink outline-none transition-colors hover:border-ink-mute focus:border-ink"
+        className="h-11 max-w-[10.5rem] rounded-[var(--radius-sm)] border border-edge glass px-2.5 pr-7 text-[13px] text-ink outline-none transition-colors hover:border-ink-mute focus:border-ink sm:h-9"
       >
         {SORTS.map((s) => (
           <option key={s.id} value={s.id}>
@@ -199,7 +199,7 @@ function Group({
               <li key={o.value}>
                 <label
                   className={cn(
-                    "-mx-1 flex cursor-pointer items-center gap-2.5 px-1 py-1",
+                    "-mx-1 flex cursor-pointer items-center gap-2.5 px-1 py-2.5 sm:py-1",
                     dead ? "cursor-not-allowed opacity-40" : "hover:bg-ps-blue hover:text-white",
                   )}
                 >
@@ -300,7 +300,7 @@ export function FilterDrawer({
     <>
       <button
         onClick={() => setOpen(true)}
-        className="card inline-flex h-8 items-center gap-2 glass px-3 text-[12px] font-bold text-ink active:translate-x-[1px]"
+        className="card inline-flex h-11 items-center gap-2 glass px-4 text-[12px] font-bold text-ink active:translate-x-[1px] sm:h-8 sm:px-3"
       >
         <svg width="13" height="13" viewBox="0 0 14 14" aria-hidden="true">
           <path d="M1 3h12M3 7h8M5 11h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />

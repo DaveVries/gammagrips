@@ -84,7 +84,7 @@ export function ContactForm() {
           onBlur={() => setErrors((e) => ({ ...e, email: check("email", values.email ?? "") }))}
         />
 
-        <div className="sm:col-span-2">
+        <div className="min-w-0 sm:col-span-2">
           <label htmlFor="topic" className="mb-1.5 block text-[13px] font-medium">
             What is it about? <span className="text-ink-mute">*</span>
           </label>
@@ -101,7 +101,7 @@ export function ContactForm() {
           </select>
         </div>
 
-        <div className="sm:col-span-2">
+        <div className="min-w-0 sm:col-span-2">
           <label htmlFor="order" className="mb-1.5 block text-[13px] font-medium">
             Order number <span className="font-normal text-ink-mute">(optional)</span>
           </label>
@@ -115,7 +115,7 @@ export function ContactForm() {
           />
         </div>
 
-        <div className="sm:col-span-2">
+        <div className="min-w-0 sm:col-span-2">
           <label htmlFor="message" className="mb-1.5 block text-[13px] font-medium">
             Message <span className="text-ink-mute">*</span>
           </label>

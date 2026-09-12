@@ -121,7 +121,7 @@ export function Footer() {
                     <li key={l.href + l.label}>
                       <Link
                         href={l.href}
-                        className="text-[13px] text-ink-dim hover:text-ps-blue hover:underline"
+                        className="inline-block py-1.5 text-[13px] text-ink-dim hover:text-ps-blue hover:underline"
                       >
                         {l.label}
                       </Link>

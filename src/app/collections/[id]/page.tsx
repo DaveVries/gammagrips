@@ -65,7 +65,7 @@ export default async function CollectionDetail({
       {/* --- design showcase --------------------------------------------- */}
       <div className="gutter border-b border-edge">
         <div className="shell grid gap-10 py-10 lg:grid-cols-12 lg:py-14">
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <div className="mb-4 flex items-center gap-2">
               <p className="label text-ink-mute">{collection.name} collection</p>
             </div>
@@ -120,7 +120,7 @@ export default async function CollectionDetail({
             </div>
           </div>
 
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <ControllerRender
               design={design}
               platformId="dualsense"

@@ -68,7 +68,7 @@ export function CartView() {
 
         <div className="mt-8 grid gap-10 lg:grid-cols-12 lg:gap-12">
           {/* --- lines ---------------------------------------------------- */}
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             <ul className="divide-y divide-edge border-y border-edge">
               {cart.lines.map((line) => {
                 const p = productBySlug(line.slug);
@@ -150,7 +150,7 @@ export function CartView() {
           </div>
 
           {/* --- summary --------------------------------------------------- */}
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <div className="rounded-[var(--radius-lg)] border border-edge glass p-5 lg:sticky lg:top-24">
               <h2 className="text-[16px] font-semibold">Summary</h2>
 

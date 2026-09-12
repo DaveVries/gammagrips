@@ -103,7 +103,7 @@ export function ProductCard({
                 aria-pressed={shownFamily === f}
                 aria-label={`Preview on ${label === "PS" ? "PlayStation" : "Xbox"} controller`}
                 className={cn(
-                  "cut-sm label px-2 py-1 backdrop-blur transition-colors",
+                  "cut-sm label inline-flex min-h-[32px] items-center px-2.5 py-1.5 backdrop-blur transition-colors sm:min-h-0 sm:px-2 sm:py-1",
                   shownFamily === f
                     ? "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]"
                     : "plate text-ink hover:bg-[var(--color-plate-hi)]",
@@ -116,9 +116,9 @@ export function ProductCard({
         )}
       </Well>
 
-      <div className="flex flex-1 flex-col gap-2.5 p-4">
+      <div className="flex flex-1 flex-col gap-2 p-2.5 sm:gap-2.5 sm:p-4">
         <div>
-          <h3 className="display text-[17px] leading-tight">
+          <h3 className="display text-[14px] leading-tight sm:text-[17px]">
             <Link
               href={`/products/${product.slug}`}
               className="after:absolute after:inset-0 after:content-['']"
@@ -128,15 +128,27 @@ export function ProductCard({
           </h3>
           {/* Compatibility on the card — never make someone open the product
               page to find out whether it fits. */}
-          <CompatibilityBadge className="mt-1.5">
+          {/* Fit is a decision input, so it stays on mobile — just quieter. */}
+          <CompatibilityBadge className="mt-1 hidden sm:mt-1.5 sm:block">
             {compatibilityLine(product)}
           </CompatibilityBadge>
         </div>
 
-        <Rating value={product.rating} count={product.reviewCount} size={12} />
+        <Rating
+          value={product.rating}
+          count={product.reviewCount}
+          size={12}
+          className="hidden sm:flex"
+        />
+        {/* Mobile keeps the score without the star row, which is unreadable at
+            half width and costs a line of height. */}
+        <p className="text-[11.5px] text-ink-dim sm:hidden">
+          ★ {product.rating.toFixed(1)}{" "}
+          <span className="text-ink-mute">({product.reviewCount})</span>
+        </p>
 
         {texture && (
-          <div className="flex items-center gap-2 plate-in px-2.5 py-1.5">
+          <div className="hidden items-center gap-2 plate-in px-2.5 py-1.5 sm:flex">
             <span className="text-[11.5px] font-semibold text-ink-dim">{texture.name}</span>
             <span className="label text-ink-mute">{texture.profile}</span>
             <span className="ml-auto flex gap-[2px]" aria-label={`Grip ${texture.grip} out of 5`}>
@@ -153,8 +165,8 @@ export function ProductCard({
           </div>
         )}
 
-        <div className="mt-auto flex items-end justify-between gap-3 pt-1">
-          <div>
+        <div className="mt-auto flex items-end justify-between gap-2 pt-1">
+          <div className="min-w-0">
             <Price value={product.price} compareAt={product.compareAt} />
             {thisOneOut && available && (
               <p className="mt-1 text-[11.5px] text-ink-mute">
@@ -162,8 +174,8 @@ export function ProductCard({
               </p>
             )}
           </div>
-          <span className="cut-sm label relative z-10 bg-[var(--color-blk-blue)] px-3 py-2 text-[var(--color-on-blk-blue)] transition-[filter] group-hover:brightness-115">
-            View →
+          <span className="cut-sm label relative z-10 shrink-0 bg-[var(--color-blk-blue)] px-2.5 py-2 text-[var(--color-on-blk-blue)] transition-[filter] group-hover:brightness-115 sm:px-3">
+            View <span className="hidden sm:inline">→</span>
           </span>
         </div>
       </div>
@@ -183,7 +195,7 @@ export function ProductGrid({
   return (
     <div
       className={cn(
-        "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3",
+        "grid grid-cols-2 gap-2.5 sm:gap-3 lg:grid-cols-3",
         className,
       )}
     >

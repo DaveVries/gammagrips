@@ -35,10 +35,10 @@ export function PageShell({
       </div>
       <div className="gutter">
         <div className="shell grid gap-4 py-4 lg:grid-cols-12">
-          <div className="glass p-5 md:p-7 lg:col-span-8">
+          <div className="min-w-0 glass p-5 md:p-7 lg:col-span-8">
             <Prose>{children}</Prose>
           </div>
-          {aside && <aside className="lg:col-span-4">{aside}</aside>}
+          {aside && <aside className="min-w-0 lg:col-span-4">{aside}</aside>}
         </div>
       </div>
     </>

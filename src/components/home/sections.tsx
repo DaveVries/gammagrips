@@ -503,7 +503,7 @@ export function CompatibilityStrip() {
           <span className="label text-[10px]">COMPATIBILITY CHECK</span>
         </div>
         <div className="grid gap-8 p-5 md:p-7 lg:grid-cols-12">
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <p className="label mb-4 text-ink-mute">Compatibility</p>
             <h2 className="text-[24px] font-bold leading-tight md:text-[28px]">
               Four controllers. Nothing ambiguous.
@@ -520,11 +520,11 @@ export function CompatibilityStrip() {
               </ButtonLink>
             </div>
           </div>
-          <ul className="grid gap-3 sm:grid-cols-2 lg:col-span-7">
+          <ul className="min-w-0 grid gap-3 sm:grid-cols-2 lg:col-span-7">
             {PLATFORMS.map((p) => (
               <li
                 key={p.id}
-                className="glass flex items-center gap-3 p-2.5"
+                className="glass flex min-w-0 items-center gap-3 p-2.5"
               >
                 <span className="border border-edge shrink-0 bg-transparent p-1">
                   <ControllerRender

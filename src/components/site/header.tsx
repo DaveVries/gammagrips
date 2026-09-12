@@ -76,7 +76,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMobileOpen(true)}
-              className="cut-sm plate flex h-9 w-9 shrink-0 items-center justify-center lg:hidden"
+              className="tap cut-sm plate flex h-10 w-10 shrink-0 items-center justify-center lg:hidden"
               aria-label="Open menu"
               aria-expanded={mobileOpen}
             >
@@ -85,7 +85,7 @@ export function Header() {
               </svg>
             </button>
 
-            <Logo className="mr-2 min-w-0 shrink sm:mr-3" />
+            <Logo className="mr-2 min-w-0 shrink sm:mr-3" compactUntilSm />
 
             {/* --- nav as bevelled tabs; the active one is pressed in ------ */}
             <nav aria-label="Main" className="hidden lg:block">
@@ -138,7 +138,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="cut-sm plate flex h-9 items-center gap-1.5 px-3 hover:bg-[var(--color-plate-hi)]"
+                className="tap cut-sm plate flex h-10 items-center gap-1.5 px-3 hover:bg-[var(--color-plate-hi)]"
                 aria-label="Search products"
               >
                 <SearchIcon />
@@ -147,7 +147,7 @@ export function Header() {
 
               <Link
                 href="/account"
-                className="cut-sm plate flex h-9 w-9 items-center justify-center hover:bg-[var(--color-plate-hi)]"
+                className="tap cut-sm plate hidden h-10 w-10 items-center justify-center hover:bg-[var(--color-plate-hi)] sm:flex"
                 aria-label="Account"
               >
                 <svg width="15" height="15" viewBox="0 0 18 18" aria-hidden="true">
@@ -159,7 +159,7 @@ export function Header() {
               <button
                 type="button"
                 onClick={() => cart.setOpen(true)}
-                className="cut-sm plate flex h-9 items-center gap-2 px-3 hover:bg-[var(--color-plate-hi)]"
+                className="tap cut-sm plate flex h-10 items-center gap-2 px-3 hover:bg-[var(--color-plate-hi)]"
                 aria-label={`Cart, ${cart.count} item${cart.count === 1 ? "" : "s"}`}
               >
                 <svg width="15" height="15" viewBox="0 0 18 18" aria-hidden="true">

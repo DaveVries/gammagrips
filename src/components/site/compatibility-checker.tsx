@@ -32,7 +32,7 @@ export function CompatibilityChecker() {
     <div className="gutter">
       <div className="shell py-10">
         <div className="grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-7">
+          <div className="min-w-0 lg:col-span-7">
             {/* --- q1 --- */}
             <fieldset>
               <legend className="flex items-baseline gap-3">
@@ -151,7 +151,7 @@ export function CompatibilityChecker() {
           </div>
 
           {/* --- not supported --- */}
-          <div className="lg:col-span-5">
+          <div className="min-w-0 lg:col-span-5">
             <div className="rounded-[var(--radius-lg)] border border-edge p-5">
               <h2 className="text-[15px] font-semibold">What we do not fit</h2>
               <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-dim">

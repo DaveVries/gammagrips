@@ -99,7 +99,7 @@ export default async function ProductPage({
 
           {/* --- overview + highlights ---------------------------------- */}
           <section className="grid gap-10 py-12 lg:grid-cols-12">
-            <div className="lg:col-span-5">
+            <div className="min-w-0 lg:col-span-5">
               <h2 className="text-[20px] font-bold">
                 What it is
               </h2>
@@ -107,7 +107,7 @@ export default async function ProductPage({
                 {product.summary}
               </p>
             </div>
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               {/* Highlights before prose — a spec wall is skipped, a short
                   scannable list is read. */}
               <h2 className="label mb-4 text-ink-mute">Key points</h2>
@@ -128,7 +128,7 @@ export default async function ProductPage({
 
           {/* --- specs + in the box + install --------------------------- */}
           <section className="grid gap-10 py-12 lg:grid-cols-12">
-            <div className="lg:col-span-7">
+            <div className="min-w-0 lg:col-span-7">
               <h2 className="text-[20px] font-bold">
                 Specification
               </h2>
@@ -151,7 +151,7 @@ export default async function ProductPage({
               </dl>
             </div>
 
-            <div className="lg:col-span-5">
+            <div className="min-w-0 lg:col-span-5">
               <h2 className="text-[20px] font-bold">In the box</h2>
               <ul className="mt-5 space-y-2.5">
                 {product.inBox.map((b) => (
@@ -199,7 +199,7 @@ export default async function ProductPage({
 
           {/* --- compatibility ------------------------------------------ */}
           <section className="grid gap-10 py-12 lg:grid-cols-12">
-            <div className="lg:col-span-4">
+            <div className="min-w-0 lg:col-span-4">
               <h2 className="text-[20px] font-bold">
                 Compatibility
               </h2>
@@ -215,7 +215,7 @@ export default async function ProductPage({
                 Identify my controller →
               </Link>
             </div>
-            <div className="lg:col-span-8">
+            <div className="min-w-0 lg:col-span-8">
               <ul className="grid gap-2 sm:grid-cols-2">
                 {compatibilityFull(product).map((c) => (
                   <li
@@ -293,7 +293,7 @@ export default async function ProductPage({
 
           {/* --- FAQ ------------------------------------------------------ */}
           <section className="grid gap-10 py-12 lg:grid-cols-12">
-            <div className="lg:col-span-4">
+            <div className="min-w-0 lg:col-span-4">
               <h2 className="text-[20px] font-bold">
                 Questions we get
               </h2>
@@ -305,7 +305,7 @@ export default async function ProductPage({
                 — we answer within one working day.
               </p>
             </div>
-            <div className="lg:col-span-8">
+            <div className="min-w-0 lg:col-span-8">
               <div className="card divide-y divide-edge glass px-3">
                 {faqs.map((f) => (
                   <details key={f.q} className="group">

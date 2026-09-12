@@ -34,7 +34,7 @@ export function Reviews({ product, reviews }: { product: Product; reviews: Revie
     <section id="reviews" className="scroll-mt-24">
       <div className="grid gap-10 lg:grid-cols-12">
         {/* --- summary --------------------------------------------------- */}
-        <div className="lg:col-span-4">
+        <div className="min-w-0 lg:col-span-4">
           <div className="lg:sticky lg:top-24">
             <h2 className="text-[20px] font-bold">Reviews</h2>
 
@@ -124,7 +124,7 @@ export function Reviews({ product, reviews }: { product: Product; reviews: Revie
         </div>
 
         {/* --- list ------------------------------------------------------- */}
-        <div className="lg:col-span-8">
+        <div className="min-w-0 lg:col-span-8">
           <div className="card flex flex-wrap items-center justify-between gap-3 plate px-3 py-2">
             <p className="text-[13.5px] text-ink-dim">
               Showing{" "}

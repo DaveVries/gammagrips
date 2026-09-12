@@ -28,7 +28,7 @@ const FIELDS = [
   { name: "firstName", label: "First name", type: "text", autoComplete: "given-name", required: true },
   { name: "lastName", label: "Last name", type: "text", autoComplete: "family-name", required: true },
   { name: "address", label: "Address", type: "text", autoComplete: "street-address", required: true },
-  { name: "postcode", label: "Postcode", type: "text", autoComplete: "postal-code", required: true },
+  { name: "postcode", label: "Postcode", type: "text", autoComplete: "postal-code", required: true, inputMode: "numeric" },
   { name: "city", label: "City", type: "text", autoComplete: "address-level2", required: true },
 ] as const;
 
@@ -117,7 +117,7 @@ export function CheckoutFlow() {
   return (
     <div className="gutter">
       <div className="shell grid gap-10 py-10 lg:grid-cols-12 lg:gap-16">
-        <div className="lg:col-span-7">
+        <div className="min-w-0 lg:col-span-7">
           <div className="glass cut p-5">
           <h1 className="text-[22px] font-bold">Checkout</h1>
 
@@ -173,7 +173,7 @@ export function CheckoutFlow() {
 
                 {/* Rarely-used optional fields stay behind a link so people do
                     not type into the wrong box while rushing. */}
-                <div className="sm:col-span-2">
+                <div className="min-w-0 sm:col-span-2">
                   {showCompany ? (
                     <Field
                       name="company"
@@ -227,7 +227,7 @@ export function CheckoutFlow() {
                   <span className="label">Encrypted card details</span>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-3">
-                  <div className="border border-edge h-10 plate-in sm:col-span-3" />
+                  <div className="min-w-0 border border-edge h-10 plate-in sm:col-span-3" />
                   <div className="border border-edge h-10 plate-in" />
                   <div className="border border-edge h-10 plate-in" />
                   <div className="border border-edge h-10 plate-in" />
@@ -250,7 +250,7 @@ export function CheckoutFlow() {
         </div>
 
         {/* --- order summary ------------------------------------------------ */}
-        <aside className="lg:col-span-5">
+        <aside className="min-w-0 lg:col-span-5">
           <div className="card p-[3px] lg:sticky lg:top-4">
             <div className="titlebar flex h-[22px] items-center px-2"><span className="label text-[10px]">YOUR ORDER</span></div>
             <div className="p-4">
@@ -332,12 +332,14 @@ function Field({
   onChange,
   onBlur,
   className,
+  inputMode,
 }: {
   name: string;
   label: string;
   type: string;
   autoComplete: string;
   required: boolean;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
   hint?: string;
   value: string;
   error?: string;
@@ -360,7 +362,7 @@ function Field({
         id={id}
         name={name}
         type={type}
-        inputMode={type === "email" ? "email" : undefined}
+        inputMode={inputMode ?? (type === "email" ? "email" : undefined)}
         autoComplete={autoComplete}
         required={required}
         value={value}

@@ -51,7 +51,7 @@ export function Hero() {
 
         <div className="relative z-[1] grid items-center gap-8 p-6 sm:p-9 lg:grid-cols-12 lg:gap-10 lg:p-12">
         {/* --- copy -------------------------------------------------------- */}
-        <div className="lg:col-span-5" data-reveal>
+        <div className="min-w-0 lg:col-span-5" data-reveal>
           <p className="label mb-5 inline-flex items-center gap-2 text-ink-mute">
             <span className="ps-rule inline-block h-[3px] w-10" />
             CONTROLLER GRIPS
@@ -93,7 +93,7 @@ export function Hero() {
         </div>
 
         {/* --- product ------------------------------------------------------ */}
-        <div className="lg:col-span-7" data-reveal data-reveal-delay="70">
+        <div className="min-w-0 lg:col-span-7" data-reveal data-reveal-delay="70">
           <div
             className="relative"
             /* Accent halo behind the screen. Sits outside the Well so the

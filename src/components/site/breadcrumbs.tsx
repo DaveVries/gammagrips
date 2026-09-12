@@ -22,7 +22,7 @@ export function Breadcrumbs({
                 {c.href && !last ? (
                   <Link
                     href={c.href}
-                    className="label text-ps-blue hover:underline"
+                    className="tap label inline-flex items-center py-2 text-ps-blue hover:underline"
                   >
                     {c.label}
                   </Link>

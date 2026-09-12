@@ -92,6 +92,8 @@
   --color-note-blue: #0a0c11;
   --color-pip-off: #242935;
 
+  --breakpoint-xs: 360px;
+
   --radius-xs: 8px;
   --radius-sm: 12px;
   --radius-md: 18px;
@@ -558,6 +560,27 @@
   @media (min-width: 1280px) { .gutter { padding-inline: 3rem; } }
 
   .shell { margin-inline: auto; width: 100%; max-width: 1440px; }
+
+  /* --- mobile ------------------------------------------------------------
+     Touch targets. Apple HIG asks 44pt, Material 48dp; the header controls
+     were 36px and the breadcrumb links 10px tall. `.tap` guarantees the
+     minimum without forcing the visible box to grow, by expanding the hit
+     area with a pseudo-element instead. */
+  /* A pseudo-element hit area is the usual trick here, but every one of these
+     controls also carries `.cut-sm`, which sets overflow:hidden and clips it —
+     the target would have looked bigger in the CSS and behaved exactly as
+     before. On coarse pointers the box itself grows instead. */
+  @media (pointer: coarse) {
+    .tap {
+      min-width: 44px;
+      min-height: 44px;
+    }
+  }
+
+  /* Bars pinned to the bottom of a phone must clear the home indicator and,
+     in Safari, the floating URL bar. Without this the primary action sits
+     under browser chrome. */
+  .safe-b { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
 
   .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
   .no-bar::-webkit-scrollbar { display: none; }

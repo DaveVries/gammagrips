@@ -206,10 +206,14 @@ export function KeyMark({ size = 34, className }: { size?: number; className?: s
 export function Logo({
   className,
   compact = false,
+  compactUntilSm = false,
   bg,
 }: {
   className?: string;
   compact?: boolean;
+  /** Mark only on the narrowest screens, where the wordmark is unreadable at
+      the height the header allows and was being clipped by the controls. */
+  compactUntilSm?: boolean;
   bg?: string;
 }) {
   return (
@@ -223,7 +227,14 @@ export function Logo({
     >
       <KeyMark size={30} className="!h-[26px] !w-[26px] sm:!h-[30px] sm:!w-[30px]" />
       {!compact && (
-        <Wordmark height={17} bg={bg} className="h-[13.5px] w-auto sm:h-[17px]" />
+        <Wordmark
+          height={17}
+          bg={bg}
+          className={cn(
+            "h-[13.5px] w-auto sm:h-[17px]",
+            compactUntilSm && "hidden xs:block",
+          )}
+        />
       )}
     </Link>
   );

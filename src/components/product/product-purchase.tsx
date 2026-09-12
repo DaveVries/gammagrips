@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { PlatformId, Product } from "@/lib/types";
 import { PLATFORMS, PRODUCTS, designById, platformById, textureById } from "@/data/catalog";
 import { ProductVisual } from "@/components/product/product-visual";
@@ -30,6 +30,23 @@ export function ProductPurchase({
   const [view, setView] = useState<ViewId>("front");
   const [added, setAdded] = useState(false);
 
+  /* Sticky buy bar. Baymard's mobile research is blunt about this: on a long
+     product page the primary action scrolls away and users lose it. It appears
+     only once the real add-to-cart row is out of view, so there are never two
+     competing buttons on screen. */
+  const addRowRef = useRef<HTMLDivElement | null>(null);
+  const [showStickyBuy, setShowStickyBuy] = useState(false);
+  useEffect(() => {
+    const el = addRowRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const io = new IntersectionObserver(
+      ([entry]) => setShowStickyBuy(!entry.isIntersecting && entry.boundingClientRect.top < 0),
+      { rootMargin: "0px 0px -40% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   const design = designById(designId);
   const platform = platformById(platformId)!;
   const texture = textureById(product.texture);
@@ -57,7 +74,7 @@ export function ProductPurchase({
     <div className="gutter">
       <div className="shell grid gap-4 py-3 lg:grid-cols-12 lg:gap-5">
         {/* ================= MEDIA ================= */}
-        <div className="lg:col-span-7">
+        <div className="min-w-0 lg:col-span-7">
           <div className="lg:sticky lg:top-[70px]">
             <Win title={`${product.name.toUpperCase()} — ${platform.short.toUpperCase()}`} right={<WinDots />} bodyClass="p-[3px]">
               <Well>
@@ -141,7 +158,7 @@ export function ProductPurchase({
         </div>
 
         {/* ================= BUY BOX ================= */}
-        <div className="lg:col-span-5">
+        <div className="min-w-0 lg:col-span-5">
           <div className="glass cut p-5">
           <div className="flex flex-wrap items-center gap-2">
             {product.badge && (
@@ -364,7 +381,7 @@ export function ProductPurchase({
             )}
           </div>
 
-          <div className="mt-4 flex gap-2">
+          <div ref={addRowRef} className="mt-4 flex gap-2">
             <QtyStepper
               qty={qty}
               onChange={(n) => setQty(Math.max(1, n))}
@@ -446,23 +463,39 @@ export function ProductPurchase({
         </div>
       </div>
 
-      {/* Sticky mobile buy bar — the PDP is long, the CTA must stay reachable */}
-      <div className="glass fixed inset-x-0 bottom-0 z-40 border-x-0 border-b-0 px-3 py-2 lg:hidden">
+      {/* Sticky mobile buy bar. Gated on the real add-to-cart row leaving the
+          viewport: showing both at once gives the page two primary actions and
+          makes the in-page one look broken. Padded for the home indicator and
+          Safari's floating URL bar, which otherwise sit on top of it. */}
+      <div
+        className={cn(
+          "glass safe-b fixed inset-x-0 bottom-0 z-40 rounded-none border-x-0 border-b-0 px-3 pt-2",
+          "transition-transform duration-300 ease-[var(--ease-out)] lg:hidden",
+          showStickyBuy ? "translate-y-0" : "pointer-events-none translate-y-full",
+        )}
+        aria-hidden={!showStickyBuy}
+      >
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
-            <p className="truncate text-[13px] font-medium">{product.name}</p>
+            <p className="truncate text-[13px] font-semibold">{product.name}</p>
             <p className="truncate text-[12px] text-ink-mute">
               {design ? `${design.name} · ` : ""}
               {platform.short}
             </p>
           </div>
           <Price value={product.price} compareAt={product.compareAt} size="sm" />
-          <Button size="md" variant="primary" disabled={soldOut} onClick={onAdd} className="shrink-0">
+          <Button
+            size="lg"
+            variant="primary"
+            disabled={soldOut}
+            onClick={onAdd}
+            tabIndex={showStickyBuy ? 0 : -1}
+            className="shrink-0 px-5"
+          >
             {soldOut ? "SOLD OUT" : added ? "ADDED ✓" : "ADD"}
           </Button>
         </div>
       </div>
-      <div className="h-16 lg:hidden" aria-hidden="true" />
     </div>
   );
 }
