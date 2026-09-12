@@ -58,7 +58,7 @@ export function Footer() {
                 discount spam, and one click to leave.
               </p>
             </div>
-            <form className="flex w-full max-w-sm gap-2" action="/newsletter" method="post">
+            <form className="flex w-full max-w-sm gap-2" action="/api/newsletter" method="post">
               <label htmlFor="nl-email" className="sr-only">
                 Email address
               </label>

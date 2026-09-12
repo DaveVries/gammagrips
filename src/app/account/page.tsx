@@ -29,32 +29,17 @@ export default function AccountPage() {
         </AsideCard>
       }
     >
-      <h2>Sign in</h2>
+      <h2>Tracking your order</h2>
       <p>
-        We use a sign-in link rather than a password. Enter your email and we send
-        a link that signs you in — nothing to remember, nothing to reset, and
-        nothing for anyone to steal.
+        There is no sign-in yet, and for most things there does not need to be:
+        the link in your confirmation email opens your order directly, and from
+        there you can track it, start a return or re-order. Keep that email and
+        you have everything an account would give you.
       </p>
-
-      <form className="mt-5 max-w-md" action="/account" method="post">
-        <label htmlFor="ac-email" className="mb-1.5 block text-[13px] font-medium">
-          Email <span className="text-ink-mute">*</span>
-        </label>
-        <div className="flex gap-2">
-          <input
-            id="ac-email"
-            name="email"
-            type="email"
-            required
-            autoComplete="email"
-            placeholder="you@example.com"
-            className="h-11 min-w-0 flex-1 rounded-[var(--radius-md)] plate-in px-3.5 text-[14px] text-ink outline-none placeholder:text-ink-mute focus:border-ink"
-          />
-          <Button type="submit" className="shrink-0">
-            Send link
-          </Button>
-        </div>
-      </form>
+      <p>
+        Lost the link? <Link href="/contact">Email us</Link> with your order
+        number or the address you ordered with and we will send it again.
+      </p>
 
       <h2>What an account gets you</h2>
       <ul>
