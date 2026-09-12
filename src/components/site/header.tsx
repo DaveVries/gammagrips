@@ -122,7 +122,7 @@ export function Header() {
                     href="/customize"
                     className={cn(
                       "key cut-sm flex h-9 items-center px-4 text-[12px] font-bold uppercase tracking-[0.06em]",
-                      "[--key-glow:rgba(200,215,240,0.4)]",
+                      "[--key-glow:rgba(220,232,255,0.35)]",
                       pathname === "/customize"
                         ? "bg-[var(--color-steel)] text-[var(--color-on-ice)]"
                         : "bg-[var(--color-ice)] text-[var(--color-on-ice)]",

@@ -23,10 +23,10 @@ const btnTone = {
      the primary action. The accent is spent only on add-to-cart, which is the
      one moment it should mean something. */
   primary:
-    "key bg-[var(--color-ice)] text-[var(--color-on-ice)] [--key-glow:rgba(200,215,240,0.4)]",
+    "key bg-[var(--color-ice)] text-[var(--color-on-ice)] [--key-glow:rgba(220,232,255,0.35)]",
   default:
     "key plate text-ink [--key-glow:rgba(0,0,0,0)] hover:bg-[var(--color-plate-hi)]",
-  go: "key bg-[var(--color-hot)] text-[var(--color-hot-ink)] [--key-glow:rgba(255,59,48,0.85)]",
+  go: "key bg-[var(--color-hot)] text-[var(--color-hot-ink)] [--key-glow:rgba(155,216,0,0.85)]",
   /* On console plastic. */
   panel: "plate text-ink hover:bg-[var(--color-plate-hi)]",
   quiet: "text-ps-blue hover:text-ink active:translate-x-0 active:translate-y-0",
@@ -161,13 +161,16 @@ export function Well({
   className,
   scan = true,
   children,
+  style,
 }: {
   className?: string;
   scan?: boolean;
   children: React.ReactNode;
+  style?: React.CSSProperties;
 }) {
   return (
     <div
+      style={style}
       className={cn(
         "plate-in relative overflow-hidden",
         scan && "scanlines",

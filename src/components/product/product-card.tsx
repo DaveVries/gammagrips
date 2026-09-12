@@ -51,7 +51,10 @@ export function ProductCard({
         className,
       )}
     >
-      <Well className="plate-in !border-0 border-b border-[var(--color-plate-edge)]">
+      <Well
+        className="hdr plate-in !border-0 border-b border-[var(--color-plate-edge)]"
+        style={{ ["--hdr-glow" as string]: design?.ink }}
+      >
         <ProductVisual
           product={product}
           design={design}

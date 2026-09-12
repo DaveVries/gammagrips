@@ -107,7 +107,7 @@ export function Hero() {
                   "radial-gradient(50% 55% at 50% 45%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 72%)",
               }}
             />
-          <Well className="cut drop relative z-[1]">
+          <Well className="hdr cut drop relative z-[1]" style={{ ["--hdr-glow" as string]: design.ink }}>
             <ProductVisual
               product={product}
               design={design}

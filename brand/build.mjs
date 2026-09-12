@@ -31,17 +31,17 @@ mkdirSync(PNG, { recursive: true });
 /* The store is a light console-grey UI, so INK is dark. INK_ON_DARK is only
    for the social cards, which stay black. Getting this wrong silently renders
    the wordmark white on grey — it did, once. */
-const INK = "#eef2f8";        /* on dark                                   */
+const INK = "#ffffff";        /* on dark                                   */
 const INK_DIM = "#aeb7c6";
 const INK_MUTE = "#8b94a4";
-const VOID = "#090a0d";
+const VOID = "#000000";
 const DEEP = "#131620";
 const EDGE = "#262b38";
 
 /* The accent gradient. Anything sitting ON it is inked dark — white cannot
    pass on the cyan stop (1.65:1). */
 const YELLOW = "#f0b419";   /* the mark tile                            */
-const RED = "#ff3b30";      /* the GRIPS knurl                          */
+const RED = "#9bd800";      /* the GRIPS knurl                          */
 const ON_YELLOW = "#3a2a00";
 const G1 = "#22e0d6";
 const G2 = "#5a7bff";
@@ -49,11 +49,11 @@ const G3 = "#b44cff";
 const ON_GRAD = "#08131c";
 
 /* Console plastic, and the four logo colours. */
-const PLATE = "#eef2f8";
+const PLATE = "#ffffff";
 const PLATE_HI = "#ffffff";
 const PLATE_LO = "#9aa3b2";
 const PLATE_LO2 = "#5b6472";
-const ON_PLATE = "#090a0d";
+const ON_PLATE = "#000000";
 const FOUR = ["#1d9b52", "#d83a34", "#2f6fd0", "#f0b419"];
 const FOUR_RULE = FOUR;
 

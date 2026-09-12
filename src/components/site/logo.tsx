@@ -147,12 +147,12 @@ export function Monogram({
    Drawn as one SVG because the bevel needs separately stroked edges, which
    CSS borders cannot do on a chamfer. */
 
-const ICE = "#eef2f8";
+const ICE = "#ffffff";
 const ICE_HI = "#ffffff";
-const ICE_LO = "#9aa3b2";
-const ICE_LO2 = "#5b6472";
-const ON_ICE = "#0d0e12";
-const HOT = "#ff3b30";
+const ICE_LO = "#a6b0c0";
+const ICE_LO2 = "#5f6a7a";
+const ON_ICE = "#000000";
+const HOT = "#9bd800";
 
 export function KeyMark({ size = 34, className }: { size?: number; className?: string }) {
   const box = 120;

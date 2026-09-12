@@ -21,79 +21,81 @@
      Dropped the four-colour console palette. One hot accent against a cold
      monochrome base carries further than four colours competing, and it lets
      six brightly coloured grips be the only saturated thing on screen. */
-  --color-page: #090a0d;
-  --color-plate: #14161c;      /* raised surface                            */
-  --color-plate-hi: #1d2029;   /* hover — ink-mute must still clear 4.5 here */
-  --color-plate-lo: #101217;
-  --color-plate-edge: #333845;
+  --color-page: #000000;       /* blackest black; panels do the lifting     */
+  --color-plate: #0b0d11;      /* raised surface                            */
+  --color-plate-hi: #171a20;   /* hover — ink-mute must still clear 4.5 here */
+  --color-plate-lo: #06070a;
+  --color-plate-edge: #262b34;
 
   /* --- deep tiles: product media sits in a well below the page ----------- */
-  --color-void: #030407;
-  --color-deep: #07080b;
-  --color-deep-2: #0d0f14;
-  --color-edge: #222630;
-  --color-edge-hi: #363c49;
+  --color-void: #000000;
+  --color-deep: #030406;
+  --color-deep-2: #0a0c10;
+  --color-edge: #1d212a;
+  --color-edge-hi: #333947;
 
   /* --- ink: cool white, three steps ---------------------------------------- */
-  --color-ink: #eef2f8;
-  --color-ink-dim: #aeb7c6;
-  --color-ink-mute: #8b94a4;
-  --color-on-dark: #eef2f8;
-  --color-on-dark-dim: #aeb7c6;
-  --color-on-dark-mute: #8b94a4;
+  --color-ink: #ffffff;        /* 21:1 on the page — full dynamic range     */
+  --color-ink-dim: #b6bfcc;
+  --color-ink-mute: #8d97a6;
+  --color-on-dark: #ffffff;
+  --color-on-dark-dim: #b6bfcc;
+  --color-on-dark-mute: #8d97a6;
 
-  /* --- bevel: a lit edge on cold plastic is steel, never white ----------- */
-  --color-bev-1: #454b57;
-  --color-bev-3: #101218;
-  --color-bev-4: #08090c;
+  /* --- bevel: a lit edge on black glass is graphite, never white --------- */
+  --color-bev-1: #333947;
+  --color-bev-3: #0a0c10;
+  --color-bev-4: #000000;
 
   /* --- the accent. One. ----------------------------------------------------
-     `hot` is the fill; `hot-ink` is what sits on it; `hot-text` is the lifted
-     variant for type, because the fill red only reaches 4.26:1 on plate-hi. */
-  --color-hot: #ff3b30;
-  --color-hot-ink: #170301;
-  --color-hot-text: #ff5b52;
-  --color-hot-dim: #b32820;
+     Lime on true black is the one hue with enough headroom to be both a fill
+     and body-safe type: 12.2:1 either way, so `hot-text` is the same value
+     rather than a lifted variant like the previous reds needed. */
+  --color-hot: #9bd800;
+  --color-hot-ink: #0a1200;
+  --color-hot-text: #9bd800;
+  --color-hot-bright: #b6f01f;   /* the glow, one stop up                   */
+  --color-hot-dim: #6f9c00;
 
   /* Neutral fills for controls that are not the primary action. */
-  --color-ice: #eef2f8;
-  --color-on-ice: #090a0d;
-  --color-steel: #c3ccd9;
+  --color-ice: #ffffff;
+  --color-on-ice: #000000;
+  --color-steel: #ccd4e0;
 
   /* The palette is monochrome. These aliases used to point three different
      names at the accent, which turned every badge, meter, notice and hover
      state red at once — the site read as "red", not "black with an accent".
      They are neutral now; `hot` is spent only where it carries meaning:
      add-to-cart, the cart count, a price drop, and the mark. */
-  --color-ps-blue: #aeb7c6;
-  --color-ps-green: #aeb7c6;
-  --color-ps-yellow: #aeb7c6;
-  --color-ps-red: #ff5b52;
-  --color-on-ps-blue: #090a0d;
+  --color-ps-blue: #b6bfcc;
+  --color-ps-green: #b6bfcc;
+  --color-ps-yellow: #b6bfcc;
+  --color-ps-red: #9bd800;
+  --color-on-ps-blue: #000000;
 
-  --color-gl-tri: #8b94a4;
-  --color-gl-cir: #8b94a4;
-  --color-gl-crs: #8b94a4;
-  --color-gl-sqr: #8b94a4;
+  --color-gl-tri: #8d97a6;
+  --color-gl-cir: #8d97a6;
+  --color-gl-crs: #8d97a6;
+  --color-gl-sqr: #8d97a6;
 
-  --color-blk-blue: #eef2f8;   /* selected / primary surface — ice          */
-  --color-blk-green: #eef2f8;  /* was success; neutral now                  */
-  --color-blk-yellow: #c3ccd9; /* steel                                     */
-  --color-blk-red: #ff3b30;    /* genuinely red things only                 */
-  --color-on-blk-blue: #090a0d;
-  --color-on-blk-green: #090a0d;
-  --color-on-blk-red: #180402;
-  --color-on-blk: #090a0d;
-  --color-on-yellow: #090a0d;
+  --color-blk-blue: #ffffff;   /* selected / primary surface — ice          */
+  --color-blk-green: #ffffff;  /* was success; neutral now                  */
+  --color-blk-yellow: #ccd4e0; /* steel                                     */
+  --color-blk-red: #9bd800;    /* the accent; named red for history only    */
+  --color-on-blk-blue: #000000;
+  --color-on-blk-green: #000000;
+  --color-on-blk-red: #0a1200;
+  --color-on-blk: #000000;
+  --color-on-yellow: #000000;
 
-  --color-note-green: #0f1218;
-  --color-note-blue: #0f1218;
-  --color-pip-off: #2b303b;
+  --color-note-green: #0a0f08;
+  --color-note-blue: #0a0c11;
+  --color-pip-off: #242935;
 
-  --radius-xs: 0px;
-  --radius-sm: 0px;
-  --radius-md: 0px;
-  --radius-lg: 0px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
@@ -115,9 +117,9 @@
      reading as a 1998 desktop. Fixed so it does not travel on scroll. */
   body {
     background:
-      radial-gradient(1200px 680px at 8% -12%, rgba(120, 150, 200, 0.10), transparent 64%),
-      radial-gradient(900px 560px at 92% 4%, rgba(255, 59, 48, 0.055), transparent 60%),
-      radial-gradient(1000px 640px at 60% 108%, rgba(90, 120, 170, 0.10), transparent 64%),
+      radial-gradient(1200px 680px at 8% -12%, rgba(120, 150, 200, 0.13), transparent 64%),
+      radial-gradient(900px 560px at 92% 4%, rgba(155, 216, 0, 0.09), transparent 60%),
+      radial-gradient(1000px 640px at 60% 108%, rgba(90, 120, 170, 0.12), transparent 64%),
       var(--color-page);
     background-attachment: fixed;
     color: var(--color-ink);
@@ -152,9 +154,9 @@
     pointer-events: none;
     opacity: 0.85;
     background:
-      radial-gradient(40% 48% at 20% 28%, rgba(120, 155, 215, 0.17), transparent 72%),
-      radial-gradient(36% 42% at 80% 30%, rgba(150, 170, 205, 0.12), transparent 72%),
-      radial-gradient(42% 46% at 58% 80%, rgba(255, 59, 48, 0.07), transparent 74%);
+      radial-gradient(40% 48% at 20% 28%, rgba(120, 155, 215, 0.18), transparent 72%),
+      radial-gradient(36% 42% at 80% 30%, rgba(155, 216, 0, 0.13), transparent 72%),
+      radial-gradient(42% 46% at 58% 80%, rgba(150, 170, 205, 0.12), transparent 74%);
     filter: blur(38px);
     animation: drift 34s var(--ease-out) infinite alternate;
   }
@@ -192,31 +194,32 @@
      and never rounded a corner. */
 
   .drop {
-    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.5);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.95);
   }
   .drop-sm {
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+    box-shadow: 0 10px 24px -12px rgba(0, 0, 0, 0.9);
   }
   .drop-accent {
     box-shadow: 5px 5px 0 var(--color-grad-2);
   }
 
   /** Cut corners — the single strongest console-menu signal. */
+  /** Corners are radii now, not chamfers. `overflow: hidden` replaces what
+      the clip-path used to do for children — without it, product media would
+      square off the corner it sits in. The chamfer survives in one place: the
+      mark, where it is drawn in SVG and now reads as a signature rather than
+      a system-wide motif. */
   .cut {
-    clip-path: polygon(
-      14px 0, 100% 0, 100% calc(100% - 14px),
-      calc(100% - 14px) 100%, 0 100%, 0 14px
-    );
+    border-radius: var(--radius-lg);
+    overflow: hidden;
   }
   .cut-sm {
-    clip-path: polygon(
-      7px 0, 100% 0, 100% calc(100% - 7px),
-      calc(100% - 7px) 100%, 0 100%, 0 7px
-    );
+    border-radius: var(--radius-sm);
+    overflow: hidden;
   }
-  /** One cut, top-right — for bars and strips. */
   .cut-tr {
-    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 0 100%);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
   /** Skewed header bar. Parallelograms are pure console menu. */
@@ -237,7 +240,7 @@
       90deg,
       var(--color-ink) 0 18%,
       var(--color-edge-hi) 18% 30%,
-      var(--color-hot) 30% 34%,
+      var(--color-hot) 30% 35%,
       var(--color-edge) 34% 100%
     );
   }
@@ -285,14 +288,15 @@
         rgba(255, 255, 255, 0.03) 32%,
         rgba(20, 20, 18, 0.10) 100%
       ),
-      rgba(30, 33, 41, 0.62);
-    backdrop-filter: blur(22px) saturate(1.7);
-    -webkit-backdrop-filter: blur(22px) saturate(1.7);
-    border: 1px solid rgba(255, 255, 255, 0.14);
+      rgba(19, 22, 28, 0.72);
+    backdrop-filter: blur(26px) saturate(1.85);
+    -webkit-backdrop-filter: blur(26px) saturate(1.85);
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    border-radius: var(--radius-lg);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.16) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.35) inset,
-      0 24px 56px -30px rgba(0, 0, 0, 0.8);
+      0 1px 0 rgba(255, 255, 255, 0.14) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.6) inset,
+      0 30px 70px -34px rgba(0, 0, 0, 0.95);
     color: var(--color-ink);
   }
 
@@ -305,14 +309,14 @@
         rgba(255, 255, 255, 0.05) 38%,
         rgba(20, 20, 18, 0.08) 100%
       ),
-      rgba(34, 37, 46, 0.54);
-    backdrop-filter: blur(30px) saturate(1.9);
-    -webkit-backdrop-filter: blur(30px) saturate(1.9);
-    border: 1px solid rgba(255, 255, 255, 0.20);
+      rgba(23, 26, 34, 0.62);
+    backdrop-filter: blur(34px) saturate(2);
+    -webkit-backdrop-filter: blur(34px) saturate(2);
+    border: 1px solid rgba(255, 255, 255, 0.14);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.24) inset,
-      0 -1px 0 rgba(0, 0, 0, 0.4) inset,
-      0 40px 90px -46px rgba(0, 0, 0, 0.85);
+      0 1px 0 rgba(255, 255, 255, 0.2) inset,
+      0 -1px 0 rgba(0, 0, 0, 0.6) inset,
+      0 50px 110px -50px rgba(0, 0, 0, 1);
   }
 
   /** A light band that crosses the surface on hover. This is the whole
@@ -381,6 +385,48 @@
   .bloom:hover::after,
   .bloom:focus-within::after { opacity: 1; }
 
+  /** Product media on a true-black field.
+
+      This is the whole "demo reel" trick and it is not a filter on the image:
+      a blurred copy of the render is painted behind itself, so the grip's own
+      colour spills onto the black around it. Saturation is nudged rather than
+      pushed — the renders are already vivid, and over-driving them loses the
+      shell highlights that sell the moulding. */
+  .hdr { position: relative; isolation: isolate; }
+  .hdr > img,
+  .hdr > svg {
+    position: relative;
+    z-index: 1;
+    filter: saturate(1.12) contrast(1.05);
+  }
+  /* `background: inherit` cannot reach an <img>'s pixels, so the spill is a
+     radial in the design's own accent, set per card via --hdr-glow. */
+  .hdr::before {
+    content: "";
+    position: absolute;
+    inset: 6%;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      62% 62% at 50% 54%,
+      var(--hdr-glow, transparent),
+      transparent 74%
+    );
+    opacity: 0.75;
+    filter: blur(34px);
+    transition: opacity 0.4s var(--ease-out);
+  }
+  .lift:hover .hdr::before,
+  .hdr:hover::before { opacity: 1; }
+
+  /** Rim light. A one-pixel lit top edge is what stops a rounded dark panel
+      from reading as a hole punched in the page. */
+  .rim {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.13),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+  }
+
   /** Console keys should depress. Cheap, and it is the difference between a
       button that looks like hardware and one that looks like a div. */
   .press { transition: transform 0.1s var(--ease-out), box-shadow 0.1s var(--ease-out); }
@@ -401,11 +447,12 @@
       rgba(255, 255, 255, 0.05) 46%,
       rgba(0, 0, 0, 0.17) 100%
     );
+    border-radius: var(--radius-sm);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.4),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-      3px 3px 0 rgba(0, 0, 0, 0.45),
-      0 7px 20px -10px var(--key-glow, transparent);
+      inset 0 1px 0 rgba(255, 255, 255, 0.35),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+      0 10px 24px -12px rgba(0, 0, 0, 0.9),
+      0 6px 26px -8px var(--key-glow, transparent);
     transition:
       box-shadow 0.2s var(--ease-out),
       filter 0.15s var(--ease-out),
@@ -415,9 +462,9 @@
     filter: brightness(1.1) saturate(1.07);
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.5),
-      inset 0 -1px 0 rgba(0, 0, 0, 0.3),
-      3px 3px 0 rgba(0, 0, 0, 0.45),
-      0 12px 30px -10px var(--key-glow, transparent);
+      inset 0 -1px 0 rgba(0, 0, 0, 0.45),
+      0 14px 30px -14px rgba(0, 0, 0, 0.9),
+      0 12px 44px -8px var(--key-glow, transparent);
   }
   .key:active {
     transform: translate(2px, 2px);
@@ -434,7 +481,7 @@
       card reads as rising off the page rather than glowing. */
   .lift { transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
   .lift:hover { transform: translateY(-4px); }
-  .lift.drop:hover { box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.55); }
+  .lift.drop:hover { box-shadow: 0 28px 60px -20px rgba(0, 0, 0, 1); }
   @media (prefers-reduced-motion: reduce) {
     .lift:hover { transform: none; }
   }
@@ -455,10 +502,13 @@
   .tile,
   .card {
     background:
-      radial-gradient(120% 90% at 50% -18%, rgba(120, 150, 220, 0.16), transparent 62%),
+      radial-gradient(120% 90% at 50% -18%, rgba(140, 170, 235, 0.14), transparent 62%),
       var(--color-deep);
     border: 1px solid var(--color-edge);
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.10) inset;
+    border-radius: var(--radius-md);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.09) inset,
+      0 0 0 1px rgba(0, 0, 0, 0.6);
     color: var(--color-on-dark);
   }
   .tile .text-ink,
