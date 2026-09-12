@@ -26,16 +26,16 @@ export default function ContactPage() {
           </AsideCard>
           <AsideCard title="GammaGrips B.V.">
             <p>
-              Keileweg 22
+              Brouwerlaan 1273
               <br />
-              3029 BS Rotterdam
+              2182 KG Hillegom
               <br />
               Netherlands
             </p>
             <p>
-              KvK 82910433
+              KvK 95473785
               <br />
-              VAT NL862634891B01
+              VAT NL005155877B40
             </p>
             <p>Returns are not accepted at this address without a label — email first.</p>
           </AsideCard>

@@ -87,7 +87,7 @@ export function Footer() {
               <Logo />
               <p className="mt-4 max-w-[30ch] text-[13.5px] leading-relaxed text-ink-dim">
                 Moulded controller grips for the PS5 DualSense and Xbox Wireless
-                Controller. Designed and shipped from Rotterdam since 2021.
+                Controller. Designed and shipped from Hillegom.
               </p>
               <ul className="mt-5 flex gap-2">
                 {[
@@ -139,7 +139,7 @@ export function Footer() {
               <p className="text-[12.5px] text-ink-mute">
                 © {new Date().getFullYear()} GammaGrips B.V.
               </p>
-              <p className="text-[12.5px] text-ink-mute">KvK 82910433 · VAT NL862634891B01</p>
+              <p className="text-[12.5px] text-ink-mute">KvK 95473785 · VAT NL005155877B40</p>
               {[
                 { label: "Privacy", href: "/privacy" },
                 { label: "Terms", href: "/terms" },

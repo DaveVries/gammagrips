@@ -257,7 +257,7 @@ export default async function ProductPage({
               {[
                 {
                   h: "Delivery",
-                  b: `€4.95 flat inside the EU, free over ${money(50)}. Orders placed before 16:00 on a weekday leave Rotterdam the same day. Tracked as standard.`,
+                  b: `€4.95 flat inside the EU, free over ${money(50)}. Orders placed before 16:00 on a weekday leave Hillegom the same day. Tracked as standard.`,
                   href: "/shipping",
                   cta: "Delivery details",
                 },

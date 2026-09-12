@@ -430,7 +430,7 @@ export function ProductPurchase({
             {[
               {
                 t: `Arrives ${eta.earliest} – ${eta.latest}`,
-                s: "Ordered before 16:00 on a weekday ships the same day from Rotterdam.",
+                s: "Ordered before 16:00 on a weekday ships the same day from Hillegom.",
               },
               {
                 t: `${RETURN_DAYS}-day returns, worn or not`,
