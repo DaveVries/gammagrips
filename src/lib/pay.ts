@@ -8,20 +8,38 @@
 
 const BASE = "https://connect.pay.nl/v1";
 
+/**
+ * Pay.nl issues two credential pairs and they are not interchangeable:
+ *
+ *   AT-code + token   → merchant management APIs
+ *   SL-code + secret  → payment processing  ← what creating an order needs
+ *
+ * Authenticating an order create with AT+token returns a bare 401 with no
+ * body explaining why, which is a slow thing to debug. The portal groups the
+ * right pair under "Receive payments".
+ */
+function serviceSecret() {
+  return process.env.PAY_SERVICE_SECRET ?? process.env.PAY_SIGNING_SECRET ?? "";
+}
+
 function credentials() {
-  const atCode = process.env.PAY_AT_CODE;
-  const token = process.env.PAY_TOKEN;
   const serviceId = process.env.PAY_SERVICE_ID;
-  if (!atCode || !token || !serviceId) {
+  const secret = serviceSecret();
+  if (!serviceId || !secret) {
     throw new Error(
-      "Pay.nl is not configured. Set PAY_AT_CODE, PAY_TOKEN and PAY_SERVICE_ID.",
+      "Pay.nl is not configured. Set PAY_SERVICE_ID (SL-code) and PAY_SERVICE_SECRET.",
     );
   }
-  return { atCode, token, serviceId };
+  return { serviceId, secret };
 }
 
 export function payConfigured() {
-  return Boolean(process.env.PAY_AT_CODE && process.env.PAY_TOKEN && process.env.PAY_SERVICE_ID);
+  return Boolean(process.env.PAY_SERVICE_ID && serviceSecret());
+}
+
+/** The sales location secret also signs the exchange callbacks. */
+export function exchangeSecret() {
+  return serviceSecret();
 }
 
 export type CreatedOrder = { id: string; redirectUrl: string };
@@ -36,13 +54,13 @@ export async function createPayOrder(opts: {
   firstName: string;
   lastName: string;
 }): Promise<CreatedOrder> {
-  const { atCode, token, serviceId } = credentials();
+  const { serviceId, secret } = credentials();
 
   const res = await fetch(`${BASE}/orders`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Basic ${Buffer.from(`${atCode}:${token}`).toString("base64")}`,
+      Authorization: `Basic ${Buffer.from(`${serviceId}:${secret}`).toString("base64")}`,
     },
     body: JSON.stringify({
       serviceId,
