@@ -61,6 +61,7 @@ export function CheckoutFlow() {
   const [showCompany, setShowCompany] = useState(false);
   const [placed, setPlaced] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const eta = deliveryWindow(new Date("2026-09-04T00:00:00Z"));
 
@@ -71,7 +72,7 @@ export function CheckoutFlow() {
   const blur = (name: string) =>
     setErrors((e) => ({ ...e, [name]: validate(name, values[name] ?? "") }));
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     const next: Errors = {};
     for (const f of FIELDS) {
@@ -85,13 +86,56 @@ export function CheckoutFlow() {
       first?.scrollIntoView({ block: "center", behavior: "smooth" });
       return;
     }
-    // No payment backend in this build: the order is simulated so the whole
-    // flow, including the confirmation state, can be reviewed end to end.
     setBusy(true);
-    window.setTimeout(() => {
+    setSubmitError(null);
+    try {
+      /* Only slugs and quantities go up. The server prices the cart from the
+         catalogue — if the browser could send amounts, it could send its own. */
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...values,
+          items: cart.lines.map((l) => ({
+            slug: l.slug,
+            designId: l.designId ?? null,
+            platformId: l.platformId,
+            qty: l.qty,
+          })),
+        }),
+      });
+
+      const data = (await res.json().catch(() => ({}))) as {
+        redirectUrl?: string | null;
+        token?: string;
+        error?: string;
+      };
+
+      if (!res.ok) {
+        setBusy(false);
+        setSubmitError(data.error ?? "Something went wrong. Nothing has been charged.");
+        return;
+      }
+
+      if (data.redirectUrl) {
+        /* Hand off to the bank. Deliberately not clearing the cart here — the
+           payment can still fail, and an emptied cart would strand them. The
+           webhook is what confirms; the cart clears on the order page. */
+        window.location.href = data.redirectUrl;
+        return;
+      }
+
+      /* No payment provider configured yet: the order exists, so show it. */
+      if (data.token) {
+        window.location.href = `/order/${data.token}`;
+        return;
+      }
       setBusy(false);
       setPlaced(true);
-    }, 700);
+    } catch {
+      setBusy(false);
+      setSubmitError("We could not reach the payment service. Nothing has been charged.");
+    }
   };
 
   if (!cart.ready) return <div className="gutter"><div className="shell py-20" /></div>;
@@ -235,8 +279,16 @@ export function CheckoutFlow() {
               </div>
             </fieldset>
 
-            <Button type="submit" variant="go" size="lg" full className="mt-7" disabled={busy}>
-              {busy ? "PLACING ORDER…" : `PLACE ORDER — ${money(cart.total)}`}
+            {submitError && (
+              <p
+                role="alert"
+                className="mt-5 rounded-[var(--radius-sm)] border border-[var(--color-hot)]/40 bg-[var(--color-note-green)] p-3 text-[13px] leading-relaxed text-ink"
+              >
+                {submitError}
+              </p>
+            )}
+            <Button type="submit" variant="go" size="lg" full className="mt-4" disabled={busy}>
+              {busy ? "TAKING YOU TO PAYMENT…" : `PAY — ${money(cart.total)}`}
             </Button>
             <p className="mt-3 text-center text-[12px] leading-relaxed text-ink-mute">
               By ordering you agree to our{" "}
