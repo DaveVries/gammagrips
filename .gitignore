@@ -43,3 +43,4 @@ next-env.d.ts
 # generated brand rasters — rebuildable with `npm run brand`
 /brand/png/
 /brand/*.png
+.preview

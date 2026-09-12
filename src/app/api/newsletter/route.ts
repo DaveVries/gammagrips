@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { sendNewsletterWelcome } from "@/lib/emails";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,10 +24,19 @@ export async function POST(req: Request) {
 
   try {
     const sql = db();
-    await sql`
+    /* RETURNING is empty on conflict, so a re-subscribe sends nothing. */
+    const fresh = (await sql`
       insert into subscribers (email, source) values (${email}, 'footer')
       on conflict (email) do nothing
-    `;
+      returning id
+    `) as unknown[];
+    if (fresh.length > 0) {
+      try {
+        await sendNewsletterWelcome({ to: email });
+      } catch (mailErr) {
+        console.error("[newsletter] welcome mail failed", mailErr);
+      }
+    }
   } catch (err) {
     console.error("[newsletter]", err);
   }

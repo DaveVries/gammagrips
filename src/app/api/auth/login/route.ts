@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
 import { createLoginToken } from "@/lib/auth";
-import { sendMail } from "@/lib/mail";
+import { sendLoginLink } from "@/lib/emails";
 import { db } from "@/lib/db";
 
 export const runtime = "nodejs";
@@ -30,16 +30,7 @@ export async function POST(req: Request) {
     if (known.length > 0 || isAdmin) {
       const { raw } = await createLoginToken(email);
       const url = `${SITE_URL}/api/auth/callback?token=${encodeURIComponent(raw)}`;
-      await sendMail({
-        to: email,
-        subject: "Je inloglink voor GammaGrips",
-        text: `Klik om in te loggen (15 minuten geldig, eenmalig bruikbaar):\n\n${url}\n\nNiet aangevraagd? Dan kun je deze mail negeren.`,
-        html:
-          `<p>Klik om in te loggen. De link is 15 minuten geldig en werkt één keer.</p>` +
-          `<p><a href="${url}" style="display:inline-block;background:#111;color:#fff;text-decoration:none;padding:11px 18px;border-radius:8px;font-weight:700;">Inloggen</a></p>` +
-          `<p style="font-size:12px;color:#666;word-break:break-all;">Of plak deze link: ${url}</p>` +
-          `<p style="font-size:12px;color:#666;">Niet aangevraagd? Dan kun je deze mail negeren.</p>`,
-      });
+      await sendLoginLink({ to: email, url, isAdmin });
     }
   } catch (err) {
     console.error("[auth/login]", err);
