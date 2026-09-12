@@ -49,9 +49,9 @@ export function Hero() {
           GG
         </span>
 
-        <div className="relative z-[1] grid items-center gap-8 p-6 sm:p-9 lg:grid-cols-12 lg:gap-10 lg:p-12">
+        <div className="relative z-[1] grid items-center gap-5 p-4 sm:gap-8 sm:p-9 lg:grid-cols-12 lg:gap-10 lg:p-12">
         {/* --- copy -------------------------------------------------------- */}
-        <div className="min-w-0 lg:col-span-5" data-reveal>
+        <div className="order-2 min-w-0 lg:order-1 lg:col-span-5" data-reveal>
           <p className="label mb-5 inline-flex items-center gap-2 text-ink-mute">
             <span className="ps-rule inline-block h-[3px] w-10" />
             CONTROLLER GRIPS
@@ -63,13 +63,13 @@ export function Hero() {
               Your controller.
             </span>
           </h1>
-          <p className="mt-6 max-w-[46ch] text-[15.5px] leading-relaxed text-ink-dim">
+          <p className="mt-4 max-w-[46ch] text-[14.5px] leading-relaxed text-ink-dim sm:mt-6 sm:text-[15.5px]">
             Six moulded grip shells for the PS5 DualSense and the Xbox Wireless
             Controller. The pattern is the relief, so what you see is what your
             hand feels. Fitted in two minutes, no adhesive.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
             <ButtonLink href="/controller-grips" size="lg" variant="primary">
               Shop all six
             </ButtonLink>
@@ -78,22 +78,24 @@ export function Hero() {
             </ButtonLink>
           </div>
 
-          <dl className="mt-10 grid max-w-md grid-cols-3 border-t border-plate-edge pt-6">
+          <dl className="mt-6 flex max-w-md flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-plate-edge pt-4 sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-0 sm:pt-6">
             {[
               ["6", "Grips"],
               ["5", "Surfaces"],
               ["4", "Controllers"],
             ].map(([n, l]) => (
-              <div key={l}>
-                <dt className="display text-[30px] leading-none tabular-nums">{n}</dt>
-                <dd className="label mt-2 text-ink-mute">{l}</dd>
+              <div key={l} className="flex items-baseline gap-1.5 sm:block">
+                <dt className="display text-[22px] leading-none tabular-nums sm:text-[30px]">
+                  {n}
+                </dt>
+                <dd className="label text-ink-mute sm:mt-2">{l}</dd>
               </div>
             ))}
           </dl>
         </div>
 
         {/* --- product ------------------------------------------------------ */}
-        <div className="min-w-0 lg:col-span-7" data-reveal data-reveal-delay="70">
+        <div className="order-1 min-w-0 lg:order-2 lg:col-span-7" data-reveal data-reveal-delay="70">
           <div
             className="relative"
             /* Accent halo behind the screen. Sits outside the Well so the

@@ -582,6 +582,57 @@
      under browser chrome. */
   .safe-b { padding-bottom: max(0.75rem, env(safe-area-inset-bottom)); }
 
+  /** Horizontal rail for *secondary* rows only.
+
+      Baymard's caution about carousels is real — users miss content and, when
+      an item fills the viewport, they scroll the rail sideways while trying to
+      scroll the page down. Two rules avoid both: the primary product grid
+      never becomes a rail, and rail items are always narrower than the screen
+      so the next one peeks and the gesture target is unambiguous. No
+      autorotation anywhere. */
+  .rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 74%;
+    gap: 0.625rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 1rem;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    padding-bottom: 0.25rem;
+  }
+  .rail > * { scroll-snap-align: start; }
+  @media (min-width: 480px) { .rail { grid-auto-columns: 56%; } }
+  @media (min-width: 640px) {
+    /* Above phones it goes back to a real grid — a rail is a compromise for
+       narrow screens, not a better layout. */
+    .rail {
+      grid-auto-flow: row;
+      grid-auto-columns: auto;
+      overflow-x: visible;
+      margin-inline: 0;
+      padding-inline: 0;
+    }
+  }
+
+  /* Above phones the fold is not a fold — force it open regardless of the
+     `open` attribute, and hide the marker. */
+  /* Collapse explicitly rather than leaning on the UA behaviour for
+     <details>. Engines differ on how they hide the content — some use a
+     content-visibility slot — and at least one renders the closed body at full
+     height. Stating it outright works everywhere. */
+  details.fold:not([open]) > div { display: none; }
+  details.fold > summary::-webkit-details-marker { display: none; }
+
+  @media (min-width: 640px) {
+    /* Above phones a fold is not a fold: always shown, no affordance. */
+    details.fold > summary { display: none; }
+    details.fold > div,
+    details.fold:not([open]) > div { display: block; }
+  }
+
   .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
   .no-bar::-webkit-scrollbar { display: none; }
 

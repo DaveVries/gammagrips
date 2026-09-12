@@ -46,7 +46,7 @@ export function PlatformSplit() {
   ];
 
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Shop by controller"
         title="Start with what you own"
@@ -57,7 +57,7 @@ export function PlatformSplit() {
           </ButtonLink>
         }
       />
-      <div className="mt-9 grid gap-4 md:grid-cols-2">
+      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid md:grid-cols-2">
         {cards.map((c, i) => (
           <Link
             key={c.family}
@@ -104,7 +104,7 @@ export function Featured() {
     .filter(Boolean);
 
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Best sellers"
         title="What most people buy"
@@ -128,13 +128,13 @@ export function Featured() {
 
 export function Benefits() {
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Why fit grips"
         title="Four things a moulded shell changes"
         copy="Not a sleeve and not a skin. A shell moulded to one controller, which is why it can add texture without adding slop."
       />
-      <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 xl:grid-cols-4">
         {[
           {
             title: "Sweat has somewhere to go",
@@ -274,7 +274,7 @@ function RemoveDiagram() {
 
 export function CollectionsShowcase() {
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Designs"
         title="Six grips, three families"
@@ -285,7 +285,7 @@ export function CollectionsShowcase() {
           </ButtonLink>
         }
       />
-      <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 lg:grid-cols-3">
         {COLLECTIONS.map((c, i) => {
           const lead = designById(c.designIds[0])!;
           return (
@@ -344,7 +344,7 @@ export function TextureTech() {
   };
 
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Surface"
         title="The pattern is the relief"
@@ -355,7 +355,7 @@ export function TextureTech() {
           </ButtonLink>
         }
       />
-      <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5" data-reveal>
+      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 lg:grid-cols-5" data-reveal>
         {TEXTURES.map((t) => (
           <Link
             key={t.id}
@@ -426,7 +426,7 @@ export function SocialProof() {
   const avg = all.sum / all.n;
 
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Reviews"
         title={
@@ -442,14 +442,17 @@ export function SocialProof() {
           </div>
         }
       />
-      <div className="mt-9 columns-1 gap-4 md:columns-2 xl:columns-3" data-reveal>
+      <div
+        className="rail mt-6 no-bar gap-4 sm:mt-9 sm:block sm:columns-2 xl:columns-3"
+        data-reveal
+      >
         {picks.map((r) => {
           const p = productBySlug(r.productSlug)!;
           const d = designById(r.designId);
           return (
             <figure
               key={r.id}
-              className="card mb-3 break-inside-avoid glass p-3"
+              className="card mb-0 break-inside-avoid glass p-3 sm:mb-3"
             >
               <div className="flex items-center justify-between gap-3">
                 <Stars value={r.rating} />
@@ -497,7 +500,7 @@ export function SocialProof() {
 
 export function CompatibilityStrip() {
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <div className="glass p-[3px]">
         <div className="titlebar flex h-[22px] items-center px-2">
           <span className="label text-[10px]">COMPATIBILITY CHECK</span>
@@ -563,7 +566,7 @@ export function CompatibilityStrip() {
 
 export function GuidesTeaser() {
   return (
-    <Section className="py-16 md:py-20">
+    <Section className="py-9 md:py-20">
       <SectionHead
         eyebrow="Guides"
         title="Before you buy"
@@ -573,7 +576,7 @@ export function GuidesTeaser() {
           </ButtonLink>
         }
       />
-      <div className="mt-9 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 xl:grid-cols-4">
         {GUIDES.map((g, i) => (
           <Link
             key={g.slug}

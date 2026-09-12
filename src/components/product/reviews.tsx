@@ -154,11 +154,17 @@ export function Reviews({ product, reviews }: { product: Product; reviews: Revie
             </p>
           ) : (
             <ul className="mt-3 space-y-3">
-              {filtered.slice(0, shown).map((r) => {
+              {filtered.slice(0, shown).map((r, i) => {
                 const d = designById(r.designId);
                 const pl = platformById(r.platformId);
                 return (
-                  <li key={r.id} className="glass cut-sm p-4">
+                  <li
+                    key={r.id}
+                    className={cn(
+                      "glass cut-sm p-4",
+                      i >= 2 && shown <= 4 && "hidden sm:block",
+                    )}
+                  >
                     <div className="flex flex-wrap items-center gap-3">
                       <Stars value={r.rating} size={13} />
                       <span className="text-[13px] font-medium">{r.author}</span>

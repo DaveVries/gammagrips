@@ -416,3 +416,43 @@ export function SectionHead({
 export function Rule({ className }: { className?: string }) {
   return <div className={cn("ps-rule h-[3px] w-full", className)} aria-hidden="true" />;
 }
+
+
+/**
+ * Collapsible below-the-fold section, phones only.
+ *
+ * The PDP's detail column ran 7,430px on a 375px screen — thirteen screens of
+ * scrolling past specs to reach reviews. Native <details> does the work: no
+ * client JS, the content stays in the DOM for crawlers, and `open` is forced
+ * back on from `sm` up so desktop is unchanged.
+ */
+export function MobileFold({
+  title,
+  children,
+  defaultOpen = false,
+}: {
+  title: string;
+  children: React.ReactNode;
+  defaultOpen?: boolean;
+}) {
+  return (
+    <details
+      open={defaultOpen}
+      className="fold group border-b border-[var(--color-plate-edge)] sm:border-0"
+    >
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-4 sm:hidden">
+        <span className="text-[15px] font-bold">{title}</span>
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          aria-hidden="true"
+          className="shrink-0 text-ink-mute transition-transform group-open:rotate-180"
+        >
+          <path d="M3 5.5 7 9.5l4-4" fill="none" stroke="currentColor" strokeWidth="1.8" />
+        </svg>
+      </summary>
+      <div className="pb-5 sm:pb-0">{children}</div>
+    </details>
+  );
+}
