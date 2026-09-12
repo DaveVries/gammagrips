@@ -1,6 +1,7 @@
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { mapStatus } from "@/lib/pay";
+import { exchangeSecret, mapStatus } from "@/lib/pay";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -16,13 +17,48 @@ export const dynamic = "force-dynamic";
  * so failures here must return non-200 to earn a retry — and successes must
  * return the magic body even when there is nothing to do.
  */
+/**
+ * Verifies the HMAC in the `signature` header against the raw body.
+ *
+ * Must run on the raw text, before any parse: JSON.parse followed by
+ * re-stringify can reorder keys, and the signature is over the exact bytes
+ * Pay.nl sent. Compared in constant time so the check cannot be probed by
+ * timing it.
+ */
+function verifySignature(raw: string, req: Request): boolean {
+  const secret = exchangeSecret();
+  if (!secret) return false;
+
+  const provided = req.headers.get("signature");
+  if (!provided) return false;
+
+  const algo = (req.headers.get("signature-algorithm") ?? "SHA256").toLowerCase();
+  const digest = algo.includes("512") ? "sha512" : "sha256";
+
+  const expected = createHmac(digest, secret).update(raw, "utf8").digest("hex");
+
+  const a = Buffer.from(expected, "utf8");
+  const b = Buffer.from(provided.trim().toLowerCase(), "utf8");
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 export async function POST(req: Request) {
+  const raw = await req.text();
+
+  /* Signed exchanges are the only ones accepted. Without this anyone who
+     guesses the URL can mark an order paid, which is the whole risk this
+     endpoint carries. Rejected with 401 rather than a retry-worthy 500 —
+     a bad signature will not get better on the third attempt. */
+  if (!verifySignature(raw, req)) {
+    console.error("[pay-webhook] rejected: signature invalid or missing");
+    return NextResponse.json({ error: "invalid signature" }, { status: 401 });
+  }
+
   let payload: Record<string, unknown> = {};
   try {
-    payload = await req.json();
+    payload = JSON.parse(raw) as Record<string, unknown>;
   } catch {
-    const form = await req.formData().catch(() => null);
-    if (form) payload = Object.fromEntries(form.entries());
+    payload = Object.fromEntries(new URLSearchParams(raw).entries());
   }
 
   const order = (payload.order ?? {}) as Record<string, unknown>;
