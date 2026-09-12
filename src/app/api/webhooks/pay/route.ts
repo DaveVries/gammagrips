@@ -2,6 +2,7 @@ import { createHmac, timingSafeEqual } from "node:crypto";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { exchangeSecret, mapStatus } from "@/lib/pay";
+import { sendOrderConfirmation } from "@/lib/emails";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -92,14 +93,54 @@ export async function POST(req: Request) {
 
     const status = mapStatus(Number.isFinite(code) ? code : undefined);
 
-    await sql`
+    /* `paid_at is null` in the WHERE is what makes the mail send once: a
+       later exchange for the same order updates the row but returns nothing,
+       so a retry or a follow-up status cannot trigger a second confirmation. */
+    const justPaid = (await sql`
       update orders
          set status = ${status},
              pay_status_code = ${Number.isFinite(code) ? code : null},
              paid_at = case when ${status} = 'paid' and paid_at is null then now() else paid_at end,
              updated_at = now()
        where pay_order_id = ${payOrderId}
-    `;
+         and ${status} = 'paid'
+         and paid_at is null
+      returning id, token, number, email, first_name, subtotal_cents, shipping_cents, total_cents
+    `) as Record<string, string | number>[];
+
+    if (justPaid.length === 0 && status !== "paid") {
+      await sql`
+        update orders
+           set status = ${status},
+               pay_status_code = ${Number.isFinite(code) ? code : null},
+               updated_at = now()
+         where pay_order_id = ${payOrderId}
+      `;
+    }
+
+    if (justPaid.length > 0) {
+      const o = justPaid[0];
+      const lines = (await sql`
+        select name, qty, line_cents from order_lines where order_id = ${o.id} order by id
+      `) as { name: string; qty: number; line_cents: number }[];
+
+      /* A mail failure must never fail the webhook: Pay.nl would retry, and
+         the order is already paid. Log it and still acknowledge. */
+      try {
+        await sendOrderConfirmation({
+          to: String(o.email),
+          firstName: String(o.first_name),
+          orderNumber: o.number,
+          token: String(o.token),
+          lines,
+          subtotalCents: Number(o.subtotal_cents),
+          shippingCents: Number(o.shipping_cents),
+          totalCents: Number(o.total_cents),
+        });
+      } catch (mailErr) {
+        console.error("[pay-webhook] confirmation mail failed", mailErr);
+      }
+    }
 
     return NextResponse.json({ result: true });
   } catch (err) {
