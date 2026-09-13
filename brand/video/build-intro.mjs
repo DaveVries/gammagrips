@@ -1,28 +1,28 @@
 import { readFileSync, writeFileSync } from "node:fs";
 
-const { cracks, shards, smoke, fog, p } = JSON.parse(readFileSync("brand/video/_g2.json", "utf8"));
+const cells = JSON.parse(readFileSync("brand/video/_shatter.json", "utf8"));
+const imgs = JSON.parse(readFileSync("brand/video/_imgs.json", "utf8"));
 const audio = readFileSync("brand/video/audio.js", "utf8").replace(/^export /gm, "");
-const [, , MW, MH] = p.mvb.split(" ").map(Number);
+const s = readFileSync("src/lib/logo-mark.ts", "utf8");
+const gp = (k) => s.match(new RegExp(`export const ${k} = "([^"]+)"`))[1];
+const gn = (k) => parseFloat(s.match(new RegExp(`export const ${k} = ([-0-9.]+)`))[1]);
 
-const crackPaths = cracks
-  .map((d, i) => `<path d="${d}" class="crack" style="--i:${i}" stroke-width="${(3.2 - (i % 4) * 0.6).toFixed(1)}"/>`)
+/* Fragments. Filled with a faint gradient and a lit edge so they read as
+   plates of glass catching light, not as outlines on black. */
+const frags = cells
+  .map(
+    (c, i) =>
+      `<path d="${c.d}" class="frag" style="--tx:${c.tx}px;--ty:${c.ty}px;--rot:${c.rot}deg;--rx:${c.rx}deg;--ry:${c.ry}deg;--dl:${c.delay}s;--dur:${c.dur}s;--f:${c.fill};--e:${c.edge}" />`,
+  )
   .join("");
 
-const shardEls = shards
-  .map((s) => `<rect class="shard" width="${s.s.toFixed(1)}" height="${(s.s * 1.9).toFixed(1)}" style="--tx:${(Math.cos(s.a) * s.d).toFixed(0)}px;--ty:${(Math.sin(s.a) * s.d).toFixed(0)}px;--r:${s.r.toFixed(0)}deg;--d:${s.dl.toFixed(2)}s;--sp:${s.sp.toFixed(2)}s"/>`)
-  .join("");
-
-const smokeEls = smoke
-  .map((s) => `<div class="puff" style="--x:${s.x.toFixed(0)}px;--y:${s.y.toFixed(0)}px;--r:${s.r.toFixed(0)}px;--dl:${s.dl.toFixed(2)}s;--dur:${s.dur.toFixed(2)}s;--dx:${s.dx.toFixed(0)}px;--dy:${s.dy.toFixed(0)}px;--o:${s.o.toFixed(2)}"></div>`)
-  .join("");
-
-const fogEls = fog
-  .map((f) => `<div class="fog" style="--fy:${f.y.toFixed(0)}%;--fh:${f.h.toFixed(0)}px;--fdur:${f.dur.toFixed(1)}s;--fdl:${f.dl.toFixed(1)}s;--fo:${f.o.toFixed(2)}"></div>`)
-  .join("");
-
-const markScale = 0.463;
-const markX = ((120 - MW * markScale) / 2).toFixed(2);
-const markY = ((120 - 13.8 - MH * markScale) / 2 + 2.16).toFixed(2);
+/* Six grips launching out of the hole on staggered arcs. */
+const GRIPS = ["dark-matter", "volt", "ember", "vapor", "venom", "ice-froyo"];
+const gripEls = GRIPS.map((g, i) => {
+  const a = (i / GRIPS.length) * Math.PI * 2 - Math.PI / 2 + 0.35;
+  const dist = 300 + (i % 3) * 130;
+  return `<img class="grip" src="${imgs[g]}" alt="" style="--gx:${Math.round(Math.cos(a) * dist)}px;--gy:${Math.round(Math.sin(a) * dist * 0.62)}px;--gr:${Math.round((Math.random() - 0.5) * 40)}deg;--gd:${(0.62 + i * 0.055).toFixed(3)}s;--gz:${6 + i}"/>`;
+}).join("");
 
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <title>GammaGrips — intro</title>
@@ -30,146 +30,145 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   :root{--lime:#9bd800}
   *{margin:0;padding:0;box-sizing:border-box}
   html,body{height:100%;background:#000;overflow:hidden;font-family:-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif}
-  .frame{position:absolute;left:50%;top:50%;width:1920px;height:1080px;background:#000;overflow:hidden;transform-origin:center}
+  .frame{position:absolute;left:50%;top:50%;width:1920px;height:1080px;background:#000;overflow:hidden;
+    transform-origin:center;perspective:1600px}
 
-  /* Camera: a hard kick plus a slow settle, with a touch of roll. A pure
-     translate shake reads as a glitch; adding rotation reads as a camera. */
+  /* Camera: a violent kick that settles, with roll and a push in. */
   @keyframes cam{
-    0%,100%{translate:0 0;rotate:0deg;scale:1}
-    6%{translate:-34px 20px;rotate:-.7deg;scale:1.035}
-    13%{translate:28px -22px;rotate:.5deg;scale:1.028}
-    22%{translate:-19px -12px;rotate:-.3deg;scale:1.018}
-    34%{translate:13px 14px;rotate:.18deg;scale:1.01}
-    50%{translate:-6px 5px;rotate:-.07deg;scale:1.004}
-    72%{translate:3px -2px;rotate:.03deg;scale:1.001}}
-  .cam{position:absolute;inset:0;animation:cam 1.5s cubic-bezier(.19,1,.22,1) .40s both}
+    0%{translate:0 0;rotate:0deg;scale:1.06}
+    /* pre-shot: slow creep toward the target */
+    26%{translate:0 0;rotate:0deg;scale:1.02}
+    27%{translate:-46px 28px;rotate:-1.2deg;scale:1.09}
+    31%{translate:38px -30px;rotate:.9deg;scale:1.07}
+    36%{translate:-24px -15px;rotate:-.45deg;scale:1.045}
+    44%{translate:15px 16px;rotate:.22deg;scale:1.03}
+    58%{translate:-7px 6px;rotate:-.08deg;scale:1.016}
+    76%{translate:3px -2px;rotate:.03deg;scale:1.008}
+    100%{translate:0 0;rotate:0deg;scale:1}}
+  .cam{position:absolute;inset:0;transform-style:preserve-3d;
+    animation:cam 3.4s cubic-bezier(.2,.9,.25,1) both}
 
-  /* Ambient fog drifting across the frame before and after the shot */
-  @keyframes drift{0%{transform:translateX(-30%)}100%{transform:translateX(130%)}}
-  .fog{position:absolute;left:0;top:var(--fy);width:60%;height:var(--fh);z-index:1;pointer-events:none;
-    background:radial-gradient(closest-side,rgba(150,170,190,var(--fo)),transparent 72%);
-    filter:blur(46px);animation:drift var(--fdur) linear var(--fdl) infinite}
+  /* Atmosphere before the shot: haze and slow-moving fog */
+  @keyframes hazeIn{0%{opacity:0}20%{opacity:.5}100%{opacity:.5}}
+  #haze{position:absolute;inset:-10%;z-index:1;pointer-events:none;opacity:0;
+    background:radial-gradient(60% 50% at 50% 55%,rgba(120,140,160,.14),transparent 70%),
+               radial-gradient(40% 60% at 22% 40%,rgba(90,110,130,.10),transparent 72%);
+    filter:blur(30px);animation:hazeIn 1.2s ease-out both}
+  @keyframes drift{0%{transform:translateX(-35%) scaleX(1)}100%{transform:translateX(135%) scaleX(1.3)}}
+  .fog{position:absolute;left:0;width:70%;z-index:2;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(160,180,200,var(--fo)),transparent 74%);
+    filter:blur(56px);animation:drift var(--fdur) linear var(--fdl) infinite}
 
-  /* Muzzle smoke: expands, rises, dissipates */
-  @keyframes puff{
-    0%{opacity:0;transform:translate(0,0) scale(.2)}
-    8%{opacity:var(--o)}
-    100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(2.6)}}
-  .puff{position:absolute;left:calc(50% + var(--x));top:calc(50% + var(--y));width:var(--r);height:var(--r);
-    margin:calc(var(--r)/-2) 0 0 calc(var(--r)/-2);z-index:4;pointer-events:none;
-    background:radial-gradient(closest-side,rgba(210,220,230,.55),rgba(160,175,190,.16) 55%,transparent 75%);
-    filter:blur(26px);animation:puff var(--dur) cubic-bezier(.12,.7,.3,1) calc(.42s + var(--dl)) both}
+  /* Muzzle flash: warm, asymmetric, two frames */
+  @keyframes flash{0%{opacity:0}1%{opacity:1}3%{opacity:.4}5%{opacity:.95}11%{opacity:.12}20%{opacity:0}100%{opacity:0}}
+  #flash{position:absolute;inset:0;z-index:14;opacity:0;mix-blend-mode:screen;pointer-events:none;
+    background:radial-gradient(ellipse 40% 26% at 50% 50%,#fff 0%,#fff3c0 18%,rgba(255,190,70,.45) 38%,transparent 66%);
+    animation:flash .55s linear .90s both}
 
-  @keyframes flash{0%{opacity:0}1%{opacity:1}4%{opacity:.55}7%{opacity:.95}14%{opacity:.15}22%{opacity:0}100%{opacity:0}}
-  #flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,#fff 0%,#fff6c4 22%,rgba(255,200,80,.3) 45%,transparent 70%);
-    opacity:0;mix-blend-mode:screen;z-index:9;animation:flash .5s linear .38s both}
+  /* Impact shockwave ring */
+  @keyframes shock{0%{opacity:0;scale:.05}8%{opacity:.9}100%{opacity:0;scale:5.5}}
+  #shock{position:absolute;left:50%;top:50%;translate:-50% -50%;width:340px;height:340px;border-radius:50%;
+    border:3px solid rgba(255,255,255,.75);z-index:9;pointer-events:none;filter:blur(1px);
+    animation:shock .85s cubic-bezier(.1,.7,.3,1) .92s both}
 
-  /* Chromatic split on impact — two coloured copies of the crack layer */
-  @keyframes ab{0%{opacity:0}4%{opacity:.85}30%{opacity:.3}70%{opacity:0}100%{opacity:0}}
-  .ab{position:absolute;inset:0;z-index:6;pointer-events:none;mix-blend-mode:screen;animation:ab 1s ease-out .40s both}
-  .ab.r{translate:-7px 0;filter:blur(.6px)}
-  .ab.b{translate:7px 0;filter:blur(.6px)}
+  /* The glass plane, fragmented */
+  #glass{position:absolute;inset:0;z-index:8;transform-style:preserve-3d}
+  @keyframes fragOut{
+    0%{opacity:0;translate:0 0;rotate:0deg;transform:none}
+    /* held together for one frame after the hit, then let go */
+    6%{opacity:1;transform:none}
+    100%{opacity:0;transform:translate3d(var(--tx),var(--ty),420px) rotateZ(var(--rot)) rotateX(var(--rx)) rotateY(var(--ry))}}
+  .frag{fill:rgba(190,215,240,var(--f));stroke:rgba(226,240,255,var(--e));stroke-width:1.1;
+    transform-origin:center;transform-box:fill-box;
+    animation:fragOut var(--dur) cubic-bezier(.15,.72,.3,1) calc(.92s + var(--dl)) both}
 
-  @keyframes ch{0%{opacity:0;scale:1.7}25%{opacity:1;scale:1}60%{opacity:1}72%{opacity:.15}100%{opacity:0;scale:.6}}
-  #cross{position:absolute;left:50%;top:50%;translate:-50% -50%;animation:ch .42s steps(5,end) both;z-index:6}
+  /* The hole itself */
+  @keyframes hole{0%{opacity:0;scale:0}55%{opacity:1;scale:1.3}100%{opacity:1;scale:1}}
+  #hole{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:10;
+    animation:hole .3s cubic-bezier(.16,1,.3,1) .92s both}
 
-  #impact{position:absolute;left:50%;top:50%;translate:-50% -50%;z-index:5}
-  @keyframes hole{0%{scale:0}70%{scale:1.25}100%{scale:1}}
-  .hole{animation:hole .22s cubic-bezier(.16,1,.3,1) .40s both;transform-origin:center}
-  @keyframes crackIn{0%{stroke-dashoffset:900;opacity:0}10%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
-  .crack{stroke:#fff;fill:none;stroke-linecap:round;stroke-dasharray:900;stroke-dashoffset:900;
-    animation:crackIn .55s cubic-bezier(.16,1,.3,1) calc(.42s + var(--i)*.009s) both}
-  @keyframes shardOut{0%{opacity:1;translate:0 0;rotate:0deg}
-    12%{opacity:1}100%{opacity:0;translate:var(--tx) var(--ty);rotate:var(--r)}}
-  .shard{fill:#e8f0ff;animation:shardOut var(--sp) cubic-bezier(.1,.75,.28,1) calc(.42s + var(--d)) both}
+  /* Light pouring out of the hole */
+  @keyframes glow{0%{opacity:0;scale:.15}22%{opacity:1}100%{opacity:0;scale:3.4}}
+  #glow{position:absolute;left:50%;top:50%;translate:-50% -50%;width:900px;height:900px;z-index:5;pointer-events:none;
+    background:radial-gradient(circle,rgba(155,216,0,.55) 0%,rgba(155,216,0,.18) 28%,transparent 62%);
+    filter:blur(24px);animation:glow 1.5s cubic-bezier(.2,.8,.3,1) 1.0s both}
 
-  /* Light spilling out of the hole */
-  @keyframes rays{0%{opacity:0;scale:.2}30%{opacity:.85}100%{opacity:0;scale:2.2}}
-  #rays{position:absolute;left:50%;top:50%;translate:-50% -50%;width:900px;height:900px;z-index:4;pointer-events:none;
-    background:conic-gradient(from 0deg,transparent 0 6deg,rgba(155,216,0,.5) 7deg,transparent 8deg 22deg,
-      rgba(155,216,0,.35) 23deg,transparent 24deg 44deg,rgba(255,255,255,.3) 45deg,transparent 46deg 70deg,
-      rgba(155,216,0,.4) 71deg,transparent 72deg 120deg,rgba(155,216,0,.3) 121deg,transparent 122deg 200deg,
-      rgba(255,255,255,.25) 201deg,transparent 202deg 260deg,rgba(155,216,0,.35) 261deg,transparent 262deg 360deg);
-    filter:blur(3px);animation:rays 1.1s cubic-bezier(.2,.8,.3,1) .52s both}
+  /* THE PRODUCT — grips launch out of the hole toward camera */
+  @keyframes gripOut{
+    0%{opacity:0;transform:translate3d(0,0,-260px) scale(.05) rotate(0deg)}
+    18%{opacity:1}
+    62%{transform:translate3d(calc(var(--gx)*.72),calc(var(--gy)*.72),260px) scale(.92) rotate(var(--gr))}
+    100%{opacity:0;transform:translate3d(var(--gx),var(--gy),900px) scale(1.55) rotate(var(--gr))}}
+  .grip{position:absolute;left:50%;top:50%;width:420px;margin:-136px 0 0 -210px;z-index:11;
+    filter:drop-shadow(0 26px 60px rgba(0,0,0,.9));
+    animation:gripOut 1.5s cubic-bezier(.22,.65,.3,1) calc(1.0s + var(--gd)) both}
 
-  @keyframes markOut{0%{opacity:0;scale:.04;filter:blur(10px)}
-    40%{opacity:1;scale:1.22;filter:blur(0)}62%{scale:.94}80%{scale:1.04}100%{opacity:1;scale:1}}
-  #mark{position:absolute;left:50%;top:calc(50% - 34px);translate:-50% -50%;z-index:7;
-    animation:markOut .66s cubic-bezier(.2,1.35,.35,1) .74s both;filter:drop-shadow(0 0 90px rgba(155,216,0,.55))}
+  /* Logo lands last */
+  @keyframes markIn{0%{opacity:0;scale:3.2;filter:blur(22px)}
+    55%{opacity:1;scale:.94;filter:blur(0)}78%{scale:1.05}100%{opacity:1;scale:1}}
+  #mark{position:absolute;left:50%;top:calc(50% - 40px);translate:-50% -50%;z-index:15;width:190px;
+    animation:markIn .5s cubic-bezier(.2,1.5,.3,1) 2.55s both;
+    filter:drop-shadow(0 0 100px rgba(155,216,0,.6))}
 
-  @keyframes wipe{0%{clip-path:inset(0 100% 0 0);opacity:0}10%{opacity:1}100%{clip-path:inset(0 0 0 0);opacity:1}}
-  #word{position:absolute;left:50%;top:calc(50% + 96px);translate:-50% -50%;z-index:7;
-    animation:wipe .48s cubic-bezier(.16,1,.3,1) 1.30s both}
+  @keyframes wipe{0%{clip-path:inset(0 100% 0 0);opacity:0}8%{opacity:1}100%{clip-path:inset(0 0 0 0);opacity:1}}
+  #word{position:absolute;left:50%;top:calc(50% + 92px);translate:-50% -50%;z-index:15;
+    animation:wipe .46s cubic-bezier(.16,1,.3,1) 2.86s both}
 
-  @keyframes rule{0%{width:0;opacity:0}10%{opacity:1}100%{width:580px;opacity:1}}
-  #rule{position:absolute;left:50%;top:calc(50% + 142px);translate:-50% 0;height:6px;background:var(--lime);
-    z-index:7;box-shadow:0 0 26px rgba(155,216,0,.8);animation:rule .4s cubic-bezier(.16,1,.3,1) 1.70s both}
+  @keyframes rule{0%{width:0;opacity:0}10%{opacity:1}100%{width:600px;opacity:1}}
+  #rule{position:absolute;left:50%;top:calc(50% + 140px);translate:-50% 0;height:5px;background:var(--lime);
+    z-index:15;box-shadow:0 0 30px rgba(155,216,0,.9);animation:rule .38s cubic-bezier(.16,1,.3,1) 3.14s both}
 
-  @keyframes slam{0%{opacity:0;scale:2.6;filter:blur(16px)}55%{opacity:1;scale:.95;filter:blur(0)}
-    75%{scale:1.03}100%{opacity:1;scale:1}}
-  #tag{position:absolute;left:50%;top:calc(50% + 182px);translate:-50% 0;z-index:8;color:#fff;
-    font-size:54px;font-weight:800;letter-spacing:.16em;white-space:nowrap;
-    animation:slam .44s cubic-bezier(.2,1.45,.3,1) 1.94s both}
-  #tag b{color:var(--lime);text-shadow:0 0 34px rgba(155,216,0,.65)}
+  @keyframes slam{0%{opacity:0;scale:2.2;filter:blur(14px);letter-spacing:.5em}
+    58%{opacity:1;scale:.97;filter:blur(0);letter-spacing:.14em}100%{opacity:1;scale:1;letter-spacing:.16em}}
+  #tag{position:absolute;left:50%;top:calc(50% + 176px);translate:-50% 0;z-index:16;color:#fff;
+    font-size:52px;font-weight:800;white-space:nowrap;
+    animation:slam .46s cubic-bezier(.2,1.4,.3,1) 3.34s both}
+  #tag b{color:var(--lime);text-shadow:0 0 40px rgba(155,216,0,.7)}
 
-  #vig{position:absolute;inset:0;z-index:10;pointer-events:none;
-    background:radial-gradient(125% 92% at 50% 50%,transparent 38%,rgba(0,0,0,.92) 100%)}
+  #vig{position:absolute;inset:0;z-index:20;pointer-events:none;
+    background:radial-gradient(130% 95% at 50% 50%,transparent 34%,rgba(0,0,0,.94) 100%)}
   @keyframes grain{to{translate:-6% -6%}}
-  #grain{position:absolute;inset:-15%;z-index:11;pointer-events:none;opacity:.06;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation:grain .28s steps(3) infinite}
+  #grain{position:absolute;inset:-15%;z-index:21;pointer-events:none;opacity:.055;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain .26s steps(3) infinite}
 
-  #gate{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:#000;cursor:pointer}
-  #gate div{text-align:center;color:#fff}
-  #gate b{color:var(--lime);font-size:15px;letter-spacing:.18em;font-weight:800}
-  #gate p{color:#6b7684;font-size:13px;margin-top:10px}
-  #hint{position:fixed;left:16px;bottom:14px;z-index:20;color:#5c6672;font-size:13px}
-  #hint b{color:var(--lime)}
+  #gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;background:#000;cursor:pointer}
+  #gate b{color:var(--lime);font-size:15px;letter-spacing:.2em;font-weight:800}
+  #gate p{color:#6b7684;font-size:13px;margin-top:10px;text-align:center}
+  #hint{position:fixed;left:16px;bottom:14px;z-index:30;color:#4c5560;font-size:12px}
 </style></head><body>
 
 <div class="frame" id="frame">
-  ${fogEls}
+  <div id="haze"></div>
+  <div class="fog" style="--fo:.08;top:12%;height:260px;--fdur:22s;--fdl:0s"></div>
+  <div class="fog" style="--fo:.06;top:52%;height:320px;--fdur:28s;--fdl:-9s"></div>
+  <div class="fog" style="--fo:.05;top:74%;height:200px;--fdur:19s;--fdl:-14s"></div>
+
   <div class="cam">
-    <svg id="cross" width="130" height="130" viewBox="0 0 130 130">
-      <circle cx="65" cy="65" r="33" fill="none" stroke="#9bd800" stroke-width="2" opacity=".9"/>
-      <circle cx="65" cy="65" r="3" fill="#9bd800"/>
-      <path d="M65 6v28M65 96v28M6 65h28M96 65h28" stroke="#9bd800" stroke-width="3"/>
+    <div id="glow"></div>
+
+    <svg id="glass" width="1920" height="1080" viewBox="0 0 1920 1080">${frags}</svg>
+
+    <svg id="hole" width="300" height="300" viewBox="-150 -150 300 300">
+      <defs>
+        <radialGradient id="hg"><stop offset="0" stop-color="#000"/><stop offset=".75" stop-color="#000"/>
+          <stop offset="1" stop-color="#1a1f26"/></radialGradient>
+      </defs>
+      <circle r="42" fill="url(#hg)"/>
+      <circle r="42" fill="none" stroke="#dfe9f5" stroke-width="2.5" opacity=".8"/>
+      <circle r="58" fill="none" stroke="#9bd800" stroke-width="1.4" opacity=".45"/>
+      <circle r="76" fill="none" stroke="#dfe9f5" stroke-width="1" opacity=".18"/>
     </svg>
 
-    <div id="rays"></div>
+    <div id="shock"></div>
+    ${gripEls}
 
-    <svg id="impact" width="1700" height="1150" viewBox="-850 -575 1700 1150">
-      <g class="hole">
-        <circle r="34" fill="#000"/>
-        <circle r="34" fill="none" stroke="#fff" stroke-width="3.5" opacity=".9"/>
-        <circle r="60" fill="none" stroke="#fff" stroke-width="1.2" opacity=".28"/>
-      </g>
-      <g opacity=".92">${crackPaths}</g>
-      <g>${shardEls}</g>
-    </svg>
+    <img id="mark" src="${imgs.logo}" alt="GammaGrips"/>
 
-    <div class="ab r"><svg width="1700" height="1150" viewBox="-850 -575 1700 1150" style="position:absolute;left:50%;top:50%;translate:-50% -50%">
-      <g opacity=".5" style="stroke:#ff2b2b">${crackPaths}</g></svg></div>
-    <div class="ab b"><svg width="1700" height="1150" viewBox="-850 -575 1700 1150" style="position:absolute;left:50%;top:50%;translate:-50% -50%">
-      <g opacity=".5" style="stroke:#2b6bff">${crackPaths}</g></svg></div>
-
-    ${smokeEls}
-
-    <svg id="mark" width="180" height="180" viewBox="0 0 120 120">
-      <defs><clipPath id="kc"><path d="M26.4 0H120V93.6L93.6 120H0V26.4Z"/></clipPath></defs>
-      <path d="M26.4 0H120V93.6L93.6 120H0V26.4Z" fill="#fff"/>
-      <g clip-path="url(#kc)">
-        <rect x="0" y="106.2" width="93.6" height="13.8" fill="#000"/>
-        <rect x="0" y="106.2" width="31.8" height="13.8" fill="#9bd800"/>
-      </g>
-      <g transform="translate(${markX} ${markY}) scale(${markScale})">
-        <g transform="translate(${p.mx} ${p.my})"><path d="${p.m1}" fill="#000"/><path d="${p.m2}" fill="#000"/></g>
-      </g>
-    </svg>
-
-    <svg id="word" width="790" height="77" viewBox="${p.wvb}">
-      <g transform="translate(${p.wx} ${p.cap})">
-        <path d="${p.gamma}" fill="#fff"/><path d="${p.grips}" fill="#9bd800"/>
+    <svg id="word" width="820" height="80" viewBox="${gp("WORDMARK_VIEWBOX")}">
+      <g transform="translate(${gn("WORDMARK_X")} ${gn("CAP_HEIGHT")})">
+        <path d="${gp("WORDMARK_GAMMA")}" fill="#fff"/>
+        <path d="${gp("WORDMARK_GRIPS")}" fill="#9bd800"/>
       </g>
     </svg>
 
@@ -177,37 +176,38 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
     <div id="tag">GET A <b>GRIP</b>.</div>
     <div id="flash"></div>
   </div>
+
   <div id="vig"></div>
   <div id="grain"></div>
 </div>
 
-<div id="gate"><div><b>CLICK TO PLAY WITH SOUND</b><p>browsers block audio until you interact · press R to replay</p></div></div>
-<div id="hint">stage is 1920×1080 · record the window at that size · <b>R</b> replay</div>
+<div id="gate"><div><b>CLICK TO PLAY WITH SOUND</b><p>browsers block audio until you interact · R to replay</p></div></div>
+<div id="hint">1920×1080 stage · ~4s · R to replay</div>
 
 <script type="module">
 ${audio}
 
 const frame = document.getElementById('frame');
-function fit(){ const s = Math.min(innerWidth/1920, innerHeight/1080);
-  frame.style.transform = 'translate(-50%,-50%) scale('+s+')'; }
+const fit = () => { const s = Math.min(innerWidth/1920, innerHeight/1080);
+  frame.style.transform = 'translate(-50%,-50%) scale('+s+')'; };
 addEventListener('resize', fit); fit();
 
-/* Timings mirror the CSS delays. Kept as one table so picture and sound
-   cannot drift apart when either is retimed. */
+/* One table for the whole timeline so sound and picture cannot drift. */
 function play(){
   unlock();
-  gunshot(0.40, 1.0);
-  glass(0.46, 0.55);
-  casing(0.78, 0.22);
-  riser(1.10, 0.72, 0.30);
-  whoosh(1.30, 0.28);
-  impact(1.94, 0.85);
+  swell(0.00, 0.90, 0.30);   // tension before the shot
+  gunshot(0.90, 1.00);       // the hit
+  glass(0.96, 0.60);         // the plane letting go
+  whoosh(1.45, 0.30, 0.55);  // grips passing camera
+  whoosh(1.85, 0.24, 0.45);
+  braam(2.30, 1.70, 0.32);   // logo approach
+  impact(2.55, 1.00);        // logo lands
+  impact(3.34, 0.55);        // tagline
 }
 document.getElementById('gate').addEventListener('click', e => {
   e.currentTarget.remove();
-  document.querySelectorAll('*').forEach(el => {
-    const a = el.getAnimations?.() ?? []; a.forEach(x => { x.cancel(); x.play(); });
-  });
+  document.querySelectorAll('*').forEach(el =>
+    (el.getAnimations?.() ?? []).forEach(a => { a.cancel(); a.play(); }));
   play();
 }, { once:true });
 addEventListener('keydown', e => { if (e.key.toLowerCase()==='r') location.reload(); });
@@ -215,4 +215,4 @@ addEventListener('keydown', e => { if (e.key.toLowerCase()==='r') location.reloa
 </body></html>`;
 
 writeFileSync("brand/video/intro.html", html);
-console.log("brand/video/intro.html", (html.length / 1024).toFixed(1) + "KB");
+console.log("intro.html", (html.length / 1024 / 1024).toFixed(2) + "MB ·", cells.length, "fragments · 6 grips");
