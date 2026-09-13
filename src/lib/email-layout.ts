@@ -89,7 +89,7 @@ export function layout(opts: {
 
   <tr><td style="padding:0 28px;">${rule}</td></tr>
   <tr><td style="padding:16px 28px 26px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:12px;line-height:1.65;color:${BRAND.muted};">
-    GammaGrips · Brouwerlaan 1273, 2182 KG Hillegom<br>
+    GammaGrips · Le Mairekade 77, 1013 CB Amsterdam<br>
     KvK 95473785 · BTW NL005155877B40 · <a href="mailto:info@gammagrips.com" style="color:${BRAND.muted};">info@gammagrips.com</a>
   </td></tr>
 

@@ -87,7 +87,7 @@ export function Footer() {
               <Logo />
               <p className="mt-4 max-w-[30ch] text-[13.5px] leading-relaxed text-ink-dim">
                 Moulded controller grips for the PS5 DualSense and Xbox Wireless
-                Controller. Designed and shipped from Hillegom.
+                Controller. Designed and shipped from Amsterdam.
               </p>
               <ul className="mt-5 flex gap-2">
                 {[

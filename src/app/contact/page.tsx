@@ -26,9 +26,9 @@ export default function ContactPage() {
           </AsideCard>
           <AsideCard title="GammaGrips B.V.">
             <p>
-              Brouwerlaan 1273
+              Le Mairekade 77
               <br />
-              2182 KG Hillegom
+              1013 CB Amsterdam
               <br />
               Netherlands
             </p>

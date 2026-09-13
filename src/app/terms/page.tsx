@@ -16,7 +16,7 @@ export default function Page() {
     >
       <h2>Who you are contracting with</h2>
       <p>
-        GammaGrips B.V., Brouwerlaan 1273, 2182 KG Hillegom, Netherlands. KvK
+        GammaGrips B.V., Le Mairekade 77, 1013 CB Amsterdam, Netherlands. KvK
         95473785, VAT NL005155877B40. Dutch law applies to these terms.
       </p>
 

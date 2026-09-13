@@ -8,6 +8,7 @@ import {
 } from "@/data/catalog";
 import { reviewsFor } from "@/data/reviews";
 import { ProductPurchase } from "@/components/product/product-purchase";
+import { shopOpen } from "@/lib/inventory";
 import { Reviews } from "@/components/product/reviews";
 import { ProductGrid } from "@/components/product/product-card";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
@@ -43,6 +44,7 @@ export default async function ProductPage({
   params: Promise<{ slug: string }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  const open = await shopOpen();
   const { slug } = await params;
   const sp = await searchParams;
   const product = productBySlug(slug);
@@ -82,6 +84,7 @@ export default async function ProductPage({
       </div>
 
       <ProductPurchase
+        shopOpen={open}
         product={product}
         initialDesign={initialDesign}
         initialPlatform={initialPlatform}
@@ -257,7 +260,7 @@ export default async function ProductPage({
               {[
                 {
                   h: "Delivery",
-                  b: `€4.95 flat inside the EU, free over ${money(50)}. Orders placed before 16:00 on a weekday leave Hillegom the same day. Tracked as standard.`,
+                  b: `€4.95 flat inside the EU, free over ${money(50)}. Orders placed before 16:00 on a weekday leave Amsterdam the same day. Tracked as standard.`,
                   href: "/shipping",
                   cta: "Delivery details",
                 },

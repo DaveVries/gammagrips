@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 const STATUS: Record<string, { label: string; note: string }> = {
   pending: { label: "Awaiting payment", note: "We have not received the payment yet. If you just paid, this can take a few seconds — refresh the page." },
-  paid: { label: "Paid", note: "Thank you. We are picking and packing; you will get a tracking link when it leaves Hillegom." },
+  paid: { label: "Paid", note: "Thank you. We are picking and packing; you will get a tracking link when it leaves Amsterdam." },
   failed: { label: "Payment failed", note: "The payment did not go through and nothing has been charged. You can order again, or email us." },
   cancelled: { label: "Cancelled", note: "The payment was cancelled. Nothing has been charged." },
   expired: { label: "Expired", note: "The payment window expired. Nothing has been charged." },

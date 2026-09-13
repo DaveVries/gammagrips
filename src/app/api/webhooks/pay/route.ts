@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { exchangeSecret, mapStatus } from "@/lib/pay";
 import { sendOrderConfirmation } from "@/lib/emails";
+import { drawDown } from "@/lib/inventory";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -121,8 +122,17 @@ export async function POST(req: Request) {
     if (justPaid.length > 0) {
       const o = justPaid[0];
       const lines = (await sql`
-        select name, qty, line_cents from order_lines where order_id = ${o.id} order by id
-      `) as { name: string; qty: number; line_cents: number }[];
+        select sku, name, qty, line_cents from order_lines where order_id = ${o.id} order by id
+      `) as { sku: string; name: string; qty: number; line_cents: number }[];
+
+      /* Decrement on the paid transition, which runs exactly once — the same
+         guard that stops a duplicate confirmation email stops double
+         decrementing. */
+      try {
+        await drawDown(lines.map((l) => ({ sku: l.sku, qty: l.qty })));
+      } catch (stockErr) {
+        console.error("[pay-webhook] stock draw-down failed", stockErr);
+      }
 
       /* A mail failure must never fail the webhook: Pay.nl would retry, and
          the order is already paid. Log it and still acknowledge. */

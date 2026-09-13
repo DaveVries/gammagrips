@@ -44,7 +44,7 @@ export async function sendOrderConfirmation(opts: {
     preheader: `Order ${opts.orderNumber} is bevestigd — we pakken 'm in.`,
     heading: `Order ${opts.orderNumber} bevestigd`,
     body: `
-<p style="margin:0 0 18px;">Hoi ${esc(opts.firstName)}, bedankt voor je bestelling. We pakken 'm in en je krijgt een track &amp; trace zodra hij Hillegom verlaat.</p>
+<p style="margin:0 0 18px;">Hoi ${esc(opts.firstName)}, bedankt voor je bestelling. We pakken 'm in en je krijgt een track &amp; trace zodra hij Amsterdam verlaat.</p>
 ${lineTable(opts.lines, opts.shippingCents, opts.totalCents)}
 ${button(url, "Bekijk je bestelling")}
 <p style="margin:14px 0 0;font-size:12px;color:${BRAND.muted};word-break:break-all;">Of plak deze link: ${url}</p>
@@ -62,7 +62,7 @@ ${button(url, "Bekijk je bestelling")}
     ``,
     `Volg je bestelling: ${url}`,
     ``,
-    `GammaGrips · Brouwerlaan 1273, 2182 KG Hillegom · KvK 95473785`,
+    `GammaGrips · Le Mairekade 77, 1013 CB Amsterdam · KvK 95473785`,
   ].join("\n");
 
   return sendMail({ to: opts.to, subject: `Order ${opts.orderNumber} bevestigd — GammaGrips`, text, html });
@@ -108,7 +108,7 @@ export async function sendShipped(opts: {
     preheader: `Order ${opts.orderNumber} is onderweg.`,
     heading: `Order ${opts.orderNumber} is onderweg`,
     body: `
-<p style="margin:0 0 18px;">Hoi ${esc(opts.firstName)}, je grips hebben Hillegom verlaten${opts.carrier ? ` met ${esc(opts.carrier)}` : ""}.</p>
+<p style="margin:0 0 18px;">Hoi ${esc(opts.firstName)}, je grips hebben Amsterdam verlaten${opts.carrier ? ` met ${esc(opts.carrier)}` : ""}.</p>
 ${button(opts.trackingUrl ?? url, opts.trackingUrl ? "Volg je pakket" : "Bekijk je bestelling")}
 <p style="margin:18px 0 0;font-size:13px;color:${BRAND.muted};">Past hij niet of bevalt hij niet? Je hebt 60 dagen om te ruilen of te retourneren.</p>`,
   });

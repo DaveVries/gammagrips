@@ -246,7 +246,7 @@ export function CheckoutFlow() {
                   Delivery — free, tracked, arrives {eta.earliest} – {eta.latest}
                 </p>
                 <p className="mt-1 text-[12px] text-ink-dim">
-                  Sent from Hillegom by PostNL. We do not ask for a phone number;
+                  Sent from Amsterdam by PostNL. We do not ask for a phone number;
                   tracking is emailed.
                 </p>
               </Groove>
@@ -463,7 +463,7 @@ function Confirmation({
           Order <span className="font-semibold text-ink">GG-24817</span> is
           confirmed. A receipt is on its way to{" "}
           <span className="text-ink">{email || "your inbox"}</span>, and tracking
-          follows as soon as it leaves Hillegom.
+          follows as soon as it leaves Amsterdam.
         </p>
 
         <dl className="border border-edge mt-7 divide-y divide-edge plate-in">

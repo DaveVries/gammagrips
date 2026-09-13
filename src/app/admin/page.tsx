@@ -1,26 +1,36 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { PageShell } from "@/components/site/page-shell";
 import { Button, Win } from "@/components/ui/primitives";
 import { currentSession } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { shopOpen } from "@/lib/inventory";
 import { money } from "@/lib/utils";
+import { AdminLogin } from "@/components/admin/admin-login";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = { title: "Admin", robots: { index: false, follow: false } };
 
-export default async function AdminPage() {
-  /* The real check. Middleware only saw that *a* cookie existed. */
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
   const session = await currentSession().catch(() => null);
-  if (!session) redirect("/account?next=/admin");
-  if (!session.is_admin) redirect("/account");
+
+  /* Not signed in, or signed in as a customer: same screen either way. Telling
+     a non-admin "you are not an admin" confirms the address exists. */
+  if (!session?.is_admin) {
+    return <AdminLogin sent={Boolean(sp.sent)} error={typeof sp.error === "string" ? sp.error : undefined} />;
+  }
 
   const sql = db();
+  const open = await shopOpen();
   const [totals] = (await sql`
     select
-      count(*) filter (where status = 'paid')::int         as paid,
-      count(*) filter (where status = 'pending')::int      as pending,
+      count(*) filter (where status = 'paid')::int    as paid,
+      count(*) filter (where status = 'pending')::int as pending,
       coalesce(sum(total_cents) filter (where status = 'paid'), 0)::int as revenue_cents
     from orders
   `) as { paid: number; pending: number; revenue_cents: number }[];
@@ -37,6 +47,22 @@ export default async function AdminPage() {
       crumbs={[{ label: "Admin" }]}
       aside={
         <div className="space-y-4 lg:sticky lg:top-24">
+          <Win title={open ? "SHOP OPEN" : "SHOP CLOSED"}>
+            <div className="p-4">
+              <p className="mb-3 text-[13px] leading-relaxed text-ink-dim">
+                {open
+                  ? "Orders are being accepted. The checkout still refuses anything with no stock."
+                  : "Nobody can order. The checkout refuses every request, whatever the page shows."}
+              </p>
+              <form action="/api/admin/shop" method="post">
+                <input type="hidden" name="open" value={open ? "false" : "true"} />
+                <Button type="submit" variant={open ? "default" : "primary"} full>
+                  {open ? "Close the shop" : "Open the shop"}
+                </Button>
+              </form>
+            </div>
+          </Win>
+
           <Win title="TOTALS">
             <dl className="space-y-2 p-4 text-[14px]">
               <div className="flex justify-between">
@@ -49,12 +75,18 @@ export default async function AdminPage() {
               </div>
               <div className="flex justify-between border-t border-[var(--color-plate-edge)] pt-2">
                 <dt className="text-ink-mute">Revenue</dt>
-                <dd className="font-bold tabular-nums">
-                  {money(totals.revenue_cents / 100)}
-                </dd>
+                <dd className="font-bold tabular-nums">{money(totals.revenue_cents / 100)}</dd>
               </div>
             </dl>
           </Win>
+
+          <Link
+            href="/admin/stock"
+            className="key cut-sm flex h-11 items-center justify-center bg-[var(--color-ice)] text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)]"
+          >
+            Manage stock
+          </Link>
+
           <form action="/api/auth/logout" method="post">
             <Button type="submit" variant="default" full>
               Sign out
@@ -88,9 +120,7 @@ export default async function AdminPage() {
                   <td className="py-2.5 text-ink-dim">
                     {new Date(String(o.created_at)).toLocaleDateString("en-GB")}
                   </td>
-                  <td className="max-w-[180px] truncate py-2.5 text-ink-dim">
-                    {String(o.email)}
-                  </td>
+                  <td className="max-w-[180px] truncate py-2.5 text-ink-dim">{String(o.email)}</td>
                   <td className="py-2.5">
                     <span
                       className={

@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/site/header";
+import { ShopNotice } from "@/components/site/shop-notice";
 import { Footer } from "@/components/site/footer";
 import { SITE_URL } from "@/lib/site";
 import { CartDrawer } from "@/components/cart/cart-drawer";
@@ -80,7 +81,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify([organizationLd, websiteLd]) }}
         />
         <CartProvider>
-          <Header />
+          <ShopNotice />
+        <Header />
           <main id="main">{children}</main>
           <Footer />
           <CartDrawer />

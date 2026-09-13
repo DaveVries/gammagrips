@@ -12,7 +12,7 @@ export default function ShippingPage() {
   return (
     <PageShell
       title="Shipping"
-      deck="Everything ships from our own unit in Hillegom. No dropshipping, no third-party fulfilment, no surprise customs charges inside the EU."
+      deck="Everything ships from our own unit in Amsterdam. No dropshipping, no third-party fulfilment, no surprise customs charges inside the EU."
       crumbs={[{ label: "Shipping" }]}
       aside={
         <div className="space-y-4 lg:sticky lg:top-24">

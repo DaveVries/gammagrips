@@ -18,10 +18,13 @@ export function ProductPurchase({
   product,
   initialDesign,
   initialPlatform,
+  shopOpen = true,
 }: {
   product: Product;
   initialDesign: string | null;
   initialPlatform: PlatformId;
+  /** Read from the database on the server; the same flag the API enforces. */
+  shopOpen?: boolean;
 }) {
   const cart = useCart();
   const [designId] = useState(initialDesign);
@@ -52,7 +55,7 @@ export function ProductPurchase({
   const texture = textureById(product.texture);
   const variant = variantFor(product, designId, platformId);
   const stock = stockLabel(variant?.stock);
-  const soldOut = !variant || variant.stock === 0;
+  const soldOut = !shopOpen || !variant || variant.stock === 0;
   const isController = product.type === "grips" || product.type === "bundle";
 
   const eta = deliveryWindow(new Date("2026-09-04T00:00:00Z"));
@@ -396,11 +399,18 @@ export function ProductPurchase({
               onClick={onAdd}
               aria-live="polite"
             >
-              {soldOut ? "SOLD OUT" : added ? "ADDED ✓" : "ADD TO CART"}
+              {!shopOpen ? "NOT YET FOR SALE" : soldOut ? "SOLD OUT" : added ? "ADDED ✓" : "ADD TO CART"}
             </Button>
           </div>
 
-          {soldOut && (
+          {!shopOpen && (
+            <p className="plate-in cut-sm mt-3 p-3 text-[13px] leading-relaxed text-ink-dim">
+              The first production run is still being moulded, so nothing is for
+              sale yet. Everything on this page is accurate — join the list in
+              the footer and we will tell you when it ships.
+            </p>
+          )}
+          {shopOpen && soldOut && (
             <p className="plate-in cut-sm mt-3 p-3 text-[13px] leading-relaxed text-ink-dim">
               This design is sold out for the {platform.short}. Pick another
               design above, or another controller — the same design is usually in
@@ -410,7 +420,7 @@ export function ProductPurchase({
 
           {/* Express checkout above the fold of the payment step; on mobile it
               collapses the whole form to one biometric tap. */}
-          {!soldOut && (
+          {!soldOut && shopOpen && (
             <div className="mt-2 grid grid-cols-2 gap-2">
               {["Apple Pay", "PayPal"].map((m) => (
                 <button
@@ -430,7 +440,7 @@ export function ProductPurchase({
             {[
               {
                 t: `Arrives ${eta.earliest} – ${eta.latest}`,
-                s: "Ordered before 16:00 on a weekday ships the same day from Hillegom.",
+                s: "Ordered before 16:00 on a weekday ships the same day from Amsterdam.",
               },
               {
                 t: `${RETURN_DAYS}-day returns, worn or not`,
@@ -492,7 +502,7 @@ export function ProductPurchase({
             tabIndex={showStickyBuy ? 0 : -1}
             className="shrink-0 px-5"
           >
-            {soldOut ? "SOLD OUT" : added ? "ADDED ✓" : "ADD"}
+            {!shopOpen ? "NOT YET" : soldOut ? "SOLD OUT" : added ? "ADDED ✓" : "ADD"}
           </Button>
         </div>
       </div>

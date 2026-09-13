@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { SITE_URL } from "@/lib/site";
 import { createOrder, priceCart, attachPayOrder, type CartLineInput } from "@/lib/orders";
 import { createPayOrder, payConfigured } from "@/lib/pay";
+import { shopOpen, stockMap } from "@/lib/inventory";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -32,12 +33,36 @@ export async function POST(req: Request) {
     if (!v) return NextResponse.json({ error: `Missing field: ${k}` }, { status: 400 });
   }
 
+  /* The real gate. A hidden "add to cart" or a replayed request must not be
+     able to place an order while the shop is closed or a SKU is at zero —
+     the UI is a courtesy, this is the guarantee. */
+  if (!(await shopOpen())) {
+    return NextResponse.json(
+      { error: "We are not taking orders at the moment. Nothing has been charged." },
+      { status: 409 },
+    );
+  }
+
   const items = Array.isArray(body.items) ? (body.items as CartLineInput[]) : [];
   // Priced from the catalog, server-side. The browser sends slugs and
   // quantities only — a client that could send prices could send its own.
   const priced = priceCart(items);
   if (!priced.lines.length || priced.totalCents <= 0) {
     return NextResponse.json({ error: "Your cart is empty" }, { status: 400 });
+  }
+
+  const stock = await stockMap();
+  const short = priced.lines.filter((l) => (stock.get(l.sku) ?? 0) < l.qty);
+  if (short.length > 0) {
+    return NextResponse.json(
+      {
+        error:
+          short.length === 1
+            ? `${short[0].name} is out of stock. Nothing has been charged.`
+            : "Some items are out of stock. Nothing has been charged.",
+      },
+      { status: 409 },
+    );
   }
 
   try {
