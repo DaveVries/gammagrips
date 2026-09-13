@@ -81,6 +81,13 @@ export default async function AdminPage({
           </Win>
 
           <Link
+            href="/admin/products"
+            className="key cut-sm flex h-11 items-center justify-center bg-[var(--color-ice)] text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)]"
+          >
+            Products
+          </Link>
+
+          <Link
             href="/admin/stock"
             className="key cut-sm flex h-11 items-center justify-center bg-[var(--color-ice)] text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)]"
           >
