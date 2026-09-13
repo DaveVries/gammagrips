@@ -19,6 +19,8 @@ const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
 const FPS = Number(process.env.FPS ?? 30);
 const DURATION = Number(process.env.DUR ?? 4.6);
 const W = 1920, H = 1080;
+const SRC = process.env.SRC ?? "brand/video/intro.html";
+const NAME = process.env.NAME ?? "gammagrips-intro";
 const OUT = "brand/video/out";
 const FRAMES = `${OUT}/frames`;
 
@@ -36,7 +38,7 @@ const browser = await puppeteer.launch({
 });
 const page = await browser.newPage();
 await page.setViewport({ width: W, height: H, deviceScaleFactor: 1 });
-await page.goto("file://" + resolve("brand/video/intro.html"), { waitUntil: "networkidle0" });
+await page.goto("file://" + resolve(SRC), { waitUntil: "networkidle0" });
 
 // Drop the click gate and the hint, and lock the stage at 1:1.
 await page.evaluate(() => {
@@ -103,7 +105,7 @@ await browser.close();
 if (wav) writeFileSync(`${OUT}/audio.wav`, Buffer.from(wav));
 
 // --- mux ---------------------------------------------------------------------
-const mp4 = `${OUT}/gammagrips-intro.mp4`;
+const mp4 = `${OUT}/${NAME}.mp4`;
 const args = ["-y", "-framerate", String(FPS), "-i", `${FRAMES}/f%05d.png`];
 if (wav) args.push("-i", `${OUT}/audio.wav`);
 args.push("-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "16", "-preset", "slow",
