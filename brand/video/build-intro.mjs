@@ -19,9 +19,11 @@ const frags = cells
 /* Six grips launching out of the hole on staggered arcs. */
 const GRIPS = ["dark-matter", "volt", "ember", "vapor", "venom", "ice-froyo"];
 const gripEls = GRIPS.map((g, i) => {
-  const a = (i / GRIPS.length) * Math.PI * 2 - Math.PI / 2 + 0.35;
-  const dist = 300 + (i % 3) * 130;
-  return `<img class="grip" src="${imgs[g]}" alt="" style="--gx:${Math.round(Math.cos(a) * dist)}px;--gy:${Math.round(Math.sin(a) * dist * 0.62)}px;--gr:${Math.round((Math.random() - 0.5) * 40)}deg;--gd:${(0.62 + i * 0.055).toFixed(3)}s;--gz:${6 + i}"/>`;
+  /* Wide arc and a big spread in travel distance, so six grips read as a
+     stream past the camera instead of a pile in the middle of frame. */
+  const a = (i / GRIPS.length) * Math.PI * 2 - Math.PI / 2 + 0.5;
+  const dist = 620 + (i % 3) * 240;
+  return `<img class="grip" src="${imgs[g]}" alt="" style="--gx:${Math.round(Math.cos(a) * dist)}px;--gy:${Math.round(Math.sin(a) * dist * 0.5)}px;--gr:${[-22, 15, -9, 26, -17, 11][i]}deg;--gd:${(0.30 + i * 0.115).toFixed(3)}s"/>`;
 }).join("");
 
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
@@ -89,19 +91,19 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 
   /* Light pouring out of the hole */
   @keyframes glow{0%{opacity:0;scale:.15}22%{opacity:1}100%{opacity:0;scale:3.4}}
-  #glow{position:absolute;left:50%;top:50%;translate:-50% -50%;width:900px;height:900px;z-index:5;pointer-events:none;
-    background:radial-gradient(circle,rgba(155,216,0,.55) 0%,rgba(155,216,0,.18) 28%,transparent 62%);
+  #glow{position:absolute;left:50%;top:50%;translate:-50% -50%;width:700px;height:700px;z-index:5;pointer-events:none;
+    background:radial-gradient(circle,rgba(155,216,0,.42) 0%,rgba(155,216,0,.10) 22%,transparent 52%);
     filter:blur(24px);animation:glow 1.5s cubic-bezier(.2,.8,.3,1) 1.0s both}
 
   /* THE PRODUCT — grips launch out of the hole toward camera */
   @keyframes gripOut{
-    0%{opacity:0;transform:translate3d(0,0,-260px) scale(.05) rotate(0deg)}
-    18%{opacity:1}
-    62%{transform:translate3d(calc(var(--gx)*.72),calc(var(--gy)*.72),260px) scale(.92) rotate(var(--gr))}
-    100%{opacity:0;transform:translate3d(var(--gx),var(--gy),900px) scale(1.55) rotate(var(--gr))}}
-  .grip{position:absolute;left:50%;top:50%;width:420px;margin:-136px 0 0 -210px;z-index:11;
-    filter:drop-shadow(0 26px 60px rgba(0,0,0,.9));
-    animation:gripOut 1.5s cubic-bezier(.22,.65,.3,1) calc(1.0s + var(--gd)) both}
+    0%{opacity:0;transform:translate3d(0,0,-420px) scale(.04) rotate(0deg)}
+    14%{opacity:1}
+    55%{transform:translate3d(calc(var(--gx)*.46),calc(var(--gy)*.46),260px) scale(.82) rotate(calc(var(--gr)*.6))}
+    100%{opacity:0;transform:translate3d(var(--gx),var(--gy),1150px) scale(1.9) rotate(var(--gr))}}
+  .grip{position:absolute;left:50%;top:50%;width:620px;margin:-200px 0 0 -310px;z-index:11;
+    filter:drop-shadow(0 30px 70px rgba(0,0,0,.95)) drop-shadow(0 0 40px rgba(155,216,0,.22));
+    animation:gripOut 1.6s cubic-bezier(.3,.58,.35,1) calc(1.0s + var(--gd)) both}
 
   /* Logo lands last */
   @keyframes markIn{0%{opacity:0;scale:3.2;filter:blur(22px)}
@@ -146,14 +148,14 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
     72%{opacity:calc(var(--fop)*.7)}
     100%{transform:translate(calc(var(--fx)*-1),-70px) scale(1.35);opacity:0}}
   #fire{position:absolute;left:50%;top:calc(50% + 108px);translate:-50% -50%;
-    width:940px;height:230px;z-index:13;pointer-events:none;opacity:0;
-    animation:hexIn .9s ease-out 2.80s both;
+    width:1040px;height:300px;z-index:13;pointer-events:none;opacity:0;
+    animation:hexIn .8s ease-out 2.70s both;
     mask-image:radial-gradient(64% 78% at 50% 55%,#000 8%,transparent 76%);
     -webkit-mask-image:radial-gradient(64% 78% at 50% 55%,#000 8%,transparent 76%);
     filter:url(#flameWarp) blur(2px)}
   .flame{position:absolute;bottom:0;border-radius:50%;
-    background:radial-gradient(closest-side,rgba(200,255,90,.95),rgba(155,216,0,.55) 42%,rgba(60,120,0,0) 76%);
-    filter:blur(18px);mix-blend-mode:screen;
+    background:radial-gradient(closest-side,rgba(215,255,120,1),rgba(155,216,0,.8) 38%,rgba(80,150,0,.25) 62%,rgba(40,90,0,0) 80%);
+    filter:blur(15px);mix-blend-mode:screen;
     animation:fireRise var(--fdurr) ease-in-out var(--fdl2) infinite}
 
   #vig{position:absolute;inset:0;z-index:20;pointer-events:none;
@@ -252,18 +254,10 @@ const fit = () => { const s = Math.min(innerWidth/1920, innerHeight/1080);
   frame.style.transform = 'translate(-50%,-50%) scale('+s+')'; };
 addEventListener('resize', fit); fit();
 
-/* One table for the whole timeline so sound and picture cannot drift. */
-function play(){
-  unlock();
-  swell(0.00, 0.90, 0.30);   // tension before the shot
-  gunshot(0.90, 1.00);       // the hit
-  glass(0.96, 0.60);         // the plane letting go
-  whoosh(1.45, 0.30, 0.55);  // grips passing camera
-  whoosh(1.85, 0.24, 0.45);
-  braam(2.30, 1.70, 0.32);   // logo approach
-  impact(2.55, 1.00);        // logo lands
-  impact(3.34, 0.55);        // tagline
-}
+/* cues() is defined in the audio module so the offline renderer uses the very
+   same timeline — the mp4 mix cannot drift from what plays here. */
+function play(){ unlock(); cues(); }
+window.__audio = { renderInto, cues, useContext };
 document.getElementById('gate').addEventListener('click', e => {
   e.currentTarget.remove();
   document.querySelectorAll('*').forEach(el =>

@@ -29,6 +29,7 @@
     "eslint-config-next": "16.3.4",
     "geist": "^1.7.2",
     "opentype.js": "^2.0.0",
+    "puppeteer-core": "^25.10.0",
     "sharp": "^0.35.4",
     "tailwindcss": "^4",
     "typescript": "^5"

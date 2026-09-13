@@ -47,3 +47,4 @@ next-env.d.ts
 
 # brand kit zip is a build artefact — rebuild from brand/kit/
 /brand/gammagrips-brand-kit.zip
+/brand/video/out/

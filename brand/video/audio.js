@@ -9,12 +9,28 @@
  */
 let ctx, verb, verbGain, master;
 
-const AC = () => {
-  if (ctx) return ctx;
-  ctx = new (window.AudioContext || window.webkitAudioContext)();
+/** Swap in an OfflineAudioContext so the exact same cue list can be rendered
+ *  to a file instead of played. Everything below reads `ctx` through AC(), so
+ *  this is the only seam needed. */
+export function useContext(offline) {
+  ctx = offline; verb = verbGain = master = undefined;
+  buildGraph();
+  return ctx;
+}
+
+function buildGraph() {
   master = ctx.createGain();
-  master.gain.value = 0.9;
-  master.connect(ctx.destination);
+  master.gain.value = 0.75;
+  /* Turning the master down did not stop it hitting 0 dBFS — the shot, the
+     impact and the reverb tail sum. A limiter on the bus catches the peaks
+     without flattening everything below them. */
+  const limiter = ctx.createDynamicsCompressor();
+  limiter.threshold.value = -3;
+  limiter.knee.value = 0;
+  limiter.ratio.value = 20;
+  limiter.attack.value = 0.002;
+  limiter.release.value = 0.18;
+  master.connect(limiter).connect(ctx.destination);
 
   // Impulse response: exponentially decaying noise. Cheap, and indistinguishable
   // from a sampled hall at this length.
@@ -31,6 +47,12 @@ const AC = () => {
   verbGain = ctx.createGain();
   verbGain.gain.value = 0.55;
   verb.connect(verbGain).connect(master);
+}
+
+const AC = () => {
+  if (ctx) { if (!master) buildGraph(); return ctx; }
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  buildGraph();
   return ctx;
 };
 
@@ -170,3 +192,24 @@ export function impact(at = 0, gain = 1) {
 }
 
 export function unlock() { AC().resume(); }
+
+
+/* ---------------------------------------------------------------------------
+   The cue list. One definition, used by both live playback and the offline
+   render, so the mix in the mp4 is the mix you hear in the browser.
+   -------------------------------------------------------------------------*/
+export function cues() {
+  swell(0.00, 0.90, 0.30);
+  gunshot(0.90, 1.00);
+  glass(0.96, 0.60);
+  whoosh(1.45, 0.30, 0.55);
+  whoosh(1.85, 0.24, 0.45);
+  braam(2.30, 1.70, 0.32);
+  impact(2.55, 1.00);
+  impact(3.34, 0.55);
+}
+
+export async function renderInto(offline) {
+  useContext(offline);
+  cues();
+}
