@@ -9,7 +9,7 @@ export async function GET(req: Request) {
   const email = token ? await consumeLoginToken(token) : null;
 
   if (!email) {
-    return NextResponse.redirect(new URL("/account?error=link", req.url), 303);
+    return NextResponse.redirect(new URL("/admin?error=link", req.url), 303);
   }
 
   await startSession(email);

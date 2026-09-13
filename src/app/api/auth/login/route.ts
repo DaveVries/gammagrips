@@ -11,10 +11,15 @@ export async function POST(req: Request) {
   const form = await req.formData().catch(() => null);
   const email = String(form?.get("email") ?? "").trim().toLowerCase().slice(0, 254);
 
-  const done = () => NextResponse.redirect(new URL("/account?sent=1", req.url), 303);
+  /* Return the visitor to the page they signed in from. Only same-site paths
+     are honoured — taking an absolute URL here would turn the login form into
+     an open redirect. */
+  const raw = String(form?.get("next") ?? "");
+  const next = /^\/[A-Za-z0-9/_-]*$/.test(raw) ? raw : "/account";
+  const done = () => NextResponse.redirect(new URL(`${next}?sent=1`, req.url), 303);
 
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-    return NextResponse.redirect(new URL("/account?error=email", req.url), 303);
+    return NextResponse.redirect(new URL(`${next}?error=email`, req.url), 303);
   }
 
   try {
