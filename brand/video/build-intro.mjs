@@ -106,24 +106,55 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
   /* Logo lands last */
   @keyframes markIn{0%{opacity:0;scale:3.2;filter:blur(22px)}
     55%{opacity:1;scale:.94;filter:blur(0)}78%{scale:1.05}100%{opacity:1;scale:1}}
-  #mark{position:absolute;left:50%;top:calc(50% - 40px);translate:-50% -50%;z-index:15;width:190px;
+  #mark{position:absolute;left:50%;top:calc(50% - 78px);translate:-50% -50%;z-index:15;width:190px;
     animation:markIn .5s cubic-bezier(.2,1.5,.3,1) 2.55s both;
     filter:drop-shadow(0 0 100px rgba(155,216,0,.6))}
 
   @keyframes wipe{0%{clip-path:inset(0 100% 0 0);opacity:0}8%{opacity:1}100%{clip-path:inset(0 0 0 0);opacity:1}}
-  #word{position:absolute;left:50%;top:calc(50% + 92px);translate:-50% -50%;z-index:15;
+  #word{position:absolute;left:50%;top:calc(50% + 108px);translate:-50% -50%;z-index:15;
     animation:wipe .46s cubic-bezier(.16,1,.3,1) 2.86s both}
 
   @keyframes rule{0%{width:0;opacity:0}10%{opacity:1}100%{width:600px;opacity:1}}
-  #rule{position:absolute;left:50%;top:calc(50% + 140px);translate:-50% 0;height:5px;background:var(--lime);
+  #rule{position:absolute;left:50%;top:calc(50% + 158px);translate:-50% 0;height:5px;background:var(--lime);
     z-index:15;box-shadow:0 0 30px rgba(155,216,0,.9);animation:rule .38s cubic-bezier(.16,1,.3,1) 3.14s both}
 
   @keyframes slam{0%{opacity:0;scale:2.2;filter:blur(14px);letter-spacing:.5em}
     58%{opacity:1;scale:.97;filter:blur(0);letter-spacing:.14em}100%{opacity:1;scale:1;letter-spacing:.16em}}
-  #tag{position:absolute;left:50%;top:calc(50% + 176px);translate:-50% 0;z-index:16;color:#fff;
+  #tag{position:absolute;left:50%;top:calc(50% + 194px);translate:-50% 0;z-index:16;color:#fff;
     font-size:52px;font-weight:800;white-space:nowrap;
     animation:slam .46s cubic-bezier(.2,1.4,.3,1) 3.34s both}
   #tag b{color:var(--lime);text-shadow:0 0 40px rgba(155,216,0,.7)}
+
+  /* Hex field. Fades up under the lockup at the end so the last frame is not
+     flat black. Two offset layers make a true honeycomb — one grid of hexes
+     cannot tile without the second row shifted half a cell. */
+  @keyframes hexIn{0%{opacity:0}100%{opacity:1}}
+  #hex{position:absolute;inset:-4%;z-index:3;pointer-events:none;opacity:0;
+    animation:hexIn 1.1s ease-out 2.45s both;
+    mask-image:radial-gradient(62% 58% at 50% 50%,#000 12%,transparent 78%);
+    -webkit-mask-image:radial-gradient(62% 58% at 50% 50%,#000 12%,transparent 78%)}
+  @keyframes hexDrift{0%{transform:translate(0,0)}100%{transform:translate(-104px,-60px)}}
+  #hex svg{width:100%;height:100%;animation:hexDrift 26s linear infinite}
+
+  /* Green fire behind the wordmark.
+     Three blurred lime blobs rising at different rates give the body; an SVG
+     turbulence displacement on top gives the flicker. Blobs alone read as a
+     lava lamp, turbulence alone reads as noise — together they read as fire. */
+  @keyframes fireRise{
+    0%{transform:translate(var(--fx),40px) scale(.7);opacity:0}
+    18%{opacity:var(--fop)}
+    72%{opacity:calc(var(--fop)*.7)}
+    100%{transform:translate(calc(var(--fx)*-1),-70px) scale(1.35);opacity:0}}
+  #fire{position:absolute;left:50%;top:calc(50% + 108px);translate:-50% -50%;
+    width:940px;height:230px;z-index:13;pointer-events:none;opacity:0;
+    animation:hexIn .9s ease-out 2.80s both;
+    mask-image:radial-gradient(64% 78% at 50% 55%,#000 8%,transparent 76%);
+    -webkit-mask-image:radial-gradient(64% 78% at 50% 55%,#000 8%,transparent 76%);
+    filter:url(#flameWarp) blur(2px)}
+  .flame{position:absolute;bottom:0;border-radius:50%;
+    background:radial-gradient(closest-side,rgba(200,255,90,.95),rgba(155,216,0,.55) 42%,rgba(60,120,0,0) 76%);
+    filter:blur(18px);mix-blend-mode:screen;
+    animation:fireRise var(--fdurr) ease-in-out var(--fdl2) infinite}
 
   #vig{position:absolute;inset:0;z-index:20;pointer-events:none;
     background:radial-gradient(130% 95% at 50% 50%,transparent 34%,rgba(0,0,0,.94) 100%)}
@@ -146,6 +177,35 @@ const html = `<!doctype html><html lang="en"><head><meta charset="utf-8">
 
   <div class="cam">
     <div id="glow"></div>
+
+    <div id="hex"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2200 1300" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <pattern id="hexcell" width="104" height="60" patternUnits="userSpaceOnUse">
+          <path d="M26 1 L78 1 L104 30 L78 59 L26 59 L0 30 Z" fill="none" stroke="#9bd800" stroke-width="1.4" opacity=".16"/>
+        </pattern>
+        <pattern id="hexcell2" width="104" height="60" patternUnits="userSpaceOnUse" patternTransform="translate(52 30)">
+          <path d="M26 1 L78 1 L104 30 L78 59 L26 59 L0 30 Z" fill="none" stroke="#9bd800" stroke-width="1.4" opacity=".10"/>
+        </pattern>
+      </defs>
+      <rect width="2200" height="1300" fill="url(#hexcell)"/>
+      <rect width="2200" height="1300" fill="url(#hexcell2)"/>
+    </svg></div>
+
+    <svg width="0" height="0" style="position:absolute">
+      <filter id="flameWarp">
+        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.05" numOctaves="2" seed="9" result="n">
+          <animate attributeName="baseFrequency" dur="7s" values="0.012 0.05;0.02 0.075;0.012 0.05" repeatCount="indefinite"/>
+        </feTurbulence>
+        <feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G"/>
+      </filter>
+    </svg>
+
+    <div id="fire">
+      <div class="flame" style="left:6%;width:270px;height:210px;--fx:-26px;--fop:.55;--fdurr:3.1s;--fdl2:0s"></div>
+      <div class="flame" style="left:26%;width:330px;height:250px;--fx:20px;--fop:.62;--fdurr:2.6s;--fdl2:-.7s"></div>
+      <div class="flame" style="left:48%;width:300px;height:230px;--fx:-16px;--fop:.58;--fdurr:3.4s;--fdl2:-1.4s"></div>
+      <div class="flame" style="left:68%;width:280px;height:215px;--fx:24px;--fop:.5;--fdurr:2.9s;--fdl2:-2.1s"></div>
+    </div>
 
     <svg id="glass" width="1920" height="1080" viewBox="0 0 1920 1080">${frags}</svg>
 
