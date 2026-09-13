@@ -4,6 +4,7 @@ import "./globals.css";
 import { CartProvider } from "@/lib/cart";
 import { Header } from "@/components/site/header";
 import { ShopNotice } from "@/components/site/shop-notice";
+import { currentSession } from "@/lib/auth";
 import { Footer } from "@/components/site/footer";
 import { SITE_URL } from "@/lib/site";
 import { CartDrawer } from "@/components/cart/cart-drawer";
@@ -61,9 +62,11 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const s = await currentSession().catch(() => null);
+  const session = s ? { email: s.email, isAdmin: s.is_admin } : null;
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -82,7 +85,7 @@ export default function RootLayout({
         />
         <CartProvider>
           <ShopNotice />
-        <Header />
+        <Header session={session} />
           <main id="main">{children}</main>
           <Footer />
           <CartDrawer />

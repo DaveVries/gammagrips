@@ -1,146 +1,118 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PageShell } from "@/components/site/page-shell";
-import { Button, Win } from "@/components/ui/primitives";
 import { currentSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { shopOpen } from "@/lib/inventory";
 import { money } from "@/lib/utils";
-import { AdminLogin } from "@/components/admin/admin-login";
 
 export const dynamic = "force-dynamic";
-export const metadata: Metadata = { title: "Admin", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Orders", robots: { index: false, follow: false } };
 
-export default async function AdminPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const sp = await searchParams;
-  const session = await currentSession().catch(() => null);
+const TONE: Record<string, string> = {
+  paid: "bg-[var(--color-hot)] text-[var(--color-hot-ink)]",
+  pending: "plate-in text-ink-dim",
+  failed: "plate-in text-ink-mute",
+  cancelled: "plate-in text-ink-mute",
+  expired: "plate-in text-ink-mute",
+  refunded: "plate-in text-ink-dim",
+};
 
-  /* Not signed in, or signed in as a customer: same screen either way. Telling
-     a non-admin "you are not an admin" confirms the address exists. */
-  if (!session?.is_admin) {
-    return <AdminLogin sent={Boolean(sp.sent)} error={typeof sp.error === "string" ? sp.error : undefined} />;
-  }
-
+export default async function AdminOrders() {
+  const session = (await currentSession())!;
   const sql = db();
   const open = await shopOpen();
-  const [totals] = (await sql`
+
+  const [t] = (await sql`
     select
-      count(*) filter (where status = 'paid')::int    as paid,
-      count(*) filter (where status = 'pending')::int as pending,
-      coalesce(sum(total_cents) filter (where status = 'paid'), 0)::int as revenue_cents
+      count(*)::int                                                        as all_orders,
+      count(*) filter (where status = 'paid')::int                         as paid,
+      count(*) filter (where status = 'pending')::int                      as pending,
+      coalesce(sum(total_cents) filter (where status = 'paid'), 0)::int    as revenue_cents,
+      coalesce(sum(total_cents) filter (where status = 'paid'
+        and created_at > now() - interval '30 days'), 0)::int              as revenue_30d
     from orders
-  `) as { paid: number; pending: number; revenue_cents: number }[];
+  `) as Record<string, number>[];
 
   const orders = (await sql`
-    select number, token, status, email, total_cents, created_at
-      from orders order by number desc limit 100
+    select number, token, status, email, total_cents, created_at, paid_at
+      from orders order by number desc limit 200
   `) as Record<string, unknown>[];
 
+  const stat = (label: string, value: string) => (
+    <div key={label} className="rounded-[var(--radius-sm)] border border-edge plate-in px-3 py-2.5">
+      <div className="label text-ink-mute">{label}</div>
+      <div className="mt-1 text-[19px] font-bold tabular-nums">{value}</div>
+    </div>
+  );
+
   return (
-    <PageShell
-      title="Orders"
-      deck={`Signed in as ${session.email}.`}
-      crumbs={[{ label: "Admin" }]}
-      aside={
-        <div className="space-y-4 lg:sticky lg:top-24">
-          <Win title={open ? "SHOP OPEN" : "SHOP CLOSED"}>
-            <div className="p-4">
-              <p className="mb-3 text-[13px] leading-relaxed text-ink-dim">
-                {open
-                  ? "Orders are being accepted. The checkout still refuses anything with no stock."
-                  : "Nobody can order. The checkout refuses every request, whatever the page shows."}
-              </p>
-              <form action="/api/admin/shop" method="post">
-                <input type="hidden" name="open" value={open ? "false" : "true"} />
-                <Button type="submit" variant={open ? "default" : "primary"} full>
-                  {open ? "Close the shop" : "Open the shop"}
-                </Button>
-              </form>
-            </div>
-          </Win>
+    <>
+      {/* A management screen leads with numbers, not with a hero. */}
+      <div className="mb-4 grid grid-cols-2 gap-2 sm:grid-cols-5">
+        {stat("Orders", String(t.all_orders))}
+        {stat("Paid", String(t.paid))}
+        {stat("Unpaid", String(t.pending))}
+        {stat("Revenue", money(t.revenue_cents / 100))}
+        {stat("Last 30d", money(t.revenue_30d / 100))}
+      </div>
 
-          <Win title="TOTALS">
-            <dl className="space-y-2 p-4 text-[14px]">
-              <div className="flex justify-between">
-                <dt className="text-ink-mute">Paid</dt>
-                <dd className="font-bold tabular-nums">{totals.paid}</dd>
-              </div>
-              <div className="flex justify-between">
-                <dt className="text-ink-mute">Awaiting payment</dt>
-                <dd className="font-bold tabular-nums">{totals.pending}</dd>
-              </div>
-              <div className="flex justify-between border-t border-[var(--color-plate-edge)] pt-2">
-                <dt className="text-ink-mute">Revenue</dt>
-                <dd className="font-bold tabular-nums">{money(totals.revenue_cents / 100)}</dd>
-              </div>
-            </dl>
-          </Win>
-
-          <Link
-            href="/admin/products"
-            className="key cut-sm flex h-11 items-center justify-center bg-[var(--color-ice)] text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)]"
+      <div className="mb-4 flex flex-wrap items-center gap-3 rounded-[var(--radius-sm)] border border-edge plate-in px-3 py-2.5">
+        <span className="flex items-center gap-2 text-[13.5px]">
+          <span
+            className={`inline-block h-2.5 w-2.5 rounded-full ${open ? "bg-[var(--color-hot)]" : "bg-[var(--color-pip-off)]"}`}
+            aria-hidden="true"
+          />
+          Shop is <strong>{open ? "open" : "closed"}</strong>
+        </span>
+        <span className="text-[12.5px] text-ink-mute">
+          {open
+            ? "Checkout accepts orders. Items with no stock are still refused."
+            : "Checkout refuses every order, whatever a page shows."}
+        </span>
+        <form action="/api/admin/shop" method="post" className="ml-auto">
+          <input type="hidden" name="open" value={open ? "false" : "true"} />
+          <button
+            type="submit"
+            className="rounded-[var(--radius-sm)] plate px-3 py-1.5 text-[12px] font-bold text-ink hover:bg-[var(--color-plate-hi)]"
           >
-            Products
-          </Link>
+            {open ? "Close shop" : "Open shop"}
+          </button>
+        </form>
+      </div>
 
-          <Link
-            href="/admin/stock"
-            className="key cut-sm flex h-11 items-center justify-center bg-[var(--color-ice)] text-[12px] font-bold uppercase tracking-[0.06em] text-[var(--color-on-ice)]"
-          >
-            Manage stock
-          </Link>
-
-          <form action="/api/auth/logout" method="post">
-            <Button type="submit" variant="default" full>
-              Sign out
-            </Button>
-          </form>
-        </div>
-      }
-    >
       {orders.length === 0 ? (
-        <p className="text-[15px] text-ink-dim">No orders yet.</p>
+        <p className="rounded-[var(--radius-sm)] border border-edge plate-in p-5 text-[14px] text-ink-dim">
+          No orders yet. Signed in as {session.email}.
+        </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full min-w-[520px] text-[13.5px]">
+        <div className="overflow-x-auto rounded-[var(--radius-sm)] border border-edge">
+          <table className="atable min-w-[680px]">
             <thead>
-              <tr className="border-b border-[var(--color-plate-edge)] text-left">
-                <th className="label py-2 text-ink-mute">Order</th>
-                <th className="label py-2 text-ink-mute">Date</th>
-                <th className="label py-2 text-ink-mute">Email</th>
-                <th className="label py-2 text-ink-mute">Status</th>
-                <th className="label py-2 text-right text-ink-mute">Total</th>
+              <tr>
+                <th>Order</th><th>Placed</th><th>Email</th><th>Status</th>
+                <th className="num">Total</th><th></th>
               </tr>
             </thead>
             <tbody>
               {orders.map((o) => (
-                <tr key={String(o.number)} className="border-b border-[var(--color-edge)]">
-                  <td className="py-2.5 font-bold">
-                    <Link href={`/order/${String(o.token)}`} className="hover:underline">
-                      {String(o.number)}
-                    </Link>
+                <tr key={String(o.number)}>
+                  <td className="font-bold tabular-nums">{String(o.number)}</td>
+                  <td className="text-ink-dim">
+                    {new Date(String(o.created_at)).toLocaleDateString("en-GB", {
+                      day: "2-digit", month: "short", year: "2-digit",
+                    })}
                   </td>
-                  <td className="py-2.5 text-ink-dim">
-                    {new Date(String(o.created_at)).toLocaleDateString("en-GB")}
-                  </td>
-                  <td className="max-w-[180px] truncate py-2.5 text-ink-dim">{String(o.email)}</td>
-                  <td className="py-2.5">
-                    <span
-                      className={
-                        String(o.status) === "paid"
-                          ? "rounded-full bg-[var(--color-hot)] px-2 py-0.5 text-[11px] font-bold text-[var(--color-hot-ink)]"
-                          : "rounded-full plate-in px-2 py-0.5 text-[11px] font-bold text-ink-dim"
-                      }
-                    >
+                  <td className="max-w-[220px] truncate text-ink-dim">{String(o.email)}</td>
+                  <td>
+                    <span className={`rounded-full px-2 py-0.5 text-[11px] font-bold ${TONE[String(o.status)] ?? "plate-in text-ink-mute"}`}>
                       {String(o.status)}
                     </span>
                   </td>
-                  <td className="py-2.5 text-right font-bold tabular-nums">
-                    {money(Number(o.total_cents) / 100)}
+                  <td className="num font-bold">{money(Number(o.total_cents) / 100)}</td>
+                  <td className="num">
+                    <Link href={`/order/${String(o.token)}`} className="text-ps-blue hover:underline">
+                      view
+                    </Link>
                   </td>
                 </tr>
               ))}
@@ -148,6 +120,6 @@ export default async function AdminPage({
           </table>
         </div>
       )}
-    </PageShell>
+    </>
   );
 }

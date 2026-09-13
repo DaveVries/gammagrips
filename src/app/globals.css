@@ -672,3 +672,42 @@ html.js [data-reveal].is-in { opacity: 1; transform: none; }
   html.js [data-reveal] { opacity: 1; transform: none; }
   .scanlines::after { display: none; }
 }
+
+/* ============================================================================
+   Admin tables
+   ----------------------------------------------------------------------------
+   A management screen is not a storefront. These are dense, quiet, and
+   scannable: one row per record, numbers right-aligned and tabular so columns
+   line up, sticky header on long lists, and a hover row so the eye can track
+   across. No cards — a card per record wastes the vertical space that makes a
+   table readable in the first place.
+   ========================================================================= */
+@layer utilities {
+  .atable { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 13.5px; }
+  .atable thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: var(--color-page);
+    text-align: left; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--color-ink-mute);
+    padding: 8px 10px; white-space: nowrap;
+    border-bottom: 1px solid var(--color-plate-edge);
+  }
+  .atable tbody td {
+    padding: 9px 10px;
+    border-bottom: 1px solid var(--color-edge);
+    vertical-align: middle;
+  }
+  .atable tbody tr:hover td { background: var(--color-plate-lo); }
+  .atable .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .atable input, .atable select {
+    height: 34px; width: 100%;
+    background: var(--color-plate-lo);
+    border: 1px solid var(--color-edge);
+    border-radius: var(--radius-xs);
+    padding: 0 8px; color: var(--color-ink); font-size: 13px; outline: none;
+  }
+  .atable input:focus, .atable select:focus { border-color: var(--color-ink-mute); }
+  .atable input[type="number"] { text-align: right; font-variant-numeric: tabular-nums; }
+  .aform-row td { background: var(--color-plate-lo); }
+}

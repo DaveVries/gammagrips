@@ -14,7 +14,7 @@ import { MobileNav } from "@/components/site/mobile-nav";
 
 const COLS: Record<number, string> = { 1: "grid-cols-2", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
-export function Header() {
+export function Header({ session }: { session?: { email: string; isAdmin: boolean } | null }) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -145,15 +145,39 @@ export function Header() {
                 <span className="label hidden text-ink-dim xl:inline">Search</span>
               </button>
 
+              {/* Admins get a way in from every page. Regular sign-in stays
+                  the same door — the dashboard is just an extra option once
+                  the session says you are staff. */}
+              {session?.isAdmin && (
+                <Link
+                  href="/admin"
+                  className="tap cut-sm hidden h-10 items-center gap-1.5 bg-[var(--color-hot)] px-3 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-hot-ink)] sm:flex"
+                >
+                  <svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true">
+                    <path d="M2 4h14M2 9h14M2 14h9" stroke="currentColor" strokeWidth="2.2" />
+                  </svg>
+                  Dashboard
+                </Link>
+              )}
+
               <Link
                 href="/account"
-                className="tap cut-sm plate hidden h-10 w-10 items-center justify-center hover:bg-[var(--color-plate-hi)] sm:flex"
-                aria-label="Account"
+                className={cn(
+                  "tap cut-sm plate relative hidden h-10 w-10 items-center justify-center hover:bg-[var(--color-plate-hi)] sm:flex",
+                  session && "text-ink",
+                )}
+                aria-label={session ? `Signed in as ${session.email}` : "Sign in"}
               >
                 <svg width="15" height="15" viewBox="0 0 18 18" aria-hidden="true">
                   <circle cx="9" cy="6" r="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
                   <path d="M3 16c0-3.3 2.7-5.2 6-5.2s6 1.9 6 5.2" fill="none" stroke="currentColor" strokeWidth="1.8" />
                 </svg>
+                {session && (
+                  <span
+                    className="absolute right-1 top-1 h-2 w-2 rounded-full bg-[var(--color-hot)]"
+                    aria-hidden="true"
+                  />
+                )}
               </Link>
 
               <button
