@@ -1,5 +1,6 @@
 import { randomBytes } from "node:crypto";
-import { PRODUCTS, designById, platformById } from "@/data/catalog";
+import { designById, platformById } from "@/data/catalog";
+import { allProducts } from "@/lib/catalog-db";
 import type { PlatformId } from "@/lib/types";
 import { variantFor } from "@/lib/shop";
 import { db } from "@/lib/db";
@@ -32,19 +33,20 @@ export type PricedLine = {
  * prices — if it did, anyone could post a €0.01 order. Same reason the
  * shipping threshold is applied here rather than trusted from the client.
  */
-export function priceCart(input: CartLineInput[]): {
+export async function priceCart(input: CartLineInput[]): Promise<{
   lines: PricedLine[];
   subtotalCents: number;
   shippingCents: number;
   totalCents: number;
-} {
+}> {
   const lines: PricedLine[] = [];
+  const catalogue = await allProducts();
 
   for (const raw of input) {
     const qty = Math.floor(Number(raw.qty));
     if (!Number.isFinite(qty) || qty < 1 || qty > 20) continue;
 
-    const product = PRODUCTS.find((p) => p.slug === raw.slug);
+    const product = catalogue.find((p) => p.slug === raw.slug);
     if (!product) continue;
 
     const designId = raw.designId && designById(raw.designId) ? raw.designId : product.designs[0];
@@ -86,7 +88,7 @@ export type Customer = {
   city: string;
 };
 
-export async function createOrder(customer: Customer, priced: ReturnType<typeof priceCart>) {
+export async function createOrder(customer: Customer, priced: Awaited<ReturnType<typeof priceCart>>) {
   const sql = db();
   const token = randomBytes(24).toString("base64url");
 

@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   const form = await req.formData();
   const slug = String(form.get("slug") ?? "");
   const back = (q = "") =>
-    NextResponse.redirect(new URL(`/admin/products${q}#${slug}`, req.url), 303);
+    NextResponse.redirect(new URL(`/admin/products/${slug}${q}`, req.url), 303);
 
   /* Delete */
   const removeId = form.get("delete_id");
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
     // Blob deletion is best-effort: the row is gone either way, and an orphan
     // blob is cheaper than a dead reference in the page.
     if (rows[0]?.url) await del(rows[0].url).catch(() => {});
-    return back("?saved=" + encodeURIComponent(slug));
+    return back("?saved=1");
   }
 
   const file = form.get("file");
@@ -48,5 +48,5 @@ export async function POST(req: Request) {
             ${String(form.get("kind") ?? "front")},
             coalesce((select max(sort) + 1 from product_images where slug = ${slug}), 0))
   `;
-  return back("?saved=" + encodeURIComponent(slug));
+  return back("?saved=1");
 }

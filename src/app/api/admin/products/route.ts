@@ -45,5 +45,5 @@ export async function POST(req: Request) {
       updated_at = now()
   `;
 
-  return NextResponse.redirect(new URL(`/admin/products?saved=${encodeURIComponent(slug)}`, req.url), 303);
+  return NextResponse.redirect(new URL(`/admin/products/${slug}?saved=1`, req.url), 303);
 }

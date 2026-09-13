@@ -46,7 +46,7 @@ export async function POST(req: Request) {
   const items = Array.isArray(body.items) ? (body.items as CartLineInput[]) : [];
   // Priced from the catalog, server-side. The browser sends slugs and
   // quantities only — a client that could send prices could send its own.
-  const priced = priceCart(items);
+  const priced = await priceCart(items);
   if (!priced.lines.length || priced.totalCents <= 0) {
     return NextResponse.json({ error: "Your cart is empty" }, { status: 400 });
   }
