@@ -93,11 +93,6 @@ export default async function ProductPage({
       {/* ================= DETAIL ================= */}
       <div className="gutter pb-4">
         <div className="shell glass p-[3px]">
-          <div className="titlebar flex h-[22px] items-center px-2">
-            <span className="label text-[10px]">
-              PRODUCT DETAIL — {product.name.toUpperCase()}
-            </span>
-          </div>
           <div className="px-5 md:px-8">
 
           {/* --- overview + highlights ---------------------------------- */}

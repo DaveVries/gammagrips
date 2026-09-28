@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PlatformId, Product } from "@/lib/types";
 import { PLATFORMS, PRODUCTS, designById, platformById, textureById } from "@/data/catalog";
 import { ProductVisual } from "@/components/product/product-visual";
 import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
-import { Badge, Button, Price, Rating, Well, Win, WinDots } from "@/components/ui/primitives";
+import { Badge, Button, Price, Rating, Well } from "@/components/ui/primitives";
 import { QtyStepper } from "@/components/cart/cart-drawer";
 import { useCart } from "@/lib/cart";
 import { compatibilityLine, stockLabel, variantFor } from "@/lib/shop";
 import { RETURN_DAYS, cn, deliveryWindow, money } from "@/lib/utils";
-
-type ViewId = "front" | "macro" | "shells";
 
 export function ProductPurchase({
   product,
@@ -30,7 +28,6 @@ export function ProductPurchase({
   const [designId] = useState(initialDesign);
   const [platformId, setPlatformId] = useState<PlatformId>(initialPlatform);
   const [qty, setQty] = useState(1);
-  const [view, setView] = useState<ViewId>("front");
   const [added, setAdded] = useState(false);
 
   /* Sticky buy bar. Baymard's mobile research is blunt about this: on a long
@@ -56,16 +53,9 @@ export function ProductPurchase({
   const variant = variantFor(product, designId, platformId);
   const stock = stockLabel(variant?.stock);
   const soldOut = !shopOpen || !variant || variant.stock === 0;
-  const isController = product.type === "grips" || product.type === "bundle";
 
   const eta = deliveryWindow(new Date("2026-09-04T00:00:00Z"));
 
-  const views = useMemo(() => {
-    const list: { id: ViewId; label: string }[] = [{ id: "front", label: "Fitted" }];
-    list.push({ id: "macro", label: "Surface" });
-    if (isController) list.push({ id: "shells", label: "Back" });
-    return list;
-  }, [isController]);
 
   const onAdd = () => {
     cart.add({ slug: product.slug, designId, platformId, qty });
@@ -76,88 +66,66 @@ export function ProductPurchase({
   return (
     <div className="gutter">
       <div className="shell grid gap-4 py-3 lg:grid-cols-12 lg:gap-5">
-        {/* ================= MEDIA ================= */}
+        {/* ================= MEDIA =================
+            Every shot on screen at once. The old gallery hid the back and the
+            macro behind a three-way switcher, so most visitors saw exactly one
+            picture of a product they cannot hold — the two views that answer
+            "what does the surface actually look like" and "what does it look
+            like from where I hold it" were one click away and therefore
+            invisible. A sticky column costs nothing on desktop; on a phone the
+            same three stack in the scroll. */}
         <div className="min-w-0 lg:col-span-7">
           <div className="lg:sticky lg:top-[70px]">
-            <Win title={`${product.name.toUpperCase()} — ${platform.short.toUpperCase()}`} right={<WinDots />} bodyClass="p-[3px]">
-              <Well>
-              {view === "macro" && design ? (
-                <GripPhoto
-                  design={design}
-                  platformId={platformId}
-                  view="macro"
-                  className="aspect-[4/3] w-full object-cover"
-                />
-              ) : view === "shells" && design ? (
-                <GripPhoto
-                  design={design}
-                  platformId={platformId}
-                  view="back"
-                  className="w-full"
-                  label={`${design.name} Grips seen from the back of the controller`}
-                />
-              ) : (
+            <div className="grid gap-2 sm:grid-cols-3">
+              <Well
+                className="hdr plate-in cut col-span-full aspect-[5/4]"
+                style={{ ["--hdr-glow" as string]: design?.ink }}
+              >
                 <ProductVisual
                   product={product}
                   design={design}
                   platformId={platformId}
-                  className="relative z-[1] w-full"
+                  className="relative z-[1] h-full w-full object-contain p-3"
                 />
-              )}
+                <span className="label absolute left-4 top-4 z-[2] text-ink-mute">
+                  FITTED
+                </span>
               </Well>
-            </Win>
 
-            {/* thumbnails — never a swipe-only gallery */}
-            <div className="plate cut-sm mt-2 flex items-center gap-3 p-2">
-              <ul className="flex gap-[3px]">
-                {views.map((v) => (
-                  <li key={v.id}>
-                    <button
-                      type="button"
-                      onClick={() => setView(v.id)}
-                      aria-pressed={view === v.id}
-                      className={cn(
-                        "relative h-16 w-20 overflow-hidden rounded-[var(--radius-sm)] border transition-colors",
-                        view === v.id
-                          ? "border-ink"
-                          : "border-edge hover:border-edge",
-                      )}
-                    >
-                      {v.id === "macro" && design ? (
-                        <GripPhoto
-                          design={design}
-                          platformId={platformId}
-                          view="macro"
-                          className="h-full w-full object-cover"
-                        />
-                      ) : v.id === "shells" && design ? (
-                        <GripPhoto
-                          design={design}
-                          platformId={platformId}
-                          view="back"
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <ProductVisual
-                          product={product}
-                          design={design}
-                          platformId={platformId}
-                          className="h-full w-full"
-                        />
-                      )}
-                      <span className="sr-only">{v.label}</span>
-                    </button>
-                  </li>
-                ))}
-              </ul>
-              <p className="label text-ink-mute">
-                {views.find((v) => v.id === view)?.label}
-                {view === "macro" && " — 8× magnification"}
-                {view === "shells" && " — left and right shells, actual contents"}
-              </p>
+              {design && (
+                <Well className="plate-in cut-tr relative col-span-2 aspect-[16/11] sm:col-span-2">
+                  <GripPhoto
+                    design={design}
+                    platformId={platformId}
+                    view="back"
+                    sizes="(max-width: 640px) 62vw, 30vw"
+                    className="h-full w-full object-contain p-2"
+                    label={`${design.name} Grips seen from the back of the controller`}
+                  />
+                  <span className="label absolute left-3 top-3 z-[2] text-ink-mute">
+                    BACK
+                  </span>
+                </Well>
+              )}
+
+              {design && (
+                <Well className="plate-in cut-tr relative aspect-square sm:aspect-auto">
+                  <GripPhoto
+                    design={design}
+                    platformId={platformId}
+                    view="macro"
+                    sizes="(max-width: 640px) 32vw, 16vw"
+                    className="h-full w-full object-cover"
+                  />
+                  <span className="label absolute bottom-2 left-2 z-[2] rounded-full bg-black/55 px-2 py-1 text-ink">
+                    8×
+                  </span>
+                </Well>
+              )}
             </div>
           </div>
         </div>
+
 
         {/* ================= BUY BOX ================= */}
         <div className="min-w-0 lg:col-span-5">

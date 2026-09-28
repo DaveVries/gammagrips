@@ -62,8 +62,8 @@ export function SearchOverlay({ onClose }: { onClose: () => void }) {
         tabIndex={-1}
       />
       <div className="relative mx-auto mt-[8vh] w-[min(680px,92vw)] glass cut p-[3px] shadow-[0_24px_60px_rgba(0,0,0,0.6)]">
-        <div className="titlebar flex h-[24px] items-center px-2">
-          <span className="label text-[10px]">FIND</span>
+        <div className="titlebar flex h-11 items-center px-4">
+          <span className="label">FIND</span>
         </div>
         <div className="border border-edge mt-[3px] flex items-center gap-2 plate-in px-3">
           <svg width="17" height="17" viewBox="0 0 18 18" aria-hidden="true" className="shrink-0 text-ink-mute">

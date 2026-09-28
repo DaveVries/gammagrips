@@ -1,10 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { useState } from "react";
-import type { PlatformFamily, PlatformId, Product } from "@/lib/types";
+import type { PlatformId, Product } from "@/lib/types";
 import { designById, platformById, textureById } from "@/data/catalog";
-import { ProductVisual } from "@/components/product/product-visual";
+import { ProductShot } from "@/components/product/product-shot";
+import { GripPhoto } from "@/components/product/grip-photo";
 import {
   Badge,
   CompatibilityBadge,
@@ -25,18 +23,11 @@ export function ProductCard({
   platformId?: PlatformId;
   className?: string;
 }) {
-  /* With one design per grip there is no swatch row to browse, so the card
-     instead lets you see the grip on either controller family — the question
-     people actually have while scanning a grid. */
-  const [family, setFamily] = useState<PlatformFamily | null>(null);
-  const scoped = platformId ? platformById(platformId)?.family : null;
-  const shownFamily = family ?? scoped ?? "playstation";
-  const renderPlatform: PlatformId =
-    platformId && platformById(platformId)?.family === shownFamily
-      ? platformId
-      : shownFamily === "playstation"
-        ? "dualsense"
-        : "xbox-series";
+  /* The card used to carry a PS/Xbox preview toggle. We photograph the
+     DualSense only, so both sides of it returned the same picture — a control
+     that claimed to show you an Xbox and did not. Gone until Xbox renders
+     exist; the card is a server component again as a result. */
+  const renderPlatform: PlatformId = platformId ?? "dualsense";
 
   const design = designById(product.designs[0]);
   const texture = textureById(product.texture);
@@ -52,18 +43,17 @@ export function ProductCard({
       )}
     >
       <Well
-        className="hdr plate-in !border-0 border-b border-[var(--color-plate-edge)] aspect-[4/3]"
+        className="hdr plate-in aspect-[4/3] !border-0"
         style={{ ["--hdr-glow" as string]: design?.ink }}
       >
-        <ProductVisual
-          product={product}
-          design={design}
+        <ProductShot
+          design={design!}
           platformId={renderPlatform}
-          className="relative z-[1] h-full w-full object-contain transition-transform duration-300 ease-[var(--ease-out)] group-hover:scale-[1.03]"
+          className="absolute inset-0 z-[1] transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
         />
 
         {product.badge && (
-          <span className="absolute left-2 top-2 z-[2]">
+          <span className="absolute left-3 top-3 z-[2]">
             <Badge tone="blue">
               {product.badge === "new"
                 ? "New"
@@ -74,45 +64,14 @@ export function ProductCard({
           </span>
         )}
         {product.compareAt && !product.badge && (
-          <span className="absolute left-2 top-2 z-[2]">
+          <span className="absolute left-3 top-3 z-[2]">
             <Badge tone="yellow">Sale</Badge>
           </span>
         )}
         {!available && (
-          <span className="absolute right-2 top-2 z-[2]">
+          <span className="absolute right-3 top-3 z-[2]">
             <Badge>Sold out</Badge>
           </span>
-        )}
-
-        {/* controller-family preview toggle */}
-        {!platformId && (
-          <div className="absolute bottom-3 left-3 z-10 flex gap-1 opacity-0 transition-opacity duration-200 focus-within:opacity-100 group-hover:opacity-100">
-            {(
-              [
-                ["playstation", "PS"],
-                ["xbox", "Xbox"],
-              ] as const
-            ).map(([f, label]) => (
-              <button
-                key={f}
-                type="button"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setFamily(f);
-                }}
-                aria-pressed={shownFamily === f}
-                aria-label={`Preview on ${label === "PS" ? "PlayStation" : "Xbox"} controller`}
-                className={cn(
-                  "cut-sm label inline-flex min-h-[32px] items-center px-2.5 py-1.5 backdrop-blur transition-colors sm:min-h-0 sm:px-2 sm:py-1",
-                  shownFamily === f
-                    ? "bg-[var(--color-blk-blue)] text-[var(--color-on-blk-blue)]"
-                    : "plate text-ink hover:bg-[var(--color-plate-hi)]",
-                )}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
         )}
       </Well>
 
@@ -223,11 +182,11 @@ export function ProductMini({
       href={`/products/${product.slug}?platform=${platformId}`}
       className="plate cut-sm flex items-center gap-3 p-2.5 transition-colors hover:bg-[var(--color-plate-hi)]"
     >
-      <span className="relative h-14 w-14 shrink-0 overflow-hidden border border-edge plate-in">
-        <ProductVisual
-          product={product}
-          design={design}
+      <span className="cut-sm plate-in relative h-14 w-14 shrink-0 overflow-hidden">
+        <GripPhoto
+          design={design!}
           platformId={platformId}
+          sizes="56px"
           className="h-full w-full object-contain"
         />
       </span>

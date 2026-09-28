@@ -322,8 +322,8 @@ export function FilterDrawer({
             tabIndex={-1}
           />
           <div className="card absolute inset-x-0 bottom-0 flex max-h-[88vh] flex-col glass">
-            <div className="titlebar flex h-8 shrink-0 items-center justify-between px-3">
-              <h2 className="label text-[10px]">FILTERS</h2>
+            <div className="titlebar flex h-12 shrink-0 items-center justify-between px-4">
+              <h2 className="label">FILTERS</h2>
               <div className="flex items-center gap-3">
                 {activeCount > 0 && (
                   <button

@@ -130,6 +130,88 @@ export function Featured() {
 }
 
 /* ============================================================================
+   Two sides — the editorial moment
+
+   The store has two shots of every grip and was only ever spending one. The
+   back is the more persuasive of the two: it is the face you look at while you
+   play, and it is where the wrap and the branding actually read. Full bleed,
+   no panel, no frame — the renders are cut out, so the page itself is the
+   backdrop.
+   ========================================================================= */
+
+export function TwoSides() {
+  const design = designById("venom")!;
+  const product = PRODUCTS.find((p) => p.designs[0] === design.id)!;
+
+  return (
+    <Section className="py-12 md:py-24">
+      <div
+        className="relative isolate"
+        style={{ ["--spill" as string]: design.ink }}
+      >
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-[-10%] inset-y-[-20%] z-0 opacity-40 blur-[90px]"
+          style={{
+            background:
+              "radial-gradient(38% 42% at 30% 52%, var(--spill), transparent 70%), radial-gradient(34% 40% at 72% 48%, var(--spill), transparent 72%)",
+          }}
+        />
+
+        <div className="relative z-[1] grid items-center gap-8 lg:grid-cols-12 lg:gap-4">
+          <figure className="min-w-0 lg:col-span-4" data-reveal>
+            <GripPhoto
+              design={design}
+              view="full"
+              sizes="(max-width: 1024px) 70vw, 30vw"
+              className="mx-auto h-auto w-[70%] lg:w-full"
+            />
+            <figcaption className="label mt-3 text-center text-ink-mute">
+              Fitted — front
+            </figcaption>
+          </figure>
+
+          <div className="order-first min-w-0 lg:order-none lg:col-span-4" data-reveal data-reveal-delay="80">
+            <p className="label mb-4 flex items-center justify-center gap-2.5">
+              <span
+                className="h-[3px] w-6 rounded-full bg-[var(--color-hot)]"
+                aria-hidden="true"
+              />
+              <span className="text-ink-mute">Both sides</span>
+            </p>
+            <h2 className="shout text-center text-[32px] leading-[0.95] md:text-[42px]">
+              The side you actually look at
+            </h2>
+            <p className="mx-auto mt-4 max-w-sm text-center text-[15px] leading-relaxed text-ink-dim">
+              A grip is not a sticker on the front. The shell wraps the whole
+              handle, so the pattern runs round the back where your fingers
+              close and where you see it for eight hours a night.
+            </p>
+            <div className="mt-6 flex justify-center">
+              <ButtonLink href={`/products/${product.slug}`} variant="primary">
+                See {design.name}
+              </ButtonLink>
+            </div>
+          </div>
+
+          <figure className="min-w-0 lg:col-span-4" data-reveal data-reveal-delay="160">
+            <GripPhoto
+              design={design}
+              view="back"
+              sizes="(max-width: 1024px) 70vw, 30vw"
+              className="mx-auto h-auto w-[70%] lg:w-full"
+            />
+            <figcaption className="label mt-3 text-center text-ink-mute">
+              Fitted — back
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ============================================================================
    Why our grips — benefits with real diagrams, not icon clip-art
    ========================================================================= */
 
@@ -509,9 +591,6 @@ export function CompatibilityStrip() {
   return (
     <Section className="py-9 md:py-20">
       <div className="glass p-[3px]">
-        <div className="titlebar flex h-[22px] items-center px-2">
-          <span className="label text-[10px]">COMPATIBILITY CHECK</span>
-        </div>
         <div className="grid gap-8 p-5 md:p-7 lg:grid-cols-12">
           <div className="min-w-0 lg:col-span-5">
             <p className="label mb-4 text-ink-mute">Compatibility</p>

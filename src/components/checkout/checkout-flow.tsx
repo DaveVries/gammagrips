@@ -304,7 +304,7 @@ export function CheckoutFlow() {
         {/* --- order summary ------------------------------------------------ */}
         <aside className="min-w-0 lg:col-span-5">
           <div className="card p-[3px] lg:sticky lg:top-4">
-            <div className="titlebar flex h-[22px] items-center px-2"><span className="label text-[10px]">YOUR ORDER</span></div>
+            <div className="titlebar flex h-11 items-center px-4"><span className="label">YOUR ORDER</span></div>
             <div className="p-4">
             <ul className="mt-4 space-y-3">
               {cart.lines.map((l) => {

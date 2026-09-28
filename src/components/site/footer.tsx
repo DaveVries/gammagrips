@@ -45,7 +45,6 @@ export function Footer() {
   return (
     <footer className="gutter mt-8 pb-4">
       <div className="shell glass p-[3px]">
-      <div className="titlebar flex h-[22px] items-center px-2"><span className="label text-[10px]">GAMMAGRIPS B.V. — CUSTOMER SERVICE</span></div>
       <div className="px-4 md:px-6">
         <div>
           {/* newsletter — deliberately understated, at the top of the footer

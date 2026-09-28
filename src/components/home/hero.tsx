@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { COLLECTIONS, DESIGNS, PRODUCTS, designById, textureById } from "@/data/catalog";
 import { DesignSwatch } from "@/components/product/grip-photo";
-import { ProductVisual } from "@/components/product/product-visual";
-import { ButtonLink, Well } from "@/components/ui/primitives";
+import { ProductStage } from "@/components/product/product-shot";
+import { ButtonLink } from "@/components/ui/primitives";
 import { cn, money } from "@/lib/utils";
 
 const ORDER = ["nebula", "venom", "ember", "cyber", "jungle", "glacier"];
@@ -44,7 +44,7 @@ export function Hero() {
         />
         <span
           aria-hidden="true"
-          className="display pointer-events-none absolute -right-6 -top-10 z-0 select-none text-[190px] leading-none tracking-[-0.06em] text-[rgba(255,255,255,0.05)] sm:text-[260px]"
+          className="display pointer-events-none absolute -right-8 -top-14 z-0 select-none text-[190px] leading-none tracking-[-0.06em] text-[rgba(255,255,255,0.025)] sm:text-[300px]"
         >
           GG
         </span>
@@ -96,37 +96,31 @@ export function Hero() {
 
         {/* --- product ------------------------------------------------------ */}
         <div className="order-1 min-w-0 lg:order-2 lg:col-span-7" data-reveal data-reveal-delay="70">
-          <div
-            className="relative"
-            /* Accent halo behind the screen. Sits outside the Well so the
-               clip-path on .cut does not eat it. */
-          >
+          <div className="relative">
+            {/* Wide accent halo. It sits outside the stage so nothing clips it,
+                and it is keyed to the selected grip, so switching designs
+                relights the whole hero rather than swapping a picture. */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -inset-6 z-0 opacity-70 blur-3xl transition-[background] duration-700"
+              className="pointer-events-none absolute -inset-10 z-0 opacity-60 blur-[70px] transition-[background] duration-700"
               style={{
                 background:
-                  "radial-gradient(50% 55% at 50% 45%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 72%)",
+                  "radial-gradient(46% 50% at 52% 52%, color-mix(in srgb, var(--accent) 60%, transparent), transparent 74%)",
               }}
             />
-          <Well className="hdr cut drop relative z-[1]" style={{ ["--hdr-glow" as string]: design.ink }}>
-            <ProductVisual
-              product={product}
-              design={design}
-              platformId="dualsense"
-              className="relative z-[1] w-full"
-            />
-            {/* readout, floated over the screen like a console HUD */}
-            <div className="absolute inset-x-0 bottom-0 z-[2] flex flex-wrap items-center gap-x-4 gap-y-1 bg-gradient-to-t from-black/85 to-transparent px-4 pb-3 pt-8">
-              <span className="display text-[15px] text-ink">{design.name}</span>
+
+            <ProductStage design={design} priority className="z-[1]" />
+
+            {/* Readout. Floated on the page, not pinned inside a bezel. */}
+            <div className="relative z-[3] -mt-2 flex flex-wrap items-baseline gap-x-5 gap-y-1">
+              <span className="display text-[17px] text-ink">{design.name}</span>
               <span className="label text-ink-mute">{collection.name}</span>
               <span className="label text-ink-mute">{texture.name}</span>
               <span className="label text-ink-mute">{texture.profile}</span>
-              <span className="ml-auto display text-[15px] tabular-nums text-ink">
+              <span className="ml-auto display text-[17px] tabular-nums text-ink">
                 {money(product.price)}
               </span>
             </div>
-          </Well>
           </div>
 
           <div className="mt-3 flex items-center gap-2">

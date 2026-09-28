@@ -63,17 +63,17 @@ export function CartDrawer() {
         ref={panelRef}
         className="absolute inset-y-0 right-0 flex w-[min(440px,100vw)] flex-col glass p-[3px] shadow-[-18px_0_60px_-20px_rgba(0,0,0,0.8)]"
       >
-        <div className="titlebar flex h-[26px] shrink-0 items-center justify-between px-2">
-          <h2 className="label text-[10px]">
+        <div className="titlebar flex h-12 shrink-0 items-center justify-between px-4">
+          <h2 className="label">
             SHOPPING CART — {cart.count} ITEM{cart.count === 1 ? "" : "S"}
           </h2>
           <button
             ref={closeRef}
             onClick={() => cart.setOpen(false)}
-            className="border border-edge flex h-[18px] w-[19px] items-center justify-center glass text-ink active:border border-edge-hi"
+            className="tap flex h-9 w-9 items-center justify-center rounded-full text-ink-mute transition-colors hover:bg-white/10 hover:text-ink"
             aria-label="Close cart"
           >
-            <svg width="9" height="9" viewBox="0 0 16 16" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 16 16" aria-hidden="true">
               <path d="M2 2 14 14M14 2 2 14" stroke="currentColor" strokeWidth="2.4" />
             </svg>
           </button>

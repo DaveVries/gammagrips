@@ -9,6 +9,7 @@ import {
   PlatformSplit,
   SocialProof,
   TextureTech,
+  TwoSides,
 } from "@/components/home/sections";
 import { Rule } from "@/components/ui/primitives";
 
@@ -25,6 +26,7 @@ export default function HomePage() {
       <PlatformSplit />
       <div className="gutter"><div className="shell"><Rule /></div></div>
       <Featured />
+      <TwoSides />
       <div className="gutter"><div className="shell"><Rule /></div></div>
       <Benefits />
       <TextureTech />

@@ -65,10 +65,10 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
       </a>
 
       {/* thin gradient rule — the only chrome above the nav */}
-      <div className="ps-rule h-[4px] w-full" />
+      <div className="ps-rule h-[2px] w-full" />
 
       <header
-        className="sticky top-0 z-50 border-b border-white/12 bg-[rgba(46,45,42,0.72)] backdrop-blur-xl backdrop-saturate-150"
+        className="sticky top-0 z-50 border-b border-white/[0.07] bg-black/70 backdrop-blur-2xl backdrop-saturate-150"
         onMouseLeave={hoverClose}
       >
         <div className="gutter">
@@ -209,10 +209,10 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
           item.panel && openIdx === i ? (
             <div
               key={item.label}
-              className="absolute inset-x-0 top-full hidden border-b-2 border-[var(--color-plate-edge)] bg-[rgba(52,51,47,0.97)] shadow-[0_26px_60px_-18px_rgba(20,22,30,0.7)] backdrop-blur-2xl lg:block"
+              className="absolute inset-x-0 top-full hidden border-b border-white/[0.07] bg-black/92 shadow-[0_40px_90px_-30px_rgba(0,0,0,1)] backdrop-blur-2xl lg:block"
               onMouseEnter={clear}
             >
-              <div className="ps-rule h-[3px] w-full" />
+              <div className="ps-rule h-px w-full" />
               <div className="gutter">
                 <div className="shell grid grid-cols-12 gap-8 py-7">
                   <div
@@ -227,12 +227,12 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
                         {col.headingHref ? (
                           <Link
                             href={col.headingHref}
-                            className="label mb-3 block border-b-2 border-[var(--color-plate-edge)] pb-2 text-ink hover:text-ps-blue"
+                            className="label mb-3 block border-b border-white/10 pb-2.5 text-ink-mute hover:text-ink"
                           >
                             {col.heading} →
                           </Link>
                         ) : (
-                          <p className="label mb-3 border-b-2 border-[var(--color-plate-edge)] pb-2 text-ink">{col.heading}</p>
+                          <p className="label mb-3 border-b border-white/10 pb-2.5 text-ink-mute">{col.heading}</p>
                         )}
                         <ul className="space-y-px">
                           {col.links.map((l) => (

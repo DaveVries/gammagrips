@@ -43,7 +43,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
         tabIndex={-1}
       />
 
-      <div className="relative flex h-full w-[min(360px,86vw)] flex-col border-r-2 border-[var(--color-plate-edge)] bg-[rgba(50,49,45,0.98)] shadow-[18px_0_60px_-20px_rgba(20,22,30,0.75)] backdrop-blur-2xl">
+      <div className="relative flex h-full w-[min(360px,86vw)] flex-col border-r border-white/[0.07] bg-black/95 shadow-[24px_0_80px_-24px_rgba(0,0,0,1)] backdrop-blur-2xl">
         <div className="ps-rule h-[3px] w-full shrink-0" />
 
         <div className="flex h-[54px] shrink-0 items-center gap-2 border-b border-[var(--color-plate-edge)] px-3">

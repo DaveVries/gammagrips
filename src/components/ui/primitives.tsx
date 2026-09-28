@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { cn, money } from "@/lib/utils";
-import { Glyph } from "@/components/ui/glyphs";
 
 /* ============================================================================
    Console-grey primitives. Server components — no client JS.
@@ -112,19 +111,17 @@ export function Win({
 }) {
   return (
     <Tag className={cn("relative", className)}>
+      {/* Was a bordered tab clipped to the top edge of the panel — a window
+          chrome tab, and it made every panel on the site look like an
+          application. It is a caption now: it labels the panel without
+          pretending to be part of one. */}
       {title !== undefined && (
-        <div className="mb-[-1px] flex min-w-0 items-end gap-3">
-          <span className="inline-flex min-w-0 max-w-full items-stretch rounded-[var(--radius-sm)] border border-[var(--color-plate-edge)] bg-[var(--color-plate-hi)]">
-            <span className="label flex min-w-0 items-center gap-2 px-3.5 py-2 text-[10px] text-ink">
-              <span
-                className="h-2.5 w-[3px] shrink-0 rounded-full bg-[var(--color-hot)]"
-                aria-hidden="true"
-              />
-              {/* truncate has to sit on the text, not on the flex container —
-                  on the container it constrains nothing. */}
-              <span className="min-w-0 truncate">{title}</span>
-            </span>
-          </span>
+        <div className="mb-3 flex min-w-0 items-center gap-2.5">
+          <span
+            className="h-[3px] w-6 shrink-0 rounded-full bg-[var(--color-hot)]"
+            aria-hidden="true"
+          />
+          <span className="label min-w-0 truncate text-ink-mute">{title}</span>
         </div>
       )}
       <div className={cn("glass cut", bodyClass)}>{children}</div>
@@ -204,7 +201,7 @@ export function Badge({
   return (
     <span
       className={cn(
-        "cut-sm label inline-flex items-center gap-1 px-2 py-[4px]",
+        "label inline-flex items-center gap-1 rounded-full px-2.5 py-[5px]",
         badgeTone[tone],
         className,
       )}
@@ -396,16 +393,17 @@ export function SectionHead({
     <div className={cn("flex flex-col gap-4 md:flex-row md:items-end md:justify-between", className)}>
       <div className="max-w-2xl">
         {eyebrow && (
-          <p className="mb-3 inline-flex items-center">
-            <span className="skew-bar label inline-flex items-center gap-1.5 border-l-2 border-[var(--color-hot)] bg-[var(--color-plate-hi)] px-3 py-1.5 text-ink">
-              <Glyph name="tri" size={9} colour="#fff" />
-              {eyebrow}
-            </span>
+          <p className="mb-4 flex items-center gap-2.5">
+            <span
+              className="h-[3px] w-6 shrink-0 rounded-full bg-[var(--color-hot)]"
+              aria-hidden="true"
+            />
+            <span className="label text-ink-mute">{eyebrow}</span>
           </p>
         )}
-        <h2 className="shout text-[28px] md:text-[38px]">{title}</h2>
+        <h2 className="shout text-[32px] leading-[0.95] md:text-[46px]">{title}</h2>
         {copy && (
-          <p className="mt-3 text-[15px] leading-relaxed text-ink-dim">{copy}</p>
+          <p className="mt-4 max-w-xl text-[15.5px] leading-relaxed text-ink-dim">{copy}</p>
         )}
       </div>
       {action && <div className="shrink-0">{action}</div>}
@@ -414,7 +412,7 @@ export function SectionHead({
 }
 
 export function Rule({ className }: { className?: string }) {
-  return <div className={cn("ps-rule h-[3px] w-full", className)} aria-hidden="true" />;
+  return <div className={cn("ps-rule h-px w-full", className)} aria-hidden="true" />;
 }
 
 
