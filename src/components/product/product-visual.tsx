@@ -1,15 +1,16 @@
 import Image from "next/image";
 import type { Design, PlatformId, Product } from "@/lib/types";
-import { ControllerRender } from "@/components/product/controller-render";
+import { ColourPlate } from "@/components/product/grip-photo";
 import { designById } from "@/data/catalog";
 import { mediaFor } from "@/data/media";
 
 /**
  * One entry point for every product image in the store.
  *
- * Registered assets in src/data/media.ts win; otherwise the SVG renderer draws
- * the product. That means real renders can be dropped in per product, design
- * and controller, incrementally, without touching a single component.
+ * Imagery comes from the media manifest — real renders in public/products/,
+ * registered by `npm run media:scan` or hand-registered in src/data/media.ts.
+ * A product with no asset yet falls back to a plain colour plate; the store
+ * never draws a fake controller.
  */
 export function ProductVisual({
   product,
@@ -31,26 +32,16 @@ export function ProductVisual({
     assets.find((a) => (view === "macro" ? a.kind === "macro" : a.kind === "front")) ??
     assets[0];
 
-  if (lead) {
-    return (
-      <Image
-        src={lead.src}
-        alt={lead.alt}
-        width={lead.w}
-        height={lead.h}
-        className={className}
-        sizes="(max-width: 640px) 92vw, (max-width: 1280px) 45vw, 30vw"
-      />
-    );
-  }
+  if (!lead) return <ColourPlate design={d} className={className} />;
 
   return (
-    <ControllerRender
-      design={d}
-      platformId={platformId}
-      view={view}
+    <Image
+      src={lead.src}
+      alt={lead.alt}
+      width={lead.w}
+      height={lead.h}
       className={className}
-      label={`${product.name} fitted to a controller`}
+      sizes="(max-width: 640px) 92vw, (max-width: 1280px) 45vw, 30vw"
     />
   );
 }

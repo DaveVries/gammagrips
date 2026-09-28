@@ -9,7 +9,8 @@ import {
 } from "@/data/catalog";
 import { GUIDES } from "@/data/guides";
 import { REVIEWS } from "@/data/reviews";
-import { ControllerRender, DesignSwatch } from "@/components/product/controller-render";
+import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
+import { ControllerIcon } from "@/components/site/controller-icon";
 import { ProductGrid } from "@/components/product/product-card";
 import {
   Badge,
@@ -32,7 +33,7 @@ export function PlatformSplit() {
       href: "/playstation",
       title: "PlayStation",
       controllers: PLATFORMS.filter((p) => p.family === "playstation"),
-      designId: "dark-matter",
+      designId: "nebula",
       platformId: "dualsense" as const,
     },
     {
@@ -40,7 +41,7 @@ export function PlatformSplit() {
       href: "/xbox",
       title: "Xbox",
       controllers: PLATFORMS.filter((p) => p.family === "xbox"),
-      designId: "volt",
+      designId: "venom",
       platformId: "xbox-series" as const,
     },
   ];
@@ -66,11 +67,17 @@ export function PlatformSplit() {
             data-reveal-delay={i * 70}
             className="group lift sheen relative flex flex-col overflow-hidden border border-edge glass drop transition-colors hover:border-edge"
           >
-            <div className="relative overflow-hidden bg-gradient-to-b from-[#14181c] to-[#0b0e11] pt-6">
-              <ControllerRender
+            {/* We only photograph the DualSense today, so the Xbox card leads
+                with the surface rather than a controller it is not. */}
+            <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-b from-[#14181c] to-[#0b0e11]">
+              <GripPhoto
                 design={designById(c.designId)!}
                 platformId={c.platformId}
-                className="mx-auto w-[86%] transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+                view={c.family === "xbox" ? "macro" : "full"}
+                className={cn(
+                  "mx-auto h-full w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]",
+                  c.family === "xbox" ? "object-cover" : "object-contain",
+                )}
               />
             </div>
             <div className="flex items-end justify-between gap-4 border-t border-edge p-5">
@@ -99,7 +106,7 @@ export function PlatformSplit() {
    ========================================================================= */
 
 export function Featured() {
-  const picks = ["dark-matter-grips", "volt-grips", "vapor-grips"]
+  const picks = ["nebula-grips", "venom-grips", "cyber-grips"]
     .map((s) => productBySlug(s)!)
     .filter(Boolean);
 
@@ -108,7 +115,7 @@ export function Featured() {
       <SectionHead
         eyebrow="Best sellers"
         title="What most people buy"
-        copy="Three of the six. Dark Matter if your hands sweat, Volt for long sessions, Vapor if you want almost nothing to change."
+        copy="Three of the six. Nebula if your hands sweat, Venom for long sessions, Cyber if you want almost nothing to change."
         action={
           <ButtonLink href="/controller-grips" variant="default" size="sm">
             All six grips
@@ -297,7 +304,7 @@ export function CollectionsShowcase() {
               className="group lift sheen glass cut-sm flex flex-col p-[3px]"
             >
               <Well className="relative aspect-[16/10]">
-                <ControllerRender
+                <GripPhoto
                   design={lead}
                   platformId="dualsense"
                   view="macro"
@@ -336,11 +343,11 @@ export function CollectionsShowcase() {
 
 export function TextureTech() {
   const map: Record<string, string> = {
-    "open-cell": "dark-matter",
-    "micro-cell": "volt",
-    ridge: "venom",
-    grid: "vapor",
-    matte: "ice-froyo",
+    "open-cell": "nebula",
+    "micro-cell": "venom",
+    ridge: "jungle",
+    grid: "cyber",
+    matte: "glacier",
   };
 
   return (
@@ -363,7 +370,7 @@ export function TextureTech() {
             className="group lift sheen glass cut-sm flex flex-col p-[3px]"
           >
             <Well className="relative aspect-[4/3]">
-              <ControllerRender
+              <GripPhoto
                 design={designById(map[t.id])!}
                 platformId="dualsense"
                 view="macro"
@@ -529,13 +536,8 @@ export function CompatibilityStrip() {
                 key={p.id}
                 className="glass flex min-w-0 items-center gap-3 p-2.5"
               >
-                <span className="border border-edge shrink-0 bg-transparent p-1">
-                  <ControllerRender
-                    design={designById("ice-froyo")!}
-                    platformId={p.id}
-                    flat
-                    className="h-12 w-16"
-                  />
+                <span className="border border-edge shrink-0 bg-transparent p-1 text-ink-dim">
+                  <ControllerIcon family={p.family} className="h-12 w-16" />
                 </span>
                 <div className="min-w-0">
                   <p className="truncate text-[13px] font-bold">{p.controller}</p>

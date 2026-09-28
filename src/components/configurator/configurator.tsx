@@ -10,7 +10,7 @@ import {
   productBySlug,
   textureById,
 } from "@/data/catalog";
-import { ControllerRender } from "@/components/product/controller-render";
+import { GripPhoto } from "@/components/product/grip-photo";
 import { ProductVisual } from "@/components/product/product-visual";
 import { Badge, Button, Groove, Price, Well, Win, WinDots } from "@/components/ui/primitives";
 import { GlyphMarker } from "@/components/ui/glyphs";
@@ -31,35 +31,35 @@ const NEEDS = [
     id: "sweat",
     label: "My hands get sweaty",
     detail: "Grip fades an hour in and gets worse",
-    pick: "dark-matter-grips",
+    pick: "nebula-grips",
     why: "Only the open-cell moulds have channels deep enough to move moisture. Traction alone stops working once there is a film of sweat on the shell.",
   },
   {
     id: "long",
     label: "I play very long sessions",
     detail: "Four hours or more at a time",
-    pick: "volt-grips",
-    why: "Same cell geometry as Dark Matter at half the pitch — most of the grip, without the hard edges that press into the same spots over six hours.",
+    pick: "venom-grips",
+    why: "Same cell geometry as Nebula at half the pitch — most of the grip, without the hard edges that press into the same spots over six hours.",
   },
   {
     id: "pain",
     label: "My hands or joints ache",
     detail: "Pressure and fatigue, not slipping",
-    pick: "venom-grips",
+    pick: "jungle-grips",
     why: "The softest compound we use, 3.1 mm of cushion, and ridges that spread load across more of the palm instead of two contact points.",
   },
   {
     id: "minimal",
     label: "I want almost nothing to change",
     detail: "Muscle memory matters more than grip",
-    pick: "vapor-grips",
+    pick: "cyber-grips",
     why: "1.4 mm is the smallest change to the controller's shape we can make while still adding real bite. Note it is a dry-hand surface.",
   },
   {
     id: "first",
     label: "I have never used grips",
     detail: "Not sure I will like the extra bulk",
-    pick: "ice-froyo-grips",
+    pick: "glacier-grips",
     why: "The gentlest introduction: 1.1 mm, soft-touch, with a dimpled patch only where your palm actually presses. Easy to live with.",
   },
   {
@@ -87,7 +87,7 @@ export function Configurator({
   );
   const [need, setNeed] = useState<string | null>(initialDesign ? "look" : null);
   const [slug, setSlug] = useState<string>(
-    PRODUCTS.find((p) => p.designs[0] === initialDesign)?.slug ?? "dark-matter-grips",
+    PRODUCTS.find((p) => p.designs[0] === initialDesign)?.slug ?? "nebula-grips",
   );
   const [qty] = useState(1);
   const [done, setDone] = useState(false);
@@ -135,7 +135,7 @@ export function Configurator({
             </Win>
             <div className="mt-2 grid grid-cols-3 gap-2">
               <Well className="col-span-2 aspect-[16/9]">
-                <ControllerRender
+                <GripPhoto
                   design={design}
                   platformId={platformId}
                   view="macro"
@@ -278,7 +278,7 @@ export function Configurator({
                       )}
                     >
                       <span className="border border-edge relative h-12 w-12 shrink-0 overflow-hidden bg-transparent">
-                        <ControllerRender
+                        <GripPhoto
                           design={d}
                           platformId={platformId}
                           view="macro"

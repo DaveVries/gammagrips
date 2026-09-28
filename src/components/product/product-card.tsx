@@ -52,14 +52,14 @@ export function ProductCard({
       )}
     >
       <Well
-        className="hdr plate-in !border-0 border-b border-[var(--color-plate-edge)]"
+        className="hdr plate-in !border-0 border-b border-[var(--color-plate-edge)] aspect-[4/3]"
         style={{ ["--hdr-glow" as string]: design?.ink }}
       >
         <ProductVisual
           product={product}
           design={design}
           platformId={renderPlatform}
-          className="relative z-[1] w-full transition-transform duration-300 ease-[var(--ease-out)] group-hover:scale-[1.03]"
+          className="relative z-[1] h-full w-full object-contain transition-transform duration-300 ease-[var(--ease-out)] group-hover:scale-[1.03]"
         />
 
         {product.badge && (
@@ -228,7 +228,7 @@ export function ProductMini({
           product={product}
           design={design}
           platformId={platformId}
-          className="w-full"
+          className="h-full w-full object-contain"
         />
       </span>
       <span className="min-w-0 flex-1">

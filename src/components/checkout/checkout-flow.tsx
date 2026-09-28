@@ -319,7 +319,7 @@ export function CheckoutFlow() {
                         product={p}
                         design={d}
                         platformId={l.platformId as PlatformId}
-                        className="w-full"
+                        className="h-full w-full object-contain"
                       />
                       <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1 text-[10px] font-semibold tabular-nums text-page">
                         {l.qty}

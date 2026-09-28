@@ -12,13 +12,20 @@ export const metadata: Metadata = { title: "Edit product", robots: { index: fals
 const field = "h-10 w-full rounded-[var(--radius-xs)] border border-edge bg-[var(--color-plate-lo)] px-3 text-[13.5px] text-ink outline-none focus:border-ink-mute";
 const lbl = "mb-1.5 block text-[12px] font-bold";
 
-export default async function EditProduct({ params }: { params: Promise<{ slug: string }> }) {
+export default async function EditProduct({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { slug } = await params;
   const [rows, stock] = await Promise.all([listForAdmin(), stockMap()]);
   const row = rows.find((r) => r.base.slug === slug);
   if (!row) notFound();
 
   const { base, merged, override, images } = row;
+  const sp = await searchParams;
   const blobReady = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
   const custom = Boolean(override?.is_custom);
 
@@ -32,6 +39,25 @@ export default async function EditProduct({ params }: { params: Promise<{ slug: 
           {custom ? "created in the dashboard" : "defined in code — fields here override it"}
         </span>
       </div>
+
+      {sp.error && (
+        <p className="mb-3 rounded-[var(--radius-sm)] border border-[var(--color-hot)]/50 px-3 py-2 text-[13px]">
+          {sp.error === "upload"
+            ? "That upload failed — the file was not saved. Check the server log for the reason."
+            : sp.error === "type"
+              ? "PNG, JPEG, WebP or AVIF only."
+              : sp.error === "size"
+                ? "That file is over 8 MB."
+                : sp.error === "noblob"
+                  ? "The Blob store is not configured."
+                  : "Something went wrong."}
+        </p>
+      )}
+      {sp.saved && (
+        <p className="mb-3 rounded-[var(--radius-sm)] border border-[var(--color-hot)]/40 bg-[var(--color-note-green)] px-3 py-2 text-[13px]">
+          Saved.
+        </p>
+      )}
 
       <div className="grid gap-4 lg:grid-cols-3">
         <form action="/api/admin/products" method="post" className="lg:col-span-2">

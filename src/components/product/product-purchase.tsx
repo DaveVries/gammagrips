@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { PlatformId, Product } from "@/lib/types";
 import { PLATFORMS, PRODUCTS, designById, platformById, textureById } from "@/data/catalog";
 import { ProductVisual } from "@/components/product/product-visual";
-import { ControllerRender, DesignSwatch } from "@/components/product/controller-render";
+import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
 import { Badge, Button, Price, Rating, Well, Win, WinDots } from "@/components/ui/primitives";
 import { QtyStepper } from "@/components/cart/cart-drawer";
 import { useCart } from "@/lib/cart";
@@ -63,7 +63,7 @@ export function ProductPurchase({
   const views = useMemo(() => {
     const list: { id: ViewId; label: string }[] = [{ id: "front", label: "Fitted" }];
     list.push({ id: "macro", label: "Surface" });
-    if (isController) list.push({ id: "shells", label: "In the box" });
+    if (isController) list.push({ id: "shells", label: "Back" });
     return list;
   }, [isController]);
 
@@ -82,19 +82,19 @@ export function ProductPurchase({
             <Win title={`${product.name.toUpperCase()} — ${platform.short.toUpperCase()}`} right={<WinDots />} bodyClass="p-[3px]">
               <Well>
               {view === "macro" && design ? (
-                <ControllerRender
+                <GripPhoto
                   design={design}
                   platformId={platformId}
                   view="macro"
-                  className="aspect-[4/3] w-full"
+                  className="aspect-[4/3] w-full object-cover"
                 />
               ) : view === "shells" && design ? (
-                <ControllerRender
+                <GripPhoto
                   design={design}
                   platformId={platformId}
-                  view="grips"
+                  view="back"
                   className="w-full"
-                  label={`The pair of ${design.name} shells supplied in the box`}
+                  label={`${design.name} Grips seen from the back of the controller`}
                 />
               ) : (
                 <ProductVisual
@@ -124,19 +124,18 @@ export function ProductPurchase({
                       )}
                     >
                       {v.id === "macro" && design ? (
-                        <ControllerRender
+                        <GripPhoto
                           design={design}
                           platformId={platformId}
                           view="macro"
                           className="h-full w-full object-cover"
                         />
                       ) : v.id === "shells" && design ? (
-                        <ControllerRender
+                        <GripPhoto
                           design={design}
                           platformId={platformId}
-                          view="grips"
-                          flat
-                          className="h-full w-full"
+                          view="back"
+                          className="h-full w-full object-cover"
                         />
                       ) : (
                         <ProductVisual

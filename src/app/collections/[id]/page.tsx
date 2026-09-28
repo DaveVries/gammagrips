@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { COLLECTIONS, PRODUCTS, collectionById, designById } from "@/data/catalog";
-import { ControllerRender, DesignSwatch } from "@/components/product/controller-render";
+import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
 import { ProductGrid } from "@/components/product/product-card";
 import { ButtonLink, Rule, SectionHead } from "@/components/ui/primitives";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
@@ -121,30 +121,32 @@ export default async function CollectionDetail({
           </div>
 
           <div className="min-w-0 lg:col-span-7">
-            <ControllerRender
+            <GripPhoto
               design={design}
               platformId="dualsense"
+              priority
               className="mx-auto w-full max-w-[620px]"
             />
             <div className="mt-4 grid grid-cols-2 gap-3">
               <div className="overflow-hidden rounded-[var(--radius-md)] border border-edge">
-                <ControllerRender
+                <GripPhoto
                   design={design}
                   platformId="dualsense"
                   view="macro"
-                  className="aspect-[4/3] w-full"
+                  className="aspect-[4/3] w-full object-cover"
                 />
               </div>
               <div className="overflow-hidden rounded-[var(--radius-md)] border border-edge bg-gradient-to-b from-[#14181c] to-[#0b0e11]">
-                <ControllerRender
+                <GripPhoto
                   design={design}
-                  platformId="xbox-series"
-                  className="w-full"
+                  platformId="dualsense"
+                  view="back"
+                  className="aspect-[4/3] w-full object-cover"
                 />
               </div>
             </div>
             <p className="mt-3 text-center text-[12.5px] text-ink-mute">
-              Surface at 8× magnification, and the same design on an Xbox Wireless Controller.
+              The moulded surface up close, and the same pair seen from the back.
             </p>
           </div>
         </div>
@@ -173,7 +175,7 @@ export default async function CollectionDetail({
                   className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-md)] border border-edge plate transition-colors hover:border-edge"
                 >
                   <span className="block aspect-[16/10] overflow-hidden">
-                    <ControllerRender
+                    <GripPhoto
                       design={designById(c.designIds[0])!}
                       platformId="dualsense"
                       view="macro"

@@ -136,7 +136,7 @@ export function CartDrawer() {
                         product={p}
                         design={d}
                         platformId={line.platformId as PlatformId}
-                        className="w-full"
+                        className="h-full w-full object-contain"
                       />
                     </Link>
 

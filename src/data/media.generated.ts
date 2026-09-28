@@ -3,58 +3,142 @@
 import type { MediaAsset } from "@/data/media";
 
 export const GENERATED_MEDIA: Record<string, MediaAsset[]> = {
-  "dark-matter|*": [
+  "cyber|*": [
     {
-      "src": "/products/dark-matter.png",
-      "w": 1120,
-      "h": 860,
+      "src": "/products/cyber.webp",
+      "w": 1400,
+      "h": 1687,
       "kind": "front",
-      "alt": "Dark Matter Grips fitted to a controller"
+      "alt": "Cyber Grips fitted to a controller"
+    },
+    {
+      "src": "/products/cyber-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Cyber Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/cyber-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Cyber grip surface"
     }
   ],
   "ember|*": [
     {
-      "src": "/products/ember.png",
-      "w": 1120,
-      "h": 860,
+      "src": "/products/ember.webp",
+      "w": 1400,
+      "h": 1687,
       "kind": "front",
       "alt": "Ember Grips fitted to a controller"
+    },
+    {
+      "src": "/products/ember-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Ember Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/ember-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Ember grip surface"
     }
   ],
-  "ice-froyo|*": [
+  "glacier|*": [
     {
-      "src": "/products/ice-froyo.png",
-      "w": 1120,
-      "h": 860,
+      "src": "/products/glacier.webp",
+      "w": 1400,
+      "h": 1687,
       "kind": "front",
-      "alt": "Ice Froyo Grips fitted to a controller"
+      "alt": "Glacier Grips fitted to a controller"
+    },
+    {
+      "src": "/products/glacier-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Glacier Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/glacier-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Glacier grip surface"
     }
   ],
-  "vapor|*": [
+  "jungle|*": [
     {
-      "src": "/products/vapor.png",
-      "w": 1120,
-      "h": 860,
+      "src": "/products/jungle.webp",
+      "w": 1400,
+      "h": 1687,
       "kind": "front",
-      "alt": "Vapor Grips fitted to a controller"
+      "alt": "Jungle Grips fitted to a controller"
+    },
+    {
+      "src": "/products/jungle-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Jungle Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/jungle-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Jungle grip surface"
+    }
+  ],
+  "nebula|*": [
+    {
+      "src": "/products/nebula.webp",
+      "w": 1400,
+      "h": 1687,
+      "kind": "front",
+      "alt": "Nebula Grips fitted to a controller"
+    },
+    {
+      "src": "/products/nebula-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Nebula Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/nebula-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Nebula grip surface"
     }
   ],
   "venom|*": [
     {
-      "src": "/products/venom.png",
-      "w": 1120,
-      "h": 860,
+      "src": "/products/venom.webp",
+      "w": 1400,
+      "h": 1687,
       "kind": "front",
       "alt": "Venom Grips fitted to a controller"
-    }
-  ],
-  "volt|*": [
+    },
     {
-      "src": "/products/volt.png",
-      "w": 1120,
-      "h": 860,
-      "kind": "front",
-      "alt": "Volt Grips fitted to a controller"
+      "src": "/products/venom-back.webp",
+      "w": 1400,
+      "h": 1446,
+      "kind": "back",
+      "alt": "Venom Grips seen from the back of a controller"
+    },
+    {
+      "src": "/products/venom-macro.webp",
+      "w": 560,
+      "h": 560,
+      "kind": "macro",
+      "alt": "Close-up of the Venom grip surface"
     }
   ]
 };

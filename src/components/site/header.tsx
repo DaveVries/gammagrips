@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/site/logo";
 import { NAV, type NavItem } from "@/components/site/nav-data";
-import { DesignSwatch } from "@/components/product/controller-render";
+import { DesignSwatch } from "@/components/product/grip-photo";
 import { designById } from "@/data/catalog";
 import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import type { Product, Review } from "@/lib/types";
 import { designById, platformById } from "@/data/catalog";
-import { DesignSwatch } from "@/components/product/controller-render";
+import { DesignSwatch } from "@/components/product/grip-photo";
 import { Badge, Groove, Stars } from "@/components/ui/primitives";
 import { cn, count as fmt, dateLabel } from "@/lib/utils";
 

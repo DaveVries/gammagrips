@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useState } from "react";
 import { COLLECTIONS, DESIGNS, PRODUCTS, designById, textureById } from "@/data/catalog";
-import { DesignSwatch } from "@/components/product/controller-render";
+import { DesignSwatch } from "@/components/product/grip-photo";
 import { ProductVisual } from "@/components/product/product-visual";
 import { ButtonLink, Well } from "@/components/ui/primitives";
 import { cn, money } from "@/lib/utils";
 
-const ORDER = ["dark-matter", "volt", "ember", "vapor", "venom", "ice-froyo"];
+const ORDER = ["nebula", "venom", "ember", "cyber", "jungle", "glacier"];
 
 /**
  * The hero is the demo. The design row swaps the product with no image request
@@ -16,7 +16,7 @@ const ORDER = ["dark-matter", "volt", "ember", "vapor", "venom", "ice-froyo"];
  * behaves on mobile.
  */
 export function Hero() {
-  const [id, setId] = useState("dark-matter");
+  const [id, setId] = useState("nebula");
   const design = designById(id)!;
   const collection = COLLECTIONS.find((c) => c.id === design.collection)!;
   const product = PRODUCTS.find((p) => p.designs[0] === id)!;

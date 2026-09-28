@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { COLLECTIONS, designById } from "@/data/catalog";
-import { ControllerRender, DesignSwatch } from "@/components/product/controller-render";
+import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
 import { Rule } from "@/components/ui/primitives";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 
@@ -67,11 +67,11 @@ export default function CollectionsIndex() {
                         href={`/collections/${c.id}?design=${id}`}
                         className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-lg)] border border-edge plate transition-colors hover:border-edge"
                       >
-                        <span className="block overflow-hidden bg-gradient-to-b from-[#14181c] to-[#0b0e11]">
-                          <ControllerRender
+                        <span className="block aspect-[4/3] overflow-hidden bg-gradient-to-b from-[#14181c] to-[#0b0e11]">
+                          <GripPhoto
                             design={d}
                             platformId="dualsense"
-                            className="w-full transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+                            className="h-full w-full object-contain transition-transform duration-500 ease-[var(--ease-out)] group-hover:scale-[1.04]"
                           />
                         </span>
                         <span className="flex flex-1 items-start gap-3 border-t border-edge p-4">

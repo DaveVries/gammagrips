@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { PLATFORMS, PRODUCTS, designById } from "@/data/catalog";
-import { ControllerRender } from "@/components/product/controller-render";
+import { ControllerIcon } from "@/components/site/controller-icon";
 import { ProductGrid } from "@/components/product/product-card";
 import { Badge, ButtonLink, Rule, SectionHead } from "@/components/ui/primitives";
 import { inStock } from "@/lib/shop";
@@ -93,11 +93,9 @@ export function CompatibilityChecker() {
                           : "border-edge hover:border-edge",
                       )}
                     >
-                      <ControllerRender
-                        design={designById("ice-froyo")!}
-                        platformId={p.id}
-                        flat
-                        className="h-12 w-16 shrink-0"
+                      <ControllerIcon
+                        family={p.family}
+                        className="h-12 w-16 shrink-0 text-ink-dim"
                       />
                       <span className="min-w-0">
                         <span className="block truncate text-[13.5px] font-medium">

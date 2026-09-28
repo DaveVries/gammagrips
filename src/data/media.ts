@@ -18,9 +18,9 @@
    ~8% padding so it crops predictably inside cards.
 
    Example:
-     "dark-matter-grips|dark-matter|dualsense": [
-       { src: "/products/dark-matter-dualsense.png", w: 2000, h: 1540,
-         alt: "Dark Matter Grips fitted to a DualSense", kind: "front" },
+     "nebula-grips|nebula|dualsense": [
+       { src: "/products/nebula-dualsense.png", w: 2000, h: 1540,
+         alt: "Nebula Grips fitted to a DualSense", kind: "front" },
      ],
 
    In practice you will not write this by hand — `npm run media:scan` generates
@@ -33,7 +33,7 @@ export interface MediaAsset {
   h: number;
   alt: string;
   /** Drives ordering and which slot the asset fills in the PDP gallery. */
-  kind: "front" | "angle" | "macro" | "installed" | "lifestyle" | "inbox";
+  kind: "front" | "back" | "angle" | "macro" | "installed" | "lifestyle" | "inbox";
 }
 
 import { GENERATED_MEDIA } from "@/data/media.generated";
@@ -57,6 +57,19 @@ export function mediaFor(
     GENERATED_MEDIA[`${d}|*`] ??
     []
   );
+}
+
+/** Design-level lookup: the imagery is keyed by design, not by product slug. */
+export function designMedia(
+  designId: string,
+  platformId: string,
+  kind: MediaAsset["kind"],
+): MediaAsset | null {
+  const pool = [
+    ...(GENERATED_MEDIA[`${designId}|${platformId}`] ?? []),
+    ...(platformId === "*" ? [] : GENERATED_MEDIA[`${designId}|*`] ?? []),
+  ];
+  return pool.find((a) => a.kind === kind) ?? null;
 }
 
 export const hasMedia = (slug: string, designId: string | null, platformId: string) =>

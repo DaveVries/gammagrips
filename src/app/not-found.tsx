@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PRODUCTS, designById } from "@/data/catalog";
-import { ControllerRender } from "@/components/product/controller-render";
+import { GripPhoto } from "@/components/product/grip-photo";
 import { ButtonLink } from "@/components/ui/primitives";
 
 export default function NotFound() {
@@ -43,7 +43,7 @@ export default function NotFound() {
           </ul>
         </div>
         <div className="hidden lg:block">
-          <ControllerRender
+          <GripPhoto
             design={designById(PRODUCTS[0].designs[0])!}
             platformId="dualsense"
             className="mx-auto w-full max-w-[480px] opacity-70"

@@ -21,9 +21,15 @@ export async function POST(req: Request) {
   /* Delete */
   const removeId = form.get("delete_id");
   if (removeId) {
-    const rows = (await db()`delete from product_images where id = ${Number(removeId)} returning url`) as {
-      url: string;
-    }[];
+    let rows: { url: string }[] = [];
+    try {
+      rows = (await db()`delete from product_images where id = ${Number(removeId)} returning url`) as {
+        url: string;
+      }[];
+    } catch (err) {
+      console.error("[admin/images] delete failed", err);
+      return back("?error=upload");
+    }
     // Blob deletion is best-effort: the row is gone either way, and an orphan
     // blob is cheaper than a dead reference in the page.
     if (rows[0]?.url) await del(rows[0].url).catch(() => {});
@@ -36,17 +42,28 @@ export async function POST(req: Request) {
   if (file.size > MAX_BYTES) return back("?error=size");
   if (!process.env.BLOB_READ_WRITE_TOKEN) return back("?error=noblob");
 
-  const ext = file.type.split("/")[1].replace("jpeg", "jpg");
-  const blob = await put(`products/${slug}-${Date.now()}.${ext}`, file, {
-    access: "public",
-    contentType: file.type,
-  });
+  /* Everything past this point can throw — a rejected blob upload, a database
+     timeout — and an unhandled throw in a route handler is a bare 500 with no
+     body. Posting a form to that lands the browser on the API URL showing a
+     blank page, with nothing to tell the user what went wrong. Always come
+     back to the page, always with a reason. */
+  try {
+    const ext = file.type.split("/")[1].replace("jpeg", "jpg");
+    const blob = await put(`products/${slug}-${Date.now()}.${ext}`, file, {
+      access: "public",
+      contentType: file.type,
+      addRandomSuffix: true,
+    });
 
-  await db()`
-    insert into product_images (slug, url, alt, kind, sort)
-    values (${slug}, ${blob.url}, ${String(form.get("alt") ?? "").slice(0, 200)},
-            ${String(form.get("kind") ?? "front")},
-            coalesce((select max(sort) + 1 from product_images where slug = ${slug}), 0))
-  `;
+    await db()`
+      insert into product_images (slug, url, alt, kind, sort)
+      values (${slug}, ${blob.url}, ${String(form.get("alt") ?? "").slice(0, 200)},
+              ${String(form.get("kind") ?? "front")},
+              coalesce((select max(sort) + 1 from product_images where slug = ${slug}), 0))
+    `;
+  } catch (err) {
+    console.error("[admin/images] upload failed", err);
+    return back("?error=upload");
+  }
   return back("?saved=1");
 }

@@ -18,38 +18,38 @@ export const GUIDES: Guide[] = [
         heading: "1. Do your hands sweat?",
         paragraphs: [
           "If your problem starts about an hour in and gets worse, you need somewhere for the moisture to go, not more friction. A smoother grip with more traction will still turn slick once there is a film of sweat on it.",
-          "Open Cell — Dark Matter and Ember — is the only surface we make that actively channels moisture. The 2.4 mm cell walls create drainage paths under the palm. If sweat is your main issue, this is the answer and nothing else in the range is a substitute.",
+          "Open Cell — Nebula and Ember — is the only surface we make that actively channels moisture. The 2.4 mm cell walls create drainage paths under the palm. If sweat is your main issue, this is the answer and nothing else in the range is a substitute.",
         ],
       },
       {
         heading: "2. How long is a typical session?",
         paragraphs: [
           "Aggressive textures are excellent for two hours and tiring for six. Open Cell has hard cell edges that press into the same points on your fingers over time — most people adapt within a week, some never do.",
-          "If you routinely play four hours or more and you are not fighting sweat, Volt's Micro Cell gives you most of the traction with none of the pressure points. It is the grip we recommend most often.",
+          "If you routinely play four hours or more and you are not fighting sweat, Venom's Micro Cell gives you most of the traction with none of the pressure points. It is the grip we recommend most often.",
         ],
       },
       {
         heading: "3. Do you want the controller to feel the same?",
         paragraphs: [
-          "Added thickness is the single most polarising thing about grips. Vapor adds 1.4 mm and is essentially invisible in the hand. Venom adds 3.1 mm and changes the shape of the controller.",
+          "Added thickness is the single most polarising thing about grips. Cyber adds 1.4 mm and is essentially invisible in the hand. Jungle adds 3.1 mm and changes the shape of the controller.",
           "If you have small hands, or you are competitive and have thousands of hours of muscle memory on a bare controller, stay under 2 mm. If your hands are large or the stock handles feel thin, the extra bulk is usually an improvement rather than a compromise.",
         ],
       },
       {
         heading: "4. Does anything hurt?",
         paragraphs: [
-          "If you get joint or knuckle pain rather than slipping, you are looking for cushion, not grip. Venom uses a softer Shore 60A compound and spreads pressure across more of the palm. Several customers with arthritis use it specifically for that.",
+          "If you get joint or knuckle pain rather than slipping, you are looking for cushion, not grip. Jungle uses a softer Shore 60A compound and spreads pressure across more of the palm. Several customers with arthritis use it specifically for that.",
         ],
       },
       {
         heading: "Short version",
         paragraphs: ["If you only read one line:"],
         list: [
-          "Sweaty hands → Dark Matter or Ember (Open Cell)",
-          "Long sessions, no sweat → Volt (Micro Cell)",
-          "Joint pain or large hands → Venom",
-          "Want nothing to change → Vapor or Ice Froyo",
-          "Never used grips before → Ice Froyo",
+          "Sweaty hands → Nebula or Ember (Open Cell)",
+          "Long sessions, no sweat → Venom (Micro Cell)",
+          "Joint pain or large hands → Jungle",
+          "Want nothing to change → Cyber or Glacier",
+          "Never used grips before → Glacier",
         ],
       },
     ],
@@ -121,31 +121,31 @@ export const GUIDES: Guide[] = [
         ],
       },
       {
-        heading: "Open Cell — Dark Matter and Ember",
+        heading: "Open Cell — Nebula and Ember",
         paragraphs: [
-          "Grip 5/5. Cushion 4/5. +2.4 mm. Deep Voronoi cell walls with open channels between them. Dark Matter and Ember share the depth; Ember runs a coarser, more angular cell. The only texture that moves sweat rather than just resisting it. Cell edges are sharp for the first week and soften with use. Needs cleaning every two to three weeks under heavy use, because the cells collect skin oil and go slick when they load up.",
+          "Grip 5/5. Cushion 4/5. +2.4 mm. Deep Voronoi cell walls with open channels between them. Nebula and Ember share the depth; Ember runs a coarser, more angular cell. The only texture that moves sweat rather than just resisting it. Cell edges are sharp for the first week and soften with use. Needs cleaning every two to three weeks under heavy use, because the cells collect skin oil and go slick when they load up.",
         ],
       },
       {
-        heading: "Micro Cell — Volt",
+        heading: "Micro Cell — Venom",
         paragraphs: [
-          "Grip 4/5. Cushion 3/5. +1.8 mm. The same cell geometry as Dark Matter at roughly half the pitch. Consistent traction with no pressure points, which makes it the best choice for sessions over four hours. This is the default recommendation for most people.",
+          "Grip 4/5. Cushion 3/5. +1.8 mm. The same cell geometry as Nebula at roughly half the pitch. Consistent traction with no pressure points, which makes it the best choice for sessions over four hours. This is the default recommendation for most people.",
         ],
       },
       {
-        heading: "Contour Ridge — Venom",
+        heading: "Contour Ridge — Jungle",
         paragraphs: [
           "Grip 4/5. Cushion 5/5. +3.1 mm. Raised ridges running across the finger wrap, on a softer Shore 60A compound. The most comfortable grip we make and the one to buy for joint pain, but the ridges are smooth so it has less outright bite than the open-cell textures.",
         ],
       },
       {
-        heading: "Soft Matte — Ice Froyo",
+        heading: "Soft Matte — Glacier",
         paragraphs: [
           "Grip 3/5. Cushion 3/5. +1.1 mm. Soft-touch with a dimpled palm patch, no pattern elsewhere. Meaningfully better than bare plastic and almost undetectable in the hand. Not the answer for sweat — a smooth surface has nothing to work with once there is moisture on it.",
         ],
       },
       {
-        heading: "Grid Emboss — Vapor",
+        heading: "Grid Emboss — Cyber",
         paragraphs: [
           "Grip 4/5. Cushion 2/5. +1.4 mm. A raised square mesh with a node at every intersection. The lowest-profile texture we make and the one that disturbs existing muscle memory least — but it is a dry-hand surface, with no channels to move moisture.",
         ],
@@ -153,7 +153,7 @@ export const GUIDES: Guide[] = [
       {
         heading: "Choosing between the top two",
         paragraphs: [
-          "Most people are deciding between Dark Matter and Volt. The rule is simple: if sweat is your problem, Dark Matter. If pressure or fatigue is your problem, Volt. If neither, Volt is the safer purchase.",
+          "Most people are deciding between Nebula and Venom. The rule is simple: if sweat is your problem, Nebula. If pressure or fatigue is your problem, Venom. If neither, Venom is the safer purchase.",
         ],
       },
     ],

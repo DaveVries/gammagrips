@@ -104,16 +104,15 @@ export const textureById = (id?: string) => TEXTURES.find((t) => t.id === id);
 
 /* ============================================================================
    Designs
-   Six, matching the six moulds we tool. Each maps to a pattern renderer in
-   src/lib/patterns.tsx.
+   Six, matching the six moulds we tool. Imagery for each comes from the
+   renders in public/products/, resolved through src/data/media.ts.
    ========================================================================= */
 
 export const DESIGNS: Design[] = [
   {
-    id: "dark-matter",
-    name: "Dark Matter",
+    id: "nebula",
+    name: "Nebula",
     collection: "cellular",
-    kind: "cell",
     // light webbing over dark cells — the webbing is the raised wall you feel
     base: "#181428",
     ink: "#e2d8ff",
@@ -123,10 +122,9 @@ export const DESIGNS: Design[] = [
     blurb: "Open Voronoi cells with a raised violet-white wall. The mould the range was built around.",
   },
   {
-    id: "volt",
-    name: "Volt",
+    id: "venom",
+    name: "Venom",
     collection: "cellular",
-    kind: "cell-fine",
     base: "#0b0d08",
     ink: "#d6f96a",
     inkAlt: "#a8dc3c",
@@ -138,7 +136,6 @@ export const DESIGNS: Design[] = [
     id: "ember",
     name: "Ember",
     collection: "cellular",
-    kind: "shard",
     base: "#0b0805",
     ink: "#ffc48c",
     inkAlt: "#ff8a34",
@@ -147,10 +144,9 @@ export const DESIGNS: Design[] = [
     blurb: "A coarser, more angular cell with the wall running hot through the palm.",
   },
   {
-    id: "vapor",
-    name: "Vapor",
+    id: "cyber",
+    name: "Cyber",
     collection: "linear",
-    kind: "lattice",
     // fine raised grid, magenta at the top cooling to cyan at the tips
     base: "#8a5aa6",
     baseAlt: "#3f7fae",
@@ -160,10 +156,9 @@ export const DESIGNS: Design[] = [
     blurb: "A fine raised mesh, magenta through the palm cooling to cyan at the tips.",
   },
   {
-    id: "venom",
-    name: "Venom",
+    id: "jungle",
+    name: "Jungle",
     collection: "linear",
-    kind: "contour",
     // dark bands on a light green shell
     base: "#b9e7ae",
     baseAlt: "#7fc98f",
@@ -173,10 +168,9 @@ export const DESIGNS: Design[] = [
     blurb: "Deep topographic bands that track the curve of the handle.",
   },
   {
-    id: "ice-froyo",
-    name: "Ice Froyo",
+    id: "glacier",
+    name: "Glacier",
     collection: "solid",
-    kind: "plain",
     base: "#f4f8fb",
     baseAlt: "#a4c9e2",
     ink: "#cfe2ef",
@@ -198,7 +192,7 @@ export const COLLECTIONS: Collection[] = [
     tagline: "Voronoi cell structures.",
     description:
       "Generated cell geometry moulded as real relief. The walls are what you feel and what you see — deeper cells grip harder and give sweat somewhere to go.",
-    designIds: ["dark-matter", "volt", "ember"],
+    designIds: ["nebula", "venom", "ember"],
   },
   {
     id: "linear",
@@ -206,7 +200,7 @@ export const COLLECTIONS: Collection[] = [
     tagline: "Drawn geometry, held to a pitch.",
     description:
       "Grids and contours at a fixed spacing, mirrored so the left and right grips are symmetric rather than two random crops of the same texture.",
-    designIds: ["vapor", "venom"],
+    designIds: ["cyber", "jungle"],
   },
   {
     id: "solid",
@@ -214,7 +208,7 @@ export const COLLECTIONS: Collection[] = [
     tagline: "Texture without a pattern.",
     description:
       "For setups where the controller should disappear. Soft-touch shells that add traction without adding graphics.",
-    designIds: ["ice-froyo"],
+    designIds: ["glacier"],
   },
 ];
 
@@ -275,16 +269,16 @@ const SHARED_IN_BOX = [
 
 export const PRODUCTS: Product[] = [
   {
-    slug: "dark-matter-grips",
-    name: "Dark Matter Grips",
+    slug: "nebula-grips",
+    name: "Nebula Grips",
     tagline: "Our deepest texture, for hands that sweat.",
     type: "grips",
     price: 34.95,
     platforms: [...ALL_PLATFORMS],
     texture: "open-cell",
-    designs: ["dark-matter"],
+    designs: ["nebula"],
     summary:
-      "Dark Matter is the grip we tooled first and the one most of our sponsored players still use. The open-cell wall structure is 2.4 mm deep, so sweat drains into the cells instead of pooling between your palm and the shell. It is the most aggressive surface in the range.",
+      "Nebula is the grip we tooled first and the one most of our sponsored players still use. The open-cell wall structure is 2.4 mm deep, so sweat drains into the cells instead of pooling between your palm and the shell. It is the most aggressive surface in the range.",
     highlights: [
       "2.4 mm open-cell wall depth channels sweat away from the palm",
       "Medical-grade TPU shell, Shore 65A — flexible from 5 °C to 45 °C",
@@ -311,27 +305,27 @@ export const PRODUCTS: Product[] = [
       { label: "Comfort", score: 4.7 },
       { label: "Durability", score: 4.6 },
     ],
-    variants: buildVariants("dark-matter", { low: ["dualsense-edge"] }),
-    pairsWith: ["volt-grips", "vapor-grips", "ember-grips"],
+    variants: buildVariants("nebula", { low: ["dualsense-edge"] }),
+    pairsWith: ["venom-grips", "cyber-grips", "ember-grips"],
     badge: "bestseller",
     releasedOn: "2025-03-04",
     popularity: 100,
   },
 
   {
-    slug: "volt-grips",
-    name: "Volt Grips",
+    slug: "venom-grips",
+    name: "Venom Grips",
     tagline: "Tight cell crackle. Reads from across the room.",
     type: "grips",
     price: 34.95,
     platforms: [...ALL_PLATFORMS],
     texture: "micro-cell",
-    designs: ["volt"],
+    designs: ["venom"],
     summary:
-      "Volt uses the same cell geometry as Dark Matter at roughly half the pitch. The finer walls give you most of the traction with none of the sharp edges people notice on Dark Matter in the first week — and the lime reads clearly on a streaming camera.",
+      "Venom uses the same cell geometry as Nebula at roughly half the pitch. The finer walls give you most of the traction with none of the sharp edges people notice on Nebula in the first week — and the lime reads clearly on a streaming camera.",
     highlights: [
       "1.8 mm micro-cell field, tuned for sessions over four hours",
-      "Most of Dark Matter's grip without the break-in period",
+      "Most of Nebula's grip without the break-in period",
       "High-visibility lime on a near-black shell",
       "Moulded per controller — no stretching, no bunching",
       "Removable and re-fittable without adhesive",
@@ -355,8 +349,8 @@ export const PRODUCTS: Product[] = [
       { label: "Comfort", score: 4.8 },
       { label: "Durability", score: 4.6 },
     ],
-    variants: buildVariants("volt", { low: ["dualsense"] }),
-    pairsWith: ["dark-matter-grips", "ember-grips", "venom-grips"],
+    variants: buildVariants("venom", { low: ["dualsense"] }),
+    pairsWith: ["nebula-grips", "ember-grips", "jungle-grips"],
     releasedOn: "2025-01-21",
     popularity: 88,
   },
@@ -371,7 +365,7 @@ export const PRODUCTS: Product[] = [
     texture: "open-cell",
     designs: ["ember"],
     summary:
-      "Ember runs the same 2.4 mm open-cell depth as Dark Matter on a coarser, more angular cell — fewer walls, wider channels, and the colour inverted so the webbing between the cells is what you see. Identical grip performance, a very different object.",
+      "Ember runs the same 2.4 mm open-cell depth as Nebula on a coarser, more angular cell — fewer walls, wider channels, and the colour inverted so the webbing between the cells is what you see. Identical grip performance, a very different object.",
     highlights: [
       "2.4 mm open-cell depth with a wider channel pitch",
       "Inverted colourway — the webbing is the graphic, not the cells",
@@ -399,22 +393,22 @@ export const PRODUCTS: Product[] = [
       { label: "Durability", score: 4.4 },
     ],
     variants: buildVariants("ember", { soldOut: ["xbox-elite-2"], low: ["xbox-series"] }),
-    pairsWith: ["dark-matter-grips", "volt-grips", "ice-froyo-grips"],
+    pairsWith: ["nebula-grips", "venom-grips", "glacier-grips"],
     releasedOn: "2025-06-10",
     popularity: 74,
   },
 
   {
-    slug: "vapor-grips",
-    name: "Vapor Grips",
+    slug: "cyber-grips",
+    name: "Cyber Grips",
     tagline: "Lowest profile. A raised mesh, not a coating.",
     type: "grips",
     price: 32.95,
     platforms: [...ALL_PLATFORMS],
     texture: "grid",
-    designs: ["vapor"],
+    designs: ["cyber"],
     summary:
-      "Vapor is the one to buy if you do not want your controller to get noticeably thicker. A 1.4 mm raised mesh with a node at every intersection — enough to lock your hand in place, close enough to stock that muscle memory carries over.",
+      "Cyber is the one to buy if you do not want your controller to get noticeably thicker. A 1.4 mm raised mesh with a node at every intersection — enough to lock your hand in place, close enough to stock that muscle memory carries over.",
     highlights: [
       "1.4 mm profile — the smallest change to the controller's shape",
       "Node points at every intersection add bite without added bulk",
@@ -441,24 +435,24 @@ export const PRODUCTS: Product[] = [
       { label: "Comfort", score: 4.8 },
       { label: "Durability", score: 4.7 },
     ],
-    variants: buildVariants("vapor"),
-    pairsWith: ["ice-froyo-grips", "venom-grips", "dark-matter-grips"],
+    variants: buildVariants("cyber"),
+    pairsWith: ["glacier-grips", "jungle-grips", "nebula-grips"],
     badge: "new",
     releasedOn: "2026-05-14",
     popularity: 81,
   },
 
   {
-    slug: "venom-grips",
-    name: "Venom Grips",
+    slug: "jungle-grips",
+    name: "Jungle Grips",
     tagline: "Most cushioned. Ridges that index your finger wrap.",
     type: "grips",
     price: 32.95,
     platforms: [...ALL_PLATFORMS],
     texture: "ridge",
-    designs: ["venom"],
+    designs: ["jungle"],
     summary:
-      "Venom is the comfort-first grip. Topographic ridges run across the handle where your middle and ring fingers wrap, giving you a physical index you can find without looking — on a softer 60A compound with 3.1 mm of cushion under the knuckle.",
+      "Jungle is the comfort-first grip. Topographic ridges run across the handle where your middle and ring fingers wrap, giving you a physical index you can find without looking — on a softer 60A compound with 3.1 mm of cushion under the knuckle.",
     highlights: [
       "3.1 mm ridge profile — the most cushioned grip we make",
       "Ridge pitch set to the natural finger spacing of an adult hand",
@@ -485,22 +479,22 @@ export const PRODUCTS: Product[] = [
       { label: "Comfort", score: 4.9 },
       { label: "Durability", score: 4.5 },
     ],
-    variants: buildVariants("venom"),
-    pairsWith: ["vapor-grips", "ice-froyo-grips", "volt-grips"],
+    variants: buildVariants("jungle"),
+    pairsWith: ["cyber-grips", "glacier-grips", "venom-grips"],
     releasedOn: "2025-08-27",
     popularity: 63,
   },
 
   {
-    slug: "ice-froyo-grips",
-    name: "Ice Froyo Grips",
+    slug: "glacier-grips",
+    name: "Glacier Grips",
     tagline: "Traction without changing how it looks.",
     type: "grips",
     price: 29.95,
     compareAt: 34.95,
     platforms: [...ALL_PLATFORMS],
     texture: "matte",
-    designs: ["ice-froyo"],
+    designs: ["glacier"],
     summary:
       "The entry point. A 1.1 mm soft-touch shell in ice white, with a dimpled patch under the palm where the contact pressure actually is. Start here if you have never used grips and do not want the feel of your controller to change.",
     highlights: [
@@ -529,8 +523,8 @@ export const PRODUCTS: Product[] = [
       { label: "Comfort", score: 4.6 },
       { label: "Durability", score: 4.3 },
     ],
-    variants: buildVariants("ice-froyo"),
-    pairsWith: ["vapor-grips", "venom-grips", "dark-matter-grips"],
+    variants: buildVariants("glacier"),
+    pairsWith: ["cyber-grips", "jungle-grips", "nebula-grips"],
     releasedOn: "2024-09-02",
     popularity: 70,
   },

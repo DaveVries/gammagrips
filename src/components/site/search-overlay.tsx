@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { search, relaxedSuggestions, compatibilityLine, type SearchHit } from "@/lib/shop";
-import { DesignSwatch } from "@/components/product/controller-render";
+import { DesignSwatch } from "@/components/product/grip-photo";
 import { designById } from "@/data/catalog";
 import { cn, money } from "@/lib/utils";
 import { productBySlug } from "@/data/catalog";

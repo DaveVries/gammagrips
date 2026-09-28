@@ -46,26 +46,11 @@ export interface Texture {
 
 export type CollectionId = "cellular" | "linear" | "solid";
 
-/** How a design's surface is drawn by the SVG pattern system. */
-export type PatternKind =
-  | "cell"
-  | "cell-fine"
-  | "shard"
-  | "hex"
-  | "lattice"
-  | "contour"
-  | "scale"
-  | "spot"
-  | "twill"
-  | "diamond"
-  | "plain";
-
 export interface Design {
   id: string;
   name: string;
   collection: CollectionId;
-  kind: PatternKind;
-  /** Shell colour beneath the pattern. */
+  /** Dominant shell colour — used for colour plates and UI accents. */
   base: string;
   /** Pattern ink. Two stops allow a gradient across the grip. */
   ink: string;

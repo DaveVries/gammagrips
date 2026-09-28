@@ -12,10 +12,10 @@
  *
  * design    any design id from src/data/catalog.ts (read automatically)
  * platform  dualsense | dualsense-edge | xbox-series | xbox-elite-2   (optional)
- * kind      front | angle | macro | installed | lifestyle | inbox     (optional)
+ * kind      front | back | angle | macro | installed | lifestyle | inbox  (optional)
  *
  * Anything not matched is skipped with a warning; anything not registered
- * falls back to the built-in SVG renderer, so partial coverage is fine.
+ * falls back to a plain colour plate, so partial coverage is fine.
  */
 import { readFileSync, readdirSync, writeFileSync, statSync } from "node:fs";
 import { join } from "node:path";
@@ -42,7 +42,7 @@ const NAMES = Object.fromEntries(
   ),
 );
 const PLATFORMS = ["dualsense-edge", "dualsense", "xbox-elite-2", "xbox-series"];
-const KINDS = ["front", "angle", "macro", "installed", "lifestyle", "inbox"];
+const KINDS = ["front", "back", "angle", "macro", "installed", "lifestyle", "inbox"];
 const EXT = /\.(png|jpe?g|webp|avif)$/i;
 
 const CONTROLLERS = {
@@ -112,14 +112,16 @@ for (const file of files.sort()) {
     alt:
       kind === "macro"
         ? `Close-up of the ${NAMES[design]} grip surface`
-        : `${NAMES[design]} Grips fitted to a ${platform === "*" ? "controller" : CONTROLLERS[platform]}`,
+        : kind === "back"
+          ? `${NAMES[design]} Grips seen from the back of a ${platform === "*" ? "controller" : CONTROLLERS[platform]}`
+          : `${NAMES[design]} Grips fitted to a ${platform === "*" ? "controller" : CONTROLLERS[platform]}`,
   });
   matched++;
   console.log(`ok    ${file}  →  ${design} / ${platform} / ${kind}  ${dim.w}×${dim.h}`);
 }
 
 // front first, then macro, then the rest — this order drives the PDP gallery
-const rank = { front: 0, angle: 1, macro: 2, installed: 3, lifestyle: 4, inbox: 5 };
+const rank = { front: 0, angle: 1, back: 2, macro: 3, installed: 4, lifestyle: 5, inbox: 6 };
 for (const list of Object.values(manifest)) list.sort((a, b) => rank[a.kind] - rank[b.kind]);
 
 writeFileSync(

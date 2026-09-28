@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCTS, TEXTURES, designById } from "@/data/catalog";
 import { CollectionPage } from "@/components/plp/collection-page";
-import { ControllerRender } from "@/components/product/controller-render";
+import { GripPhoto } from "@/components/product/grip-photo";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/controller-grips" },
@@ -12,11 +12,11 @@ export const metadata: Metadata = {
 };
 
 const MACRO: Record<string, string> = {
-  "open-cell": "dark-matter",
-  "micro-cell": "volt",
-  ridge: "venom",
-  grid: "vapor",
-  matte: "ice-froyo",
+  "open-cell": "nebula",
+  "micro-cell": "venom",
+  ridge: "jungle",
+  grid: "cyber",
+  matte: "glacier",
 };
 
 export default async function GripsPage({
@@ -47,7 +47,7 @@ export default async function GripsPage({
                   className="group cut-sm plate flex w-[190px] flex-col overflow-hidden transition-colors hover:bg-[var(--color-plate-hi)]"
                 >
                   <span className="plate-in relative block aspect-[16/9] overflow-hidden border-0 border-b border-edge">
-                    <ControllerRender
+                    <GripPhoto
                       design={designById(MACRO[t.id])!}
                       platformId="dualsense"
                       view="macro"

@@ -15,7 +15,7 @@ const GROUPS = [
       ["Which controllers do you make grips for?", "The PS5 DualSense, the DualSense Edge, the Xbox Wireless Controller (including the 2016 Xbox One refresh with a 3.5 mm jack) and the Xbox Elite Series 2. Each is a separate mould and they are not interchangeable. The compatibility checker identifies yours in two questions."],
       ["Will a DualSense grip fit a DualSense Edge?", "No. The Edge has a rear paddle module and our Edge shells are cut around it. A standard DualSense shell will not seat correctly on an Edge, and vice versa."],
       ["Do they cover the ports or the paddles?", "No. Every shell is cut around the USB-C port, both triggers, the headphone jack and — on the Edge and Elite Series 2 — the rear module, so stick modules and paddles still come out with the grips on."],
-      ["How much thicker will my controller be?", "Between 1.1 mm and 3.1 mm per handle depending on the surface. Vapor at 1.4 mm and Ice Froyo at 1.1 mm are the least noticeable; Venom at 3.1 mm is the most."],
+      ["How much thicker will my controller be?", "Between 1.1 mm and 3.1 mm per handle depending on the surface. Cyber at 1.4 mm and Glacier at 1.1 mm are the least noticeable; Jungle at 3.1 mm is the most."],
     ],
   },
   {
@@ -30,7 +30,7 @@ const GROUPS = [
   {
     heading: "Choosing",
     items: [
-      ["Which grip should I buy?", "If your hands sweat, Dark Matter or Ember — they are the only surfaces with channels deep enough to move moisture. For long sessions without sweat, Volt. For joint pain, Venom. To change as little as possible, Vapor or Ice Froyo."],
+      ["Which grip should I buy?", "If your hands sweat, Nebula or Ember — they are the only surfaces with channels deep enough to move moisture. For long sessions without sweat, Venom. For joint pain, Jungle. To change as little as possible, Cyber or Glacier."],
       ["Is the pattern printed on?", "No. Each grip is one mould, so the pattern is the physical relief — what you see is what your hand feels. That is also why design and surface are a single choice here rather than two."],
       ["Do you restock sold-out combinations?", "Yes. Everything in the range is in continuous production; a sold-out controller variant is a tooling schedule gap, usually two to three weeks."],
     ],
