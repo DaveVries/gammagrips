@@ -1,6 +1,6 @@
 import Link from "next/link";
 import {
-  COLLECTIONS,
+  DESIGNS,
   PLATFORMS,
   PRODUCTS,
   TEXTURES,
@@ -8,7 +8,6 @@ import {
   productBySlug,
 } from "@/data/catalog";
 import { GUIDES } from "@/data/guides";
-import { REVIEWS } from "@/data/reviews";
 import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
 import { ControllerIcon } from "@/components/site/controller-icon";
 import { ProductGrid } from "@/components/product/product-card";
@@ -17,10 +16,9 @@ import {
   ButtonLink,
   Section,
   SectionHead,
-  Stars,
   Well,
 } from "@/components/ui/primitives";
-import { cn, dateLabel } from "@/lib/utils";
+import { RETURN_DAYS, cn } from "@/lib/utils";
 
 /* ============================================================================
    Shop by platform
@@ -113,9 +111,9 @@ export function Featured() {
   return (
     <Section className="py-9 md:py-20">
       <SectionHead
-        eyebrow="Best sellers"
-        title="What most people buy"
-        copy="Three of the six. Nebula if your hands sweat, Venom for long sessions, Cyber if you want almost nothing to change."
+        eyebrow="The range"
+        title="Start with one of these"
+        copy="Three of the six colourways. The shell is the same in all of them — pick the one you want to look at."
         action={
           <ButtonLink href="/controller-grips" variant="default" size="sm">
             All six grips
@@ -145,16 +143,13 @@ export function TwoSides() {
 
   return (
     <Section className="py-12 md:py-24">
-      <div
-        className="relative isolate"
-        style={{ ["--spill" as string]: design.ink }}
-      >
+      <div className="relative isolate">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 inset-y-[-20%] z-0 opacity-40 blur-[90px]"
+          className="pointer-events-none absolute inset-x-0 inset-y-[-20%] z-0"
           style={{
             background:
-              "radial-gradient(38% 42% at 30% 52%, var(--spill), transparent 70%), radial-gradient(34% 40% at 72% 48%, var(--spill), transparent 72%)",
+              "radial-gradient(34% 40% at 28% 34%, rgba(255,255,255,0.05), transparent 70%), radial-gradient(32% 38% at 74% 32%, rgba(255,255,255,0.045), transparent 72%)",
           }}
         />
 
@@ -227,12 +222,12 @@ export function Benefits() {
         {[
           {
             title: "Sweat has somewhere to go",
-            copy: "Open cell walls create drainage channels under your palm. Traction alone stops working once there is a film of moisture on the shell.",
+            copy: "The relief leaves channels under your palm. Traction alone stops working once there is a film of moisture on the shell.",
             diagram: <CellSectionDiagram />,
           },
           {
             title: "Pressure spreads out",
-            copy: "The shell adds 0.9–3.1 mm of TPU across the whole handle, so the load moves off the two points where a bare controller digs in.",
+            copy: "The shell adds a layer of TPU across the whole handle, so the load moves off the two points where a bare controller digs in.",
             diagram: <PressureDiagram />,
           },
           {
@@ -358,58 +353,111 @@ function RemoveDiagram() {
 }
 
 /* ============================================================================
-   Collections showcase
+   The surface
+
+   This block used to be a five-across comparison of Open Cell, Micro Cell,
+   Contour Ridge, Grid Emboss and Soft Matte, each with a relief depth and a
+   grip/cushion score. One of those exists, and none of the numbers were
+   measured. One surface, shown once, at the magnification that makes the
+   point.
+   ========================================================================= */
+
+export function TextureTech() {
+  const lead = designById("nebula")!;
+
+  return (
+    <Section className="py-9 md:py-20">
+      <div className="glass grid items-center gap-8 p-5 md:p-10 lg:grid-cols-12 lg:gap-12">
+        <div className="min-w-0 lg:col-span-5">
+          <p className="label mb-4 flex items-center gap-2.5">
+            <span className="h-[3px] w-6 rounded-full bg-[var(--color-hot)]" aria-hidden="true" />
+            <span className="text-ink-mute">Surface</span>
+          </p>
+          <h2 className="shout text-[32px] leading-[0.95] md:text-[42px]">
+            The pattern is the relief
+          </h2>
+          <p className="mt-4 text-[15.5px] leading-relaxed text-ink-dim">
+            One mould, one surface. The texture is not printed on the shell and
+            it is not a coating sprayed over it — it is the shape of the shell,
+            so what you see at 8× is exactly what your palm finds.
+          </p>
+          <p className="mt-3 text-[15.5px] leading-relaxed text-ink-dim">
+            That is also why there is one of it. A second surface means a second
+            tool, and the first one is still being cut.
+          </p>
+          <div className="mt-7">
+            <ButtonLink href="/controller-grips" variant="primary">
+              See the six colourways
+            </ButtonLink>
+          </div>
+        </div>
+
+        <div className="min-w-0 lg:col-span-7" data-reveal>
+          <Well className="cut relative aspect-[16/10]" scan={false}>
+            <GripPhoto
+              design={lead}
+              platformId="dualsense"
+              view="macro"
+              sizes="(max-width: 1024px) 92vw, 52vw"
+              className="absolute inset-0 z-[1] h-full w-full object-cover"
+            />
+            <span className="label absolute bottom-3 right-3 z-[2] rounded-full bg-black/60 px-2.5 py-1.5 text-ink backdrop-blur">
+              8× magnification
+            </span>
+          </Well>
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ============================================================================
+   Colourways
+
+   Was "Six grips, three families", grouping the range by surface geometry
+   into collections that no longer exist. Same six products, described as what
+   they are: one shell, finished six ways.
    ========================================================================= */
 
 export function CollectionsShowcase() {
   return (
     <Section className="py-9 md:py-20">
       <SectionHead
-        eyebrow="Designs"
-        title="Six grips, three families"
-        copy="Cell structures, drawn geometry, or no pattern at all. Every one is moulded per controller."
+        eyebrow="Colourways"
+        title="One shell, six finishes"
+        copy="The geometry is identical across all six. Pick the one you want to look at for the next few thousand hours."
         action={
-          <ButtonLink href="/collections" variant="default" size="sm">
-            Browse designs
+          <ButtonLink href="/controller-grips" variant="default" size="sm">
+            All six
           </ButtonLink>
         }
       />
-      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 lg:grid-cols-3">
-        {COLLECTIONS.map((c, i) => {
-          const lead = designById(c.designIds[0])!;
+      <div className="rail mt-6 no-bar gap-3 sm:mt-9 sm:grid sm:grid-cols-3 lg:grid-cols-6">
+        {DESIGNS.map((d, i) => {
+          const product = PRODUCTS.find((p) => p.designs[0] === d.id);
+          if (!product) return null;
           return (
             <Link
-              key={c.id}
-              href={`/collections/${c.id}`}
+              key={d.id}
+              href={`/products/${product.slug}`}
               data-reveal
-              data-reveal-delay={(i % 3) * 60}
+              data-reveal-delay={(i % 6) * 50}
               className="group lift sheen glass cut-sm flex flex-col p-[3px]"
             >
-              <Well className="relative aspect-[16/10]">
+              <Well className="relative aspect-square" scan={false}>
                 <GripPhoto
-                  design={lead}
+                  design={d}
                   platformId="dualsense"
                   view="macro"
+                  sizes="(max-width: 640px) 46vw, 16vw"
                   className="absolute inset-0 z-[1] h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                 />
               </Well>
               <div className="flex flex-1 flex-col p-3">
-                <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="text-[15px] font-bold">{c.name}</h3>
-                  <span className="label text-ink-mute">
-                    {c.designIds.length} design{c.designIds.length > 1 ? "s" : ""}
-                  </span>
-                </div>
-                <p className="mt-1.5 text-[13px] leading-relaxed text-ink-dim">
-                  {c.tagline}
+                <h3 className="text-[13.5px] font-bold">{d.name}</h3>
+                <p className="mt-1 text-[12px] leading-relaxed text-ink-dim">
+                  {d.blurb}
                 </p>
-                <ul className="mt-3 flex gap-[3px]">
-                  {c.designIds.map((d) => (
-                    <li key={d} className="border border-edge p-[2px]">
-                      <DesignSwatch design={designById(d)!} size={24} />
-                    </li>
-                  ))}
-                </ul>
               </div>
             </Link>
           );
@@ -419,169 +467,59 @@ export function CollectionsShowcase() {
   );
 }
 
-/* ============================================================================
-   Texture / technology — macro detail
-   ========================================================================= */
-
-export function TextureTech() {
-  const map: Record<string, string> = {
-    "open-cell": "nebula",
-    "micro-cell": "venom",
-    ridge: "jungle",
-    grid: "cyber",
-    matte: "glacier",
-  };
-
-  return (
-    <Section className="py-9 md:py-20">
-      <SectionHead
-        eyebrow="Surface"
-        title="The pattern is the relief"
-        copy="Each grip is a single mould, so what you see is what you feel. These are the five surfaces, at 8× magnification."
-        action={
-          <ButtonLink href="/guides/grip-texture-comparison" variant="default" size="sm">
-            Full comparison
-          </ButtonLink>
-        }
-      />
-      <div className="rail mt-6 no-bar gap-4 sm:mt-9 sm:grid sm:grid-cols-2 lg:grid-cols-5" data-reveal>
-        {TEXTURES.map((t) => (
-          <Link
-            key={t.id}
-            href={`/controller-grips?texture=${t.id}`}
-            className="group lift sheen glass cut-sm flex flex-col p-[3px]"
-          >
-            <Well className="relative aspect-[4/3]">
-              <GripPhoto
-                design={designById(map[t.id])!}
-                platformId="dualsense"
-                view="macro"
-                className="absolute inset-0 z-[1] h-full w-full transition-transform duration-500 group-hover:scale-[1.08]"
-              />
-              <span className="border border-edge label absolute bottom-1.5 right-1.5 z-[2] glass px-1.5 py-1 text-ink">
-                {t.profile}
-              </span>
-            </Well>
-            <div className="flex flex-1 flex-col p-3">
-              <h3 className="text-[13.5px] font-bold">{t.name}</h3>
-              <p className="mt-1.5 flex-1 text-[12px] leading-relaxed text-ink-dim">
-                {t.feel}
-              </p>
-              <dl className="mt-4 space-y-2">
-                {[
-                  ["Grip", t.grip],
-                  ["Cushion", t.cushion],
-                ].map(([label, v]) => (
-                  <div key={label as string} className="flex items-center gap-2">
-                    <dt className="label w-12 shrink-0 text-ink-mute">{label}</dt>
-                    <dd className="flex flex-1 gap-[2px]" aria-label={`${v} out of 5`}>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <span
-                          key={n}
-                          className={cn(
-                            "h-[9px] flex-1",
-                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
-                          )}
-                        />
-                      ))}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          </Link>
-        ))}
-      </div>
-    </Section>
-  );
-}
 
 /* ============================================================================
-   Social proof
+   What we can honestly say
+
+   This slot used to be a wall of five-star testimonials and an aggregate of
+   4,666 reviews. Not one of them was real — nothing has shipped. Inventing
+   reviews is illegal here (the EU Omnibus Directive; the ACM enforces it), and
+   it is the fastest way to lose the only thing a new brand has. Until there
+   are customers, the honest version of social proof is the terms we will
+   actually be held to.
    ========================================================================= */
 
-export function SocialProof() {
-  const picks = ["r1", "r11", "r15", "r18", "r8", "r13"]
-    .map((id) => REVIEWS.find((r) => r.id === id)!)
-    .filter(Boolean);
-  const all = PRODUCTS.reduce(
-    (acc, p) => {
-      acc.n += p.reviewCount;
-      acc.sum += p.rating * p.reviewCount;
-      return acc;
+export function Assurance() {
+  const items = [
+    {
+      k: "No reviews yet",
+      v: "Nobody has one",
+      copy: "The first production run is still being moulded. When grips ship, reviews will appear here — written by people who bought them, good and bad, unedited.",
     },
-    { n: 0, sum: 0 },
-  );
-  const avg = all.sum / all.n;
+    {
+      k: `${RETURN_DAYS} days`,
+      v: "To change your mind",
+      copy: `Fitted, used, washed — it does not matter. Send them back inside ${RETURN_DAYS} days and we refund the order.`,
+    },
+    {
+      k: "No adhesive",
+      v: "Nothing to undo",
+      copy: "The shell is a friction fit moulded to one controller. It comes off as cleanly as it went on, leaving no residue on the plastic.",
+    },
+  ];
 
   return (
     <Section className="py-9 md:py-20">
       <SectionHead
-        eyebrow="Reviews"
-        title={
-          <>
-            {avg.toFixed(1)} out of 5, across{" "}
-            {new Intl.NumberFormat("en-GB").format(all.n)} reviews
-          </>
-        }
-        copy="We publish every review, including the bad ones, and we reply to the critical ones."
-        action={
-          <div className="flex items-center gap-3">
-            <Stars value={avg} size={16} />
-          </div>
-        }
+        eyebrow="Straight answers"
+        title="What we can honestly tell you"
+        copy="We are a first run with no customers yet, so there is nothing to quote. Here is what we will be held to instead."
       />
-      <div
-        className="rail mt-6 no-bar gap-4 sm:mt-9 sm:block sm:columns-2 xl:columns-3"
-        data-reveal
-      >
-        {picks.map((r) => {
-          const p = productBySlug(r.productSlug)!;
-          const d = designById(r.designId);
-          return (
-            <figure
-              key={r.id}
-              className="card mb-0 break-inside-avoid glass p-3 sm:mb-3"
-            >
-              <div className="flex items-center justify-between gap-3">
-                <Stars value={r.rating} />
-                <span className="label text-ink-mute">{dateLabel(r.date)}</span>
-              </div>
-              <blockquote className="mt-2.5">
-                <p className="text-[13.5px] font-bold leading-snug">{r.title}</p>
-                <p className="mt-2 text-[13px] leading-relaxed text-ink-dim">{r.body}</p>
-              </blockquote>
-              <figcaption className="border-t border-edge mt-3.5 flex items-center gap-2.5 pt-3">
-                {d && (
-                  <span className="border border-edge shrink-0 p-[2px]">
-                    <DesignSwatch design={d} size={24} />
-                  </span>
-                )}
-                <span className="min-w-0">
-                  <span className="block truncate text-[12.5px] font-bold text-ink">
-                    {r.author}
-                  </span>
-                  <Link
-                    href={`/products/${p.slug}`}
-                    className="block truncate text-[12px] text-ink-mute hover:text-ink"
-                  >
-                    {p.name}
-                    {d ? ` · ${d.name}` : ""}
-                  </Link>
-                </span>
-                {r.verified && (
-                  <span className="ml-auto shrink-0">
-                    <Badge tone="green">Verified</Badge>
-                  </span>
-                )}
-              </figcaption>
-            </figure>
-          );
-        })}
-      </div>
+      <ul className="mt-9 grid gap-3 md:grid-cols-3" data-reveal>
+        {items.map((it) => (
+          <li key={it.k} className="glass flex flex-col p-6">
+            <p className="display text-[26px] leading-none text-ink">{it.k}</p>
+            <p className="label mt-2.5 text-ink-mute">{it.v}</p>
+            <p className="mt-4 text-[13.5px] leading-relaxed text-ink-dim">
+              {it.copy}
+            </p>
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }
+
 
 /* ============================================================================
    Compatibility

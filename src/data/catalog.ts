@@ -1,5 +1,5 @@
 import type {
-  Collection,
+
   Design,
   Platform,
   Product,
@@ -51,168 +51,101 @@ export const PLATFORMS: Platform[] = [
 export const platformById = (id: string) => PLATFORMS.find((p) => p.id === id);
 
 /* ============================================================================
-   Textures
-   Each grip is moulded with one surface. Texture is coupled to the design
-   because the pattern IS the relief — the visual and the physical are the
-   same tooling.
+   The surface
+
+   There is one. Earlier versions of this file advertised five — Open Cell,
+   Micro Cell, Contour Ridge, Grid Emboss and Soft Matte — each with its own
+   relief depth, added weight and Shore hardness. One mould exists, so one
+   surface exists, and none of those numbers had been measured. Everything the
+   six products share now lives here, and the six differ only in colour.
    ========================================================================= */
 
 export const TEXTURES: Texture[] = [
   {
-    id: "open-cell",
-    name: "Open Cell",
-    feel: "Deep cell walls channel sweat away from your palm.",
-    grip: 5,
-    cushion: 4,
-    profile: "+2.4 mm",
-  },
-  {
-    id: "micro-cell",
-    name: "Micro Cell",
-    feel: "A tighter cell field. Consistent bite without the sharp edges.",
-    grip: 4,
-    cushion: 3,
-    profile: "+1.8 mm",
-  },
-  {
-    id: "ridge",
-    name: "Contour Ridge",
-    feel: "Raised ridges follow your finger wrap for a positive index.",
-    grip: 4,
-    cushion: 5,
-    profile: "+3.1 mm",
-  },
-  {
-    id: "grid",
-    name: "Grid Emboss",
-    feel: "A precise raised lattice. The lowest-profile texture we make.",
-    grip: 4,
-    cushion: 2,
-    profile: "+1.4 mm",
-  },
-  {
-    id: "matte",
-    name: "Soft Matte",
-    feel: "Smooth soft-touch with a dimpled palm patch. Barely changes the shape.",
-    grip: 3,
-    cushion: 3,
-    profile: "+1.1 mm",
+    id: "moulded",
+    name: "Moulded relief",
+    feel: "The pattern is the relief. What you see on the shell is what your palm finds, because it is moulded in rather than printed on.",
+    profile: "Moulded relief",
   },
 ];
 
 export const textureById = (id?: string) => TEXTURES.find((t) => t.id === id);
 
 /* ============================================================================
-   Designs
-   Six, matching the six moulds we tool. Imagery for each comes from the
-   renders in public/products/, resolved through src/data/media.ts.
+   Colourways
+
+   Six of them, one shell. These used to be described as six separate moulds
+   with six different surfaces; they are one moulded shell finished six ways.
+   Imagery comes from the renders in public/products/, resolved through
+   src/data/media.ts.
    ========================================================================= */
 
 export const DESIGNS: Design[] = [
   {
     id: "nebula",
     name: "Nebula",
-    collection: "cellular",
     // light webbing over dark cells — the webbing is the raised wall you feel
     base: "#181428",
     ink: "#e2d8ff",
     inkAlt: "#b9a6f5",
     webbed: true,
     colorFamily: "violet",
-    blurb: "Open Voronoi cells with a raised violet-white wall. The mould the range was built around.",
+    blurb: "Violet-white over a near-black shell. The first colourway we tooled.",
   },
   {
     id: "venom",
     name: "Venom",
-    collection: "cellular",
     base: "#0b0d08",
     ink: "#d6f96a",
     inkAlt: "#a8dc3c",
     webbed: true,
     colorFamily: "green",
-    blurb: "A tighter cell field with a high-visibility lime wall over a black shell.",
+    blurb: "High-visibility lime over black. The one that reads on a streaming camera.",
   },
   {
     id: "ember",
     name: "Ember",
-    collection: "cellular",
     base: "#0b0805",
     ink: "#ffc48c",
     inkAlt: "#ff8a34",
     webbed: true,
     colorFamily: "orange",
-    blurb: "A coarser, more angular cell with the wall running hot through the palm.",
+    blurb: "Orange running hot through the palm and cooling toward the tips.",
   },
   {
     id: "cyber",
     name: "Cyber",
-    collection: "linear",
     // fine raised grid, magenta at the top cooling to cyan at the tips
     base: "#8a5aa6",
     baseAlt: "#3f7fae",
     ink: "#ffe0f6",
     inkAlt: "#d8f5ff",
     colorFamily: "multi",
-    blurb: "A fine raised mesh, magenta through the palm cooling to cyan at the tips.",
+    blurb: "Magenta through the palm, cooling to cyan at the fingertips.",
   },
   {
     id: "jungle",
     name: "Jungle",
-    collection: "linear",
     // dark bands on a light green shell
     base: "#b9e7ae",
     baseAlt: "#7fc98f",
     ink: "#17512c",
     inkAlt: "#0e3a1f",
     colorFamily: "green",
-    blurb: "Deep topographic bands that track the curve of the handle.",
+    blurb: "Deep green over a light shell.",
   },
   {
     id: "glacier",
     name: "Glacier",
-    collection: "solid",
     base: "#f4f8fb",
     baseAlt: "#a4c9e2",
     ink: "#cfe2ef",
     colorFamily: "white",
-    blurb: "No pattern. A soft-touch shell that cools to ice blue at the tips, with a dimpled palm patch.",
+    blurb: "White through the palm, cooling to ice blue at the tips.",
   },
 ];
 
 export const designById = (id?: string | null) => DESIGNS.find((d) => d.id === id);
-
-/* ============================================================================
-   Collections — how the six group by surface geometry
-   ========================================================================= */
-
-export const COLLECTIONS: Collection[] = [
-  {
-    id: "cellular",
-    name: "Cellular",
-    tagline: "Voronoi cell structures.",
-    description:
-      "Generated cell geometry moulded as real relief. The walls are what you feel and what you see — deeper cells grip harder and give sweat somewhere to go.",
-    designIds: ["nebula", "venom", "ember"],
-  },
-  {
-    id: "linear",
-    name: "Linear",
-    tagline: "Drawn geometry, held to a pitch.",
-    description:
-      "Grids and contours at a fixed spacing, mirrored so the left and right grips are symmetric rather than two random crops of the same texture.",
-    designIds: ["cyber", "jungle"],
-  },
-  {
-    id: "solid",
-    name: "Solid",
-    tagline: "Texture without a pattern.",
-    description:
-      "For setups where the controller should disappear. Soft-touch shells that add traction without adding graphics.",
-    designIds: ["glacier"],
-  },
-];
-
-export const collectionById = (id?: string) => COLLECTIONS.find((c) => c.id === id);
 
 /* ============================================================================
    Variants
@@ -250,14 +183,18 @@ function buildVariants(
 }
 
 /* ============================================================================
-   Products — one per design. Six moulds, six products.
+   Products — one per colourway. One mould, six finishes.
    ========================================================================= */
 
+/* The measured numbers this table used to carry — wall depth, added thickness,
+   added weight, Shore hardness, operating range, "medical-grade" — were never
+   measured or sourced. They are out until the first run comes off the tool. */
 const SHARED_SPECS = [
-  { label: "Material", value: "Medical-grade TPU" },
+  { label: "Surface", value: "Moulded relief" },
+  { label: "Material", value: "TPU" },
   { label: "Adhesive", value: "None — friction fit" },
-  { label: "Finish", value: "UV-cured, dishwasher safe" },
-  { label: "Operating range", value: "5 °C – 45 °C" },
+  { label: "Fit", value: "Moulded to one controller" },
+  { label: "Thickness, weight, hardness", value: "Published once the first run is measured" },
   { label: "Warranty", value: "2 years" },
 ];
 
@@ -271,43 +208,26 @@ export const PRODUCTS: Product[] = [
   {
     slug: "nebula-grips",
     name: "Nebula Grips",
-    tagline: "Our deepest texture, for hands that sweat.",
+    tagline: "Violet-white over near-black.",
     type: "grips",
     price: 34.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "open-cell",
+    texture: "moulded",
     designs: ["nebula"],
     summary:
-      "Nebula is the grip we tooled first and the one most of our sponsored players still use. The open-cell wall structure is 2.4 mm deep, so sweat drains into the cells instead of pooling between your palm and the shell. It is the most aggressive surface in the range.",
+      "Nebula is the colourway we tooled first: a violet-white relief over a near-black shell. The surface is the same moulded relief on every grip we make — the colour is what changes.",
     highlights: [
-      "2.4 mm open-cell wall depth channels sweat away from the palm",
-      "Medical-grade TPU shell, Shore 65A — flexible from 5 °C to 45 °C",
-      "Moulded per controller, not a universal stretch sleeve",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
       "Full access to every button, port, paddle and the battery bay",
       "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Open Cell" },
-      { label: "Wall depth", value: "2.4 mm" },
-      { label: "Added thickness", value: "+2.4 mm per handle" },
-      { label: "Added weight", value: "18 g per pair" },
-      { label: "Shore hardness", value: "65A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.8,
-    reviewCount: 1247,
-    ratingBreakdown: [981, 187, 45, 18, 16],
-    subscores: [
-      { label: "Fit", score: 4.9 },
-      { label: "Grip", score: 4.9 },
-      { label: "Comfort", score: 4.7 },
-      { label: "Durability", score: 4.6 },
-    ],
     variants: buildVariants("nebula", { low: ["dualsense-edge"] }),
     pairsWith: ["venom-grips", "cyber-grips", "ember-grips"],
-    badge: "bestseller",
     releasedOn: "2025-03-04",
     popularity: 100,
   },
@@ -315,40 +235,24 @@ export const PRODUCTS: Product[] = [
   {
     slug: "venom-grips",
     name: "Venom Grips",
-    tagline: "Tight cell crackle. Reads from across the room.",
+    tagline: "Lime that reads on camera.",
     type: "grips",
     price: 34.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "micro-cell",
+    texture: "moulded",
     designs: ["venom"],
     summary:
-      "Venom uses the same cell geometry as Nebula at roughly half the pitch. The finer walls give you most of the traction with none of the sharp edges people notice on Nebula in the first week — and the lime reads clearly on a streaming camera.",
+      "Venom is the loud one. Lime over a black shell, bright enough to hold up under a streaming light where darker colourways go muddy. Same moulded shell as the rest of the range.",
     highlights: [
-      "1.8 mm micro-cell field, tuned for sessions over four hours",
-      "Most of Nebula's grip without the break-in period",
-      "High-visibility lime on a near-black shell",
-      "Moulded per controller — no stretching, no bunching",
-      "Removable and re-fittable without adhesive",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
+      "Full access to every button, port, paddle and the battery bay",
+      "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Micro Cell" },
-      { label: "Wall depth", value: "1.8 mm" },
-      { label: "Added thickness", value: "+1.8 mm per handle" },
-      { label: "Added weight", value: "15 g per pair" },
-      { label: "Shore hardness", value: "68A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.7,
-    reviewCount: 863,
-    ratingBreakdown: [634, 154, 43, 18, 14],
-    subscores: [
-      { label: "Fit", score: 4.8 },
-      { label: "Grip", score: 4.6 },
-      { label: "Comfort", score: 4.8 },
-      { label: "Durability", score: 4.6 },
-    ],
     variants: buildVariants("venom", { low: ["dualsense"] }),
     pairsWith: ["nebula-grips", "ember-grips", "jungle-grips"],
     releasedOn: "2025-01-21",
@@ -358,40 +262,24 @@ export const PRODUCTS: Product[] = [
   {
     slug: "ember-grips",
     name: "Ember Grips",
-    tagline: "Angular shard web with a hot gradient.",
+    tagline: "Orange, hot through the palm.",
     type: "grips",
     price: 34.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "open-cell",
+    texture: "moulded",
     designs: ["ember"],
     summary:
-      "Ember runs the same 2.4 mm open-cell depth as Nebula on a coarser, more angular cell — fewer walls, wider channels, and the colour inverted so the webbing between the cells is what you see. Identical grip performance, a very different object.",
+      "Ember runs hot orange through the palm and cools toward the tips. Same moulded shell as the rest of the range, finished in the warmest colour we make.",
     highlights: [
-      "2.4 mm open-cell depth with a wider channel pitch",
-      "Inverted colourway — the webbing is the graphic, not the cells",
-      "Gradient runs hot through the centre of the palm",
-      "Moulded per controller, full port and trigger clearance",
-      "Removable and re-fittable without adhesive",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
+      "Full access to every button, port, paddle and the battery bay",
+      "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Open Cell" },
-      { label: "Wall depth", value: "2.4 mm" },
-      { label: "Added thickness", value: "+2.4 mm per handle" },
-      { label: "Added weight", value: "18 g per pair" },
-      { label: "Shore hardness", value: "65A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.6,
-    reviewCount: 512,
-    ratingBreakdown: [352, 96, 31, 18, 15],
-    subscores: [
-      { label: "Fit", score: 4.8 },
-      { label: "Grip", score: 4.9 },
-      { label: "Comfort", score: 4.5 },
-      { label: "Durability", score: 4.4 },
-    ],
     variants: buildVariants("ember", { soldOut: ["xbox-elite-2"], low: ["xbox-series"] }),
     pairsWith: ["nebula-grips", "venom-grips", "glacier-grips"],
     releasedOn: "2025-06-10",
@@ -401,40 +289,24 @@ export const PRODUCTS: Product[] = [
   {
     slug: "cyber-grips",
     name: "Cyber Grips",
-    tagline: "Lowest profile. A raised mesh, not a coating.",
+    tagline: "Magenta to cyan, palm to tip.",
     type: "grips",
     price: 32.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "grid",
+    texture: "moulded",
     designs: ["cyber"],
     summary:
-      "Cyber is the one to buy if you do not want your controller to get noticeably thicker. A 1.4 mm raised mesh with a node at every intersection — enough to lock your hand in place, close enough to stock that muscle memory carries over.",
+      "Cyber shifts along the handle — magenta where your palm sits, cyan at the fingertips. Same moulded shell as the rest of the range.",
     highlights: [
-      "1.4 mm profile — the smallest change to the controller's shape",
-      "Node points at every intersection add bite without added bulk",
-      "Mesh mirrors across the two grips rather than repeating",
-      "Best choice if you have small hands or thousands of hours on bare",
-      "Removable and re-fittable without adhesive",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
+      "Full access to every button, port, paddle and the battery bay",
+      "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Grid Emboss" },
-      { label: "Relief height", value: "1.4 mm" },
-      { label: "Added thickness", value: "+1.4 mm per handle" },
-      { label: "Added weight", value: "12 g per pair" },
-      { label: "Shore hardness", value: "72A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.7,
-    reviewCount: 694,
-    ratingBreakdown: [498, 138, 34, 14, 10],
-    subscores: [
-      { label: "Fit", score: 4.9 },
-      { label: "Grip", score: 4.4 },
-      { label: "Comfort", score: 4.8 },
-      { label: "Durability", score: 4.7 },
-    ],
     variants: buildVariants("cyber"),
     pairsWith: ["glacier-grips", "jungle-grips", "nebula-grips"],
     badge: "new",
@@ -445,40 +317,24 @@ export const PRODUCTS: Product[] = [
   {
     slug: "jungle-grips",
     name: "Jungle Grips",
-    tagline: "Most cushioned. Ridges that index your finger wrap.",
+    tagline: "Deep green on a light shell.",
     type: "grips",
     price: 32.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "ridge",
+    texture: "moulded",
     designs: ["jungle"],
     summary:
-      "Jungle is the comfort-first grip. Topographic ridges run across the handle where your middle and ring fingers wrap, giving you a physical index you can find without looking — on a softer 60A compound with 3.1 mm of cushion under the knuckle.",
+      "Jungle is the quietest of the coloured options: deep green over a light shell, closer to stock than the saturated colourways. Same moulded shell as the rest of the range.",
     highlights: [
-      "3.1 mm ridge profile — the most cushioned grip we make",
-      "Ridge pitch set to the natural finger spacing of an adult hand",
-      "Softer Shore 60A compound absorbs haptic buzz on long sessions",
-      "Recommended for players with joint pain or larger hands",
-      "Removable and re-fittable without adhesive",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
+      "Full access to every button, port, paddle and the battery bay",
+      "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Contour Ridge" },
-      { label: "Ridge height", value: "3.1 mm" },
-      { label: "Added thickness", value: "+3.1 mm per handle" },
-      { label: "Added weight", value: "22 g per pair" },
-      { label: "Shore hardness", value: "60A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.6,
-    reviewCount: 412,
-    ratingBreakdown: [281, 84, 24, 12, 11],
-    subscores: [
-      { label: "Fit", score: 4.7 },
-      { label: "Grip", score: 4.4 },
-      { label: "Comfort", score: 4.9 },
-      { label: "Durability", score: 4.5 },
-    ],
     variants: buildVariants("jungle"),
     pairsWith: ["cyber-grips", "glacier-grips", "venom-grips"],
     releasedOn: "2025-08-27",
@@ -488,41 +344,25 @@ export const PRODUCTS: Product[] = [
   {
     slug: "glacier-grips",
     name: "Glacier Grips",
-    tagline: "Traction without changing how it looks.",
+    tagline: "White, cooling to ice blue.",
     type: "grips",
     price: 29.95,
     compareAt: 34.95,
     platforms: [...ALL_PLATFORMS],
-    texture: "matte",
+    texture: "moulded",
     designs: ["glacier"],
     summary:
-      "The entry point. A 1.1 mm soft-touch shell in ice white, with a dimpled patch under the palm where the contact pressure actually is. Start here if you have never used grips and do not want the feel of your controller to change.",
+      "Glacier is the one that barely changes how the controller looks. White through the palm, cooling to ice blue at the tips. Same moulded shell as the rest of the range.",
     highlights: [
-      "1.1 mm profile — the closest thing to a stock controller",
-      "Dimpled palm patch, smooth everywhere else",
-      "Matches a stock white DualSense closely",
-      "Best first grip if you are unsure about added bulk",
-      "Removable and re-fittable without adhesive",
+      "The texture is moulded relief, not a printed or sprayed coating",
+      "Moulded to one controller — not a universal stretch sleeve",
+      "Full access to every button, port, paddle and the battery bay",
+      "Removable and re-fittable without adhesive or residue",
+      "Fits in about two minutes with no tools",
     ],
-    specs: [
-      { label: "Texture", value: "Soft Matte" },
-      { label: "Dimple depth", value: "0.6 mm" },
-      { label: "Added thickness", value: "+1.1 mm per handle" },
-      { label: "Added weight", value: "10 g per pair" },
-      { label: "Shore hardness", value: "75A" },
-      ...SHARED_SPECS,
-    ],
+    specs: [...SHARED_SPECS],
     inBox: SHARED_IN_BOX,
     installMinutes: 2,
-    rating: 4.4,
-    reviewCount: 938,
-    ratingBreakdown: [554, 251, 78, 31, 24],
-    subscores: [
-      { label: "Fit", score: 4.7 },
-      { label: "Grip", score: 4.0 },
-      { label: "Comfort", score: 4.6 },
-      { label: "Durability", score: 4.3 },
-    ],
     variants: buildVariants("glacier"),
     pairsWith: ["cyber-grips", "jungle-grips", "nebula-grips"],
     releasedOn: "2024-09-02",

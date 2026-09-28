@@ -6,7 +6,7 @@ import type { PlatformId, Product } from "@/lib/types";
 import { PLATFORMS, PRODUCTS, designById, platformById, textureById } from "@/data/catalog";
 import { ProductVisual } from "@/components/product/product-visual";
 import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
-import { Badge, Button, Price, Rating, Well } from "@/components/ui/primitives";
+import { Badge, Button, Price, Well } from "@/components/ui/primitives";
 import { QtyStepper } from "@/components/cart/cart-drawer";
 import { useCart } from "@/lib/cart";
 import { compatibilityLine, stockLabel, variantFor } from "@/lib/shop";
@@ -76,11 +76,8 @@ export function ProductPurchase({
             same three stack in the scroll. */}
         <div className="min-w-0 lg:col-span-7">
           <div className="lg:sticky lg:top-[70px]">
-            <div className="grid gap-2 sm:grid-cols-3">
-              <Well
-                className="hdr plate-in cut col-span-full aspect-[5/4]"
-                style={{ ["--hdr-glow" as string]: design?.ink }}
-              >
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+              <Well className="hdr plate-in cut col-span-2 aspect-[5/4] sm:col-span-3">
                 <ProductVisual
                   product={product}
                   design={design}
@@ -93,7 +90,7 @@ export function ProductPurchase({
               </Well>
 
               {design && (
-                <Well className="plate-in cut-tr relative col-span-2 aspect-[16/11] sm:col-span-2">
+                <Well className="plate-in cut-tr relative aspect-square sm:col-span-2 sm:aspect-[16/11]">
                   <GripPhoto
                     design={design}
                     platformId={platformId}
@@ -109,7 +106,7 @@ export function ProductPurchase({
               )}
 
               {design && (
-                <Well className="plate-in cut-tr relative aspect-square sm:aspect-auto">
+                <Well className="plate-in cut-tr relative aspect-square sm:aspect-auto" scan={false}>
                   <GripPhoto
                     design={design}
                     platformId={platformId}
@@ -133,11 +130,7 @@ export function ProductPurchase({
           <div className="flex flex-wrap items-center gap-2">
             {product.badge && (
               <Badge tone={product.badge === "limited" ? "red" : "blue"}>
-                {product.badge === "new"
-                  ? "New"
-                  : product.badge === "limited"
-                    ? "Limited run"
-                    : "Best seller"}
+                {product.badge === "new" ? "New" : "Limited run"}
               </Badge>
             )}
             {texture && <Badge>{texture.name}</Badge>}
@@ -149,15 +142,6 @@ export function ProductPurchase({
           <p className="mt-2 text-[14px] leading-relaxed text-ink-dim">
             {product.tagline}
           </p>
-
-          <div className="mt-4">
-            <Rating
-              value={product.rating}
-              count={product.reviewCount}
-              href="#reviews"
-              size={14}
-            />
-          </div>
 
           <div className="plate-in mt-4 px-3 py-2.5">
             <Price value={product.price} compareAt={product.compareAt} size="lg" />
@@ -286,42 +270,15 @@ export function ProductPurchase({
             )}
           </fieldset>
 
-          {/* --- texture cross-reference ---------------------------------- */}
+          {/* One surface, so there is nothing to cross-reference. This used
+              to be a five-way grip/cushion comparison against four textures
+              that do not exist. */}
           {texture && (
-            <div className="plate-in mt-4 p-3">
-              <div className="flex items-baseline justify-between gap-3">
-                <p className="text-[13.5px] font-medium">Texture: {texture.name}</p>
-                <Link
-                  href="/guides/grip-texture-comparison"
-                  className="label shrink-0 text-ink-mute transition-colors hover:text-ink"
-                >
-                  Compare all 5 →
-                </Link>
-              </div>
+            <div className="plate-in mt-4 rounded-[var(--radius-sm)] p-3.5">
+              <p className="text-[13.5px] font-medium">Surface: {texture.name}</p>
               <p className="mt-1.5 text-[12.5px] leading-relaxed text-ink-dim">
                 {texture.feel}
               </p>
-              <dl className="mt-3 space-y-2">
-                {[
-                  ["Grip", texture.grip],
-                  ["Cushion", texture.cushion],
-                ].map(([label, v]) => (
-                  <div key={label as string} className="flex items-center gap-3">
-                    <dt className="label w-14 shrink-0 text-ink-mute">{label}</dt>
-                    <dd className="flex flex-1 gap-[2px]" aria-label={`${v} out of 5`}>
-                      {[1, 2, 3, 4, 5].map((n) => (
-                        <span
-                          key={n}
-                          className={cn(
-                            "h-[10px] flex-1",
-                            n <= (v as number) ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
-                          )}
-                        />
-                      ))}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
             </div>
           )}
 

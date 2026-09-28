@@ -20,51 +20,44 @@ import { cn, money } from "@/lib/utils";
 import type { PlatformId } from "@/lib/types";
 
 /* ============================================================================
-   The configurator earns its place by removing a real failure mode, not by
-   being a novelty: nearly every grip return is someone who bought for the look
-   and got the surface wrong. So it asks what their hands actually do, names one
-   grip, explains why, and still lets them override it.
+   The configurator used to ask what your hands do and answer with one of five
+   surfaces. There is one surface, so that question has no answer any more —
+   asking it and then naming a colour would be theatre. It picks the controller
+   and the colourway, which is the whole decision there actually is.
    ========================================================================= */
 
 const NEEDS = [
   {
-    id: "sweat",
-    label: "My hands get sweaty",
-    detail: "Grip fades an hour in and gets worse",
-    pick: "nebula-grips",
-    why: "Only the open-cell moulds have channels deep enough to move moisture. Traction alone stops working once there is a film of sweat on the shell.",
-  },
-  {
-    id: "long",
-    label: "I play very long sessions",
-    detail: "Four hours or more at a time",
+    id: "loud",
+    label: "I want it loud",
+    detail: "It should read on a camera or across a room",
     pick: "venom-grips",
-    why: "Same cell geometry as Nebula at half the pitch — most of the grip, without the hard edges that press into the same spots over six hours.",
+    why: "Lime holds up under a streaming light where the darker colourways go muddy.",
   },
   {
-    id: "pain",
-    label: "My hands or joints ache",
-    detail: "Pressure and fatigue, not slipping",
-    pick: "jungle-grips",
-    why: "The softest compound we use, 3.1 mm of cushion, and ridges that spread load across more of the palm instead of two contact points.",
+    id: "warm",
+    label: "Warm colours",
+    detail: "Orange and red end of the range",
+    pick: "ember-grips",
+    why: "Ember runs hot through the palm and cools toward the tips.",
   },
   {
-    id: "minimal",
-    label: "I want almost nothing to change",
-    detail: "Muscle memory matters more than grip",
-    pick: "cyber-grips",
-    why: "1.4 mm is the smallest change to the controller's shape we can make while still adding real bite. Note it is a dry-hand surface.",
+    id: "cool",
+    label: "Cool colours",
+    detail: "Violet, blue, cyan",
+    pick: "nebula-grips",
+    why: "Violet-white over near-black — the colourway we tooled first.",
   },
   {
-    id: "first",
-    label: "I have never used grips",
-    detail: "Not sure I will like the extra bulk",
+    id: "subtle",
+    label: "Keep it close to stock",
+    detail: "I do not want it to shout",
     pick: "glacier-grips",
-    why: "The gentlest introduction: 1.1 mm, soft-touch, with a dimpled patch only where your palm actually presses. Easy to live with.",
+    why: "White through the palm, cooling to ice blue. The least visible change to the controller.",
   },
   {
     id: "look",
-    label: "I just want a specific look",
+    label: "I already know which one",
     detail: "Skip the recommendation",
     pick: null,
     why: "",
@@ -205,7 +198,7 @@ export function Configurator({
           {/* --- step 2 --- */}
           <Step
             n={2}
-            title="What are your hands doing?"
+            title="What should it look like?"
             value={recommended ? recommended.label : "Not answered"}
           >
             <ul className="space-y-2">
@@ -294,7 +287,7 @@ export function Configurator({
                           {out && <span className="label shrink-0 text-ink-mute">Sold out</span>}
                         </span>
                         <span className="mt-0.5 block truncate text-[12px] text-ink-mute">
-                          {t.name} · {t.profile} · grip {t.grip}/5
+                          {t.name} · {g.designs.length === 1 ? "one colourway" : "colourway"}
                         </span>
                       </span>
                       <span className="shrink-0 text-[13px] font-semibold tabular-nums">
@@ -312,7 +305,7 @@ export function Configurator({
             <dl className="space-y-2 text-[12.5px]">
               <Row label="Controller" value={platform.controller} />
               <Row label="Grip" value={product.name} />
-              <Row label="Surface" value={`${texture.name} · ${texture.profile}`} />
+              <Row label="Surface" value={texture.name} />
             </dl>
             <div className="border-t border-edge mt-3 flex items-center justify-between pt-3">
               <span className="text-[13px] font-bold">Total</span>
@@ -349,8 +342,8 @@ export function Configurator({
             {soldOut && (
               <p className="mt-2.5 text-[12.5px] leading-relaxed text-ink-dim">
                 {product.name} is out of stock for the {platform.short}. It is
-                available for the other controllers, and the surface closest to
-                it is{" "}
+                available for the other controllers, and the closest colourway
+                is{" "}
                 <button
                   onClick={() => setSlug(product.pairsWith[0])}
                   className="text-ink underline underline-offset-2"

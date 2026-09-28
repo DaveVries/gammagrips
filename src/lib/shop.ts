@@ -1,5 +1,4 @@
 import {
-  COLLECTIONS,
   DESIGNS,
   PLATFORMS,
   PRODUCTS,
@@ -17,7 +16,6 @@ import type { Design, PlatformId, Product } from "@/lib/types";
 export interface Filters {
   platform: string[];
   type: string[];
-  collection: string[];
   color: string[];
   texture: string[];
   price: string[];
@@ -27,7 +25,6 @@ export interface Filters {
 export const EMPTY_FILTERS: Filters = {
   platform: [],
   type: [],
-  collection: [],
   color: [],
   texture: [],
   price: [],
@@ -43,7 +40,6 @@ export const PRICE_BANDS = [
 
 export const SORTS = [
   { id: "popular", label: "Most popular" },
-  { id: "rating", label: "Highest rated" },
   { id: "new", label: "Newest" },
   { id: "price-asc", label: "Price: low to high" },
   { id: "price-desc", label: "Price: high to low" },
@@ -62,7 +58,6 @@ export function parseFilters(sp: Record<string, string | string[] | undefined>):
   return {
     platform: get("platform"),
     type: get("type"),
-    collection: get("collection"),
     color: get("color"),
     texture: get("texture"),
     price: get("price"),
@@ -87,8 +82,6 @@ export function matches(p: Product, f: Filters): boolean {
   if (f.texture.length && (!p.texture || !f.texture.includes(p.texture))) return false;
 
   const ds = designsOf(p);
-  if (f.collection.length && !ds.some((d) => f.collection.includes(d.collection)))
-    return false;
   if (f.color.length && !ds.some((d) => f.color.includes(d.colorFamily))) return false;
 
   if (f.price.length) {
@@ -103,8 +96,6 @@ export function matches(p: Product, f: Filters): boolean {
 export function sortProducts(list: Product[], sort: SortId): Product[] {
   const out = [...list];
   switch (sort) {
-    case "rating":
-      return out.sort((a, b) => b.rating - a.rating || b.reviewCount - a.reviewCount);
     case "new":
       return out.sort((a, b) => b.releasedOn.localeCompare(a.releasedOn));
     case "price-asc":
@@ -208,25 +199,6 @@ export function buildFacets(pool: Product[], f: Filters): FacetGroup[] {
                     : "Bundles",
         count: countFor("type", t),
       })),
-    },
-    {
-      key: "texture",
-      label: "Texture",
-      hint: "How the surface feels. Texture is separate from the design — most designs are available in several textures.",
-      options: TEXTURES.map((t) => ({
-        value: t.id,
-        label: t.name,
-        count: countFor("texture", t.id),
-      })).filter((o) => o.count > 0),
-    },
-    {
-      key: "collection",
-      label: "Design collection",
-      options: COLLECTIONS.map((c) => ({
-        value: c.id,
-        label: c.name,
-        count: countFor("collection", c.id),
-      })).filter((o) => o.count > 0),
     },
     {
       key: "color",
@@ -341,7 +313,7 @@ const SYNONYMS: Record<string, string[]> = {
 };
 
 export interface SearchHit {
-  kind: "product" | "collection" | "design" | "help";
+  kind: "product" | "design" | "help";
   title: string;
   meta: string;
   href: string;
@@ -402,26 +374,15 @@ export function search(raw: string): SearchHit[] {
   }
 
   for (const d of DESIGNS) {
-    const s = score(`${d.name} ${d.collection} ${d.colorFamily} ${d.blurb}`) + score(d.name) * 2;
-    if (s > 0)
+    const s = score(`${d.name} ${d.colorFamily} ${d.blurb}`) + score(d.name) * 2;
+    const product = PRODUCTS.find((p) => p.designs[0] === d.id);
+    if (s > 0 && product)
       hits.push({
         kind: "design",
         title: d.name,
-        meta: `${d.collection[0].toUpperCase()}${d.collection.slice(1)} design`,
-        href: `/collections/${d.collection}?design=${d.id}`,
+        meta: "Colourway",
+        href: `/products/${product.slug}`,
         designId: d.id,
-        s,
-      });
-  }
-
-  for (const c of COLLECTIONS) {
-    const s = score(`${c.name} ${c.tagline}`) * 2;
-    if (s > 0)
-      hits.push({
-        kind: "collection",
-        title: `${c.name} collection`,
-        meta: c.tagline,
-        href: `/collections/${c.id}`,
         s,
       });
   }

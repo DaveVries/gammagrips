@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { COLLECTIONS, DESIGNS, PRODUCTS, designById, textureById } from "@/data/catalog";
+import { DESIGNS, PRODUCTS, designById, textureById } from "@/data/catalog";
 import { DesignSwatch } from "@/components/product/grip-photo";
 import { ProductStage } from "@/components/product/product-shot";
 import { ButtonLink } from "@/components/ui/primitives";
@@ -18,7 +18,6 @@ const ORDER = ["nebula", "venom", "ember", "cyber", "jungle", "glacier"];
 export function Hero() {
   const [id, setId] = useState("nebula");
   const design = designById(id)!;
-  const collection = COLLECTIONS.find((c) => c.id === design.collection)!;
   const product = PRODUCTS.find((p) => p.designs[0] === id)!;
   const texture = textureById(product.texture)!;
 
@@ -26,22 +25,9 @@ export function Hero() {
     <section className="gutter pt-6 md:pt-9">
       <div
         className="shell glass glass-hi cut relative overflow-hidden"
-        /* The slab picks up the selected grip's accent, so switching designs
-           relights the whole hero rather than just swapping a picture. */
-        style={{ ["--accent" as string]: design.ink }}
       >
         <div className="ps-rule h-[3px] w-full" />
 
-        {/* Accent wash + oversized face-button watermark. Both are decoration
-            and sit behind everything, hence aria-hidden and pointer-events-none. */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 z-0 transition-[background] duration-700"
-          style={{
-            background:
-              "radial-gradient(60% 70% at 78% 18%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%)",
-          }}
-        />
         <span
           aria-hidden="true"
           className="display pointer-events-none absolute -right-8 -top-14 z-0 select-none text-[190px] leading-none tracking-[-0.06em] text-[rgba(255,255,255,0.025)] sm:text-[300px]"
@@ -64,9 +50,9 @@ export function Hero() {
             </span>
           </h1>
           <p className="mt-4 max-w-[46ch] text-[14.5px] leading-relaxed text-ink-dim sm:mt-6 sm:text-[15.5px]">
-            Six moulded grip shells for the PS5 DualSense and the Xbox Wireless
-            Controller. The pattern is the relief, so what you see is what your
-            hand feels. Fitted in two minutes, no adhesive.
+            One moulded grip shell for the PS5 DualSense and the Xbox Wireless
+            Controller, in six colourways. The pattern is the relief, so what you
+            see is what your hand feels. Fitted in two minutes, no adhesive.
           </p>
 
           <div className="mt-5 flex flex-wrap gap-2.5 sm:mt-8 sm:gap-3">
@@ -80,8 +66,8 @@ export function Hero() {
 
           <dl className="mt-6 flex max-w-md flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-plate-edge pt-4 sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-0 sm:pt-6">
             {[
-              ["6", "Grips"],
-              ["5", "Surfaces"],
+              ["6", "Colourways"],
+              ["1", "Surface"],
               ["4", "Controllers"],
             ].map(([n, l]) => (
               <div key={l} className="flex items-baseline gap-1.5 sm:block">
@@ -97,26 +83,12 @@ export function Hero() {
         {/* --- product ------------------------------------------------------ */}
         <div className="order-1 min-w-0 lg:order-2 lg:col-span-7" data-reveal data-reveal-delay="70">
           <div className="relative">
-            {/* Wide accent halo. It sits outside the stage so nothing clips it,
-                and it is keyed to the selected grip, so switching designs
-                relights the whole hero rather than swapping a picture. */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute -inset-10 z-0 opacity-60 blur-[70px] transition-[background] duration-700"
-              style={{
-                background:
-                  "radial-gradient(46% 50% at 52% 52%, color-mix(in srgb, var(--accent) 60%, transparent), transparent 74%)",
-              }}
-            />
-
             <ProductStage design={design} priority className="z-[1]" />
 
             {/* Readout. Floated on the page, not pinned inside a bezel. */}
             <div className="relative z-[3] -mt-2 flex flex-wrap items-baseline gap-x-5 gap-y-1">
               <span className="display text-[17px] text-ink">{design.name}</span>
-              <span className="label text-ink-mute">{collection.name}</span>
               <span className="label text-ink-mute">{texture.name}</span>
-              <span className="label text-ink-mute">{texture.profile}</span>
               <span className="ml-auto display text-[17px] tabular-nums text-ink">
                 {money(product.price)}
               </span>

@@ -7,7 +7,6 @@ import {
   Badge,
   CompatibilityBadge,
   Price,
-  Rating,
   Well,
 } from "@/components/ui/primitives";
 import { compatibilityLine, inStock, variantFor } from "@/lib/shop";
@@ -42,10 +41,7 @@ export function ProductCard({
         className,
       )}
     >
-      <Well
-        className="hdr plate-in aspect-[4/3] !border-0"
-        style={{ ["--hdr-glow" as string]: design?.ink }}
-      >
+      <Well className="hdr plate-in aspect-[4/3] !border-0">
         <ProductShot
           design={design!}
           platformId={renderPlatform}
@@ -55,11 +51,7 @@ export function ProductCard({
         {product.badge && (
           <span className="absolute left-3 top-3 z-[2]">
             <Badge tone="blue">
-              {product.badge === "new"
-                ? "New"
-                : product.badge === "limited"
-                  ? "Limited"
-                  : "Best seller"}
+              {product.badge === "new" ? "New" : "Limited"}
             </Badge>
           </span>
         )}
@@ -92,37 +84,6 @@ export function ProductCard({
             {compatibilityLine(product)}
           </CompatibilityBadge>
         </div>
-
-        <Rating
-          value={product.rating}
-          count={product.reviewCount}
-          size={12}
-          className="hidden sm:flex"
-        />
-        {/* Mobile keeps the score without the star row, which is unreadable at
-            half width and costs a line of height. */}
-        <p className="text-[11.5px] text-ink-dim sm:hidden">
-          ★ {product.rating.toFixed(1)}{" "}
-          <span className="text-ink-mute">({product.reviewCount})</span>
-        </p>
-
-        {texture && (
-          <div className="hidden items-center gap-2 plate-in px-2.5 py-1.5 sm:flex">
-            <span className="text-[11.5px] font-semibold text-ink-dim">{texture.name}</span>
-            <span className="label text-ink-mute">{texture.profile}</span>
-            <span className="ml-auto flex gap-[2px]" aria-label={`Grip ${texture.grip} out of 5`}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <span
-                  key={n}
-                  className={cn(
-                    "h-[9px] w-[5px]",
-                    n <= texture.grip ? "bg-[var(--color-blk-green)]" : "bg-[var(--color-pip-off)]",
-                  )}
-                />
-              ))}
-            </span>
-          </div>
-        )}
 
         <div className="mt-auto flex items-end justify-between gap-2 pt-1">
           <div className="min-w-0">

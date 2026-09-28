@@ -7,7 +7,7 @@ import {
   sortProducts,
   type SortId,
 } from "@/lib/shop";
-import { COLLECTIONS, PLATFORMS, TEXTURES } from "@/data/catalog";
+import { PLATFORMS, TEXTURES } from "@/data/catalog";
 import { ProductGrid } from "@/components/product/product-card";
 import {
   AppliedFilters,
@@ -37,7 +37,6 @@ export interface PlpProps {
 const LABELS: Record<string, (v: string) => string> = {
   platform: (v) => PLATFORMS.find((p) => p.id === v)?.short ?? v,
   texture: (v) => TEXTURES.find((t) => t.id === v)?.name ?? v,
-  collection: (v) => COLLECTIONS.find((c) => c.id === v)?.name ?? v,
   price: (v) => PRICE_BANDS.find((b) => b.id === v)?.label ?? v,
   type: (v) =>
     v === "grips"
@@ -185,9 +184,9 @@ function EmptyState({ pool, platformId }: { pool: Product[]; platformId?: Platfo
       <div className="glass p-8 text-center">
         <p className="text-[15px] font-bold">No products match all of those filters</p>
         <p className="mx-auto mt-2 max-w-[52ch] text-[14px] leading-relaxed text-ink-dim">
-          Try removing one — colour and texture together are the combination that
-          most often comes back empty, because not every design is made in every
-          texture.
+          Colour and controller together are the combination that most often
+          comes back empty — every colourway is made for every controller, but
+          not every one is in stock.
         </p>
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           <ButtonLink href="/customize" size="sm">

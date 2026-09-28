@@ -98,18 +98,24 @@ export function ProductStage({
   if (!front) return <ColourPlate design={design} className={className} />;
 
   return (
-    <div
-      className={cn("relative isolate aspect-[4/5] w-full sm:aspect-[5/4]", className)}
-      style={{ ["--spill" as string]: design.ink }}
-    >
-      {/* Colour pooled on the floor. The renders are cut out, so without this
-          they hang in the middle of nothing. */}
+    <div className={cn("relative isolate aspect-[4/5] w-full sm:aspect-[5/4]", className)}>
+      {/* A soft key from above and a contact shadow on the floor. This used to
+          be the design's own colour blurred behind the render, which is what
+          made the shot read as composited rather than photographed. */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-x-[6%] bottom-[4%] top-[14%] z-0 rounded-full opacity-60 blur-[60px]"
+        className="pointer-events-none absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(50% 46% at 50% 64%, var(--spill), transparent 72%)",
+            "radial-gradient(56% 44% at 56% 10%, rgba(255,255,255,0.055), transparent 70%)",
+        }}
+      />
+      <span
+        aria-hidden
+        className="pointer-events-none absolute bottom-[3%] left-[48%] z-0 h-[5%] w-[46%] -translate-x-1/2 blur-[14px]"
+        style={{
+          background:
+            "radial-gradient(50% 50% at 50% 50%, rgba(0,0,0,0.9), transparent 72%)",
         }}
       />
 

@@ -12,7 +12,7 @@ export default function ReturnsPage() {
   return (
     <PageShell
       title="Returns & refunds"
-      deck="Sixty days, including grips you have already fitted and used. If the surface is wrong for your hands there is no way to find that out without trying it, so we do not penalise you for trying it."
+      deck="Sixty days, including grips you have already fitted and used. There is no way to find out whether a grip suits your hands without putting it on a controller, so we do not penalise you for finding out."
       crumbs={[{ label: "Returns" }]}
       aside={
         <div className="space-y-4 lg:sticky lg:top-24">
@@ -47,23 +47,18 @@ export default function ReturnsPage() {
 
       <h2>Why sixty days</h2>
       <p>
-        The most common reason for a return here is that the surface did not suit
-        the person&rsquo;s hands — too aggressive over a long session, or not enough
-        bite once their palms warmed up. Neither is knowable in fourteen days of
-        light use, and neither is the customer&rsquo;s fault. A window short enough to
-        make people gamble is a window that generates bad purchases.
+        How a moulded surface feels after six hours is not knowable in fourteen
+        days of light use, and it is not the customer&rsquo;s fault that it is not.
+        A window short enough to make people gamble is a window that generates
+        bad purchases.
       </p>
 
       <h2>Exchanges</h2>
       <p>
-        If you want a different surface rather than your money back, say so in the
-        email and we ship the replacement as soon as the return is scanned into
-        the carrier network — you are not waiting for it to reach us. If there is
-        a price difference we settle it either way.{" "}
-        <Link href="/guides/grip-texture-comparison">
-          The surface comparison
-        </Link>{" "}
-        is the fastest way to work out what to swap to.
+        If you want a different colourway rather than your money back, say so in
+        the email and we ship the replacement as soon as the return is scanned
+        into the carrier network — you are not waiting for it to reach us. Every
+        colourway is the same price, so there is nothing to settle.
       </p>
 
       <h2>Refunds</h2>

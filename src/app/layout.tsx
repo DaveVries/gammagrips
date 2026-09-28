@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     template: "%s | GammaGrips",
   },
   description:
-    "Six moulded controller grips for the PS5 DualSense and Xbox Wireless Controller. The pattern is the moulded relief, not print. No adhesive, 60-day returns.",
+    "One moulded controller grip shell for the PS5 DualSense and Xbox Wireless Controller, in six colourways. The pattern is the relief, not print. No adhesive, 60-day returns.",
   openGraph: {
     type: "website",
     siteName: "GammaGrips",
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
     url: "https://gammagrips.com",
     title: "GammaGrips — Controller grips for DualSense and Xbox",
     description:
-      "Six moulded controller grips, built per controller. The pattern is the relief you feel.",
+      "One moulded grip shell, six colourways, built per controller. The pattern is the relief you feel.",
   },
   twitter: {
     card: "summary_large_image",
     title: "GammaGrips — More grip. Your controller.",
     description:
-      "Six moulded controller grips for DualSense and Xbox. No adhesive, 60-day returns.",
+      "One moulded grip shell in six colourways, for DualSense and Xbox. No adhesive, 60-day returns.",
   },
 };
 

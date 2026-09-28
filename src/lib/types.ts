@@ -26,30 +26,24 @@ export interface Platform {
     without reworking the filter and navigation layers. */
 export type ProductType = "grips";
 
-export type TextureId =
-  | "open-cell"
-  | "micro-cell"
-  | "ridge"
-  | "grid"
-  | "matte";
+/* One mould, one surface. The site used to advertise five (Open Cell, Micro
+   Cell, Contour Ridge, Grid Emboss, Soft Matte) with a different relief depth
+   and Shore hardness each. Exactly one of them exists. */
+export type TextureId = "moulded";
 
 export interface Texture {
   id: TextureId;
   name: string;
   /** One line the customer can actually act on. */
   feel: string;
-  /** 1–5, surfaced as a comparison bar on the PDP and the texture guide. */
-  grip: number;
-  cushion: number;
+  /** Short label for chips and readouts. */
   profile: string;
 }
 
-export type CollectionId = "cellular" | "linear" | "solid";
-
+/** A colourway. The shell geometry is identical across all of them. */
 export interface Design {
   id: string;
   name: string;
-  collection: CollectionId;
   /** Dominant shell colour — used for colour plates and UI accents. */
   base: string;
   /** Pattern ink. Two stops allow a gradient across the grip. */
@@ -107,44 +101,12 @@ export interface Product {
   specs: { label: string; value: string }[];
   inBox: string[];
   installMinutes: number;
-  rating: number;
-  reviewCount: number;
-  /** 5,4,3,2,1 — drives the ratings histogram. */
-  ratingBreakdown: [number, number, number, number, number];
-  /** Aggregate subscores. "Fit" is the anxiety dimension for this category. */
-  subscores: { label: string; score: number }[];
   variants: Variant[];
   /** Slugs recommended as "complete your controller" (supplementary). */
   pairsWith: string[];
-  badge?: "new" | "limited" | "bestseller";
+  badge?: "new" | "limited";
   releasedOn: string;
   popularity: number;
-}
-
-export interface Collection {
-  id: CollectionId;
-  name: string;
-  tagline: string;
-  description: string;
-  designIds: string[];
-}
-
-export interface Review {
-  id: string;
-  productSlug: string;
-  designId: string;
-  platformId: PlatformId;
-  author: string;
-  rating: number;
-  title: string;
-  body: string;
-  date: string;
-  verified: boolean;
-  helpful: number;
-  ownedWeeks: number;
-  /** Brand response — Baymard: responding to criticism lifts perception of
-      product, brand and site simultaneously. */
-  response?: { from: string; date: string; body: string };
 }
 
 export interface Guide {

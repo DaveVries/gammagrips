@@ -92,10 +92,6 @@ export function customToProduct(o: Override): Product {
     specs: [],
     inBox: [],
     installMinutes: 2,
-    rating: 0,
-    reviewCount: 0,
-    ratingBreakdown: [0, 0, 0, 0, 0],
-    subscores: [],
     // SKUs are derived, so a created product can be stocked and sold like any
     // other without a second table to keep in step.
     variants: platforms.map((p) => ({
@@ -142,7 +138,7 @@ export async function listForAdmin() {
 
 export const TEXTURE_CHOICES = TEXTURES.map((t) => ({
   id: t.id,
-  label: `${t.name} · grip ${t.grip}/5 · cushion ${t.cushion}/5`,
+  label: t.name,
 }));
 
 export { textureById };

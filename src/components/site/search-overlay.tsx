@@ -184,13 +184,7 @@ function SearchRow({
   const product = hit.slug ? productBySlug(hit.slug) : undefined;
   const design = hit.designId ? designById(hit.designId) : undefined;
   const kindLabel =
-    hit.kind === "product"
-      ? "Product"
-      : hit.kind === "design"
-        ? "Design"
-        : hit.kind === "collection"
-          ? "Collection"
-          : "Help";
+    hit.kind === "product" ? "Product" : hit.kind === "design" ? "Colourway" : "Help";
 
   return (
     <Link

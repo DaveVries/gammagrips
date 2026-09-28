@@ -4,52 +4,34 @@ export const GUIDES: Guide[] = [
   {
     slug: "choosing-a-controller-grip",
     title: "How to choose a controller grip",
-    deck: "Four questions that narrow six grips down to one.",
+    deck: "Two questions, and one of them is just which controller you own.",
     category: "Buying",
-    readMinutes: 5,
-    date: "2026-08-12",
+    readMinutes: 3,
+    date: "2026-09-28",
     body: [
       {
         paragraphs: [
-          "Almost every grip return we process comes down to the same thing: someone bought for the pattern and got the surface wrong. On our grips the pattern IS the relief — the two are moulded together — so choosing the look and choosing the feel are one decision. Work out the feel you need first, and the look follows.",
+          "This guide used to run to four questions about sweat, session length and joint pain, and answered each with a different surface. We make one surface, so most of that was a decision tree with one destination. Here is the honest version.",
         ],
       },
       {
-        heading: "1. Do your hands sweat?",
+        heading: "1. Which controller do you own?",
         paragraphs: [
-          "If your problem starts about an hour in and gets worse, you need somewhere for the moisture to go, not more friction. A smoother grip with more traction will still turn slick once there is a film of sweat on it.",
-          "Open Cell — Nebula and Ember — is the only surface we make that actively channels moisture. The 2.4 mm cell walls create drainage paths under the palm. If sweat is your main issue, this is the answer and nothing else in the range is a substitute.",
+          "This is the only question that can be answered wrong. Each shell is moulded to one controller and they are not interchangeable — a DualSense shell will not seat on a DualSense Edge, and an Xbox Wireless shell will not seat on an Elite Series 2.",
+          "If you are not sure which revision you have, the compatibility checker identifies it from the bottom edge of the controller in two questions.",
         ],
       },
       {
-        heading: "2. How long is a typical session?",
+        heading: "2. Which one do you want to look at?",
         paragraphs: [
-          "Aggressive textures are excellent for two hours and tiring for six. Open Cell has hard cell edges that press into the same points on your fingers over time — most people adapt within a week, some never do.",
-          "If you routinely play four hours or more and you are not fighting sweat, Venom's Micro Cell gives you most of the traction with none of the pressure points. It is the grip we recommend most often.",
+          "There is one mould and one surface, so all six colourways grip identically. Nothing about Venom is grippier than Glacier; they are the same shell in a different colour.",
+          "Glacier is the quietest and changes the look of the controller least. Venom is the loudest and holds up best under a streaming light. The other four sit between them.",
         ],
       },
       {
-        heading: "3. Do you want the controller to feel the same?",
+        heading: "What we cannot tell you yet",
         paragraphs: [
-          "Added thickness is the single most polarising thing about grips. Cyber adds 1.4 mm and is essentially invisible in the hand. Jungle adds 3.1 mm and changes the shape of the controller.",
-          "If you have small hands, or you are competitive and have thousands of hours of muscle memory on a bare controller, stay under 2 mm. If your hands are large or the stock handles feel thin, the extra bulk is usually an improvement rather than a compromise.",
-        ],
-      },
-      {
-        heading: "4. Does anything hurt?",
-        paragraphs: [
-          "If you get joint or knuckle pain rather than slipping, you are looking for cushion, not grip. Jungle uses a softer Shore 60A compound and spreads pressure across more of the palm. Several customers with arthritis use it specifically for that.",
-        ],
-      },
-      {
-        heading: "Short version",
-        paragraphs: ["If you only read one line:"],
-        list: [
-          "Sweaty hands → Nebula or Ember (Open Cell)",
-          "Long sessions, no sweat → Venom (Micro Cell)",
-          "Joint pain or large hands → Jungle",
-          "Want nothing to change → Cyber or Glacier",
-          "Never used grips before → Glacier",
+          "How much thickness the shell adds, what it weighs and how hard the compound is. The first production run is still being moulded and none of it has been measured. Those numbers go on the product pages the day we have them, and not before.",
         ],
       },
     ],
@@ -103,57 +85,6 @@ export const GUIDES: Guide[] = [
         heading: "If a grip works loose",
         paragraphs: [
           "Nine times out of ten it is oil on the controller, not a faulty shell. Take the grip off, clean both the controller handle and the inside of the shell with warm water and washing-up liquid, dry both completely, and refit. If it still lifts at the same edge after that, it is a moulding fault — email support with your order number and we will replace it.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "grip-texture-comparison",
-    title: "Grip texture comparison",
-    deck: "All five textures measured against each other on grip, cushion, profile and session length.",
-    category: "Reference",
-    readMinutes: 4,
-    date: "2026-06-29",
-    body: [
-      {
-        paragraphs: [
-          "Each of the six grips is one mould, so the pattern you see is the relief you feel — design and texture are the same decision here. Ratings are ours, from in-house testing plus aggregated review subscores.",
-        ],
-      },
-      {
-        heading: "Open Cell — Nebula and Ember",
-        paragraphs: [
-          "Grip 5/5. Cushion 4/5. +2.4 mm. Deep Voronoi cell walls with open channels between them. Nebula and Ember share the depth; Ember runs a coarser, more angular cell. The only texture that moves sweat rather than just resisting it. Cell edges are sharp for the first week and soften with use. Needs cleaning every two to three weeks under heavy use, because the cells collect skin oil and go slick when they load up.",
-        ],
-      },
-      {
-        heading: "Micro Cell — Venom",
-        paragraphs: [
-          "Grip 4/5. Cushion 3/5. +1.8 mm. The same cell geometry as Nebula at roughly half the pitch. Consistent traction with no pressure points, which makes it the best choice for sessions over four hours. This is the default recommendation for most people.",
-        ],
-      },
-      {
-        heading: "Contour Ridge — Jungle",
-        paragraphs: [
-          "Grip 4/5. Cushion 5/5. +3.1 mm. Raised ridges running across the finger wrap, on a softer Shore 60A compound. The most comfortable grip we make and the one to buy for joint pain, but the ridges are smooth so it has less outright bite than the open-cell textures.",
-        ],
-      },
-      {
-        heading: "Soft Matte — Glacier",
-        paragraphs: [
-          "Grip 3/5. Cushion 3/5. +1.1 mm. Soft-touch with a dimpled palm patch, no pattern elsewhere. Meaningfully better than bare plastic and almost undetectable in the hand. Not the answer for sweat — a smooth surface has nothing to work with once there is moisture on it.",
-        ],
-      },
-      {
-        heading: "Grid Emboss — Cyber",
-        paragraphs: [
-          "Grip 4/5. Cushion 2/5. +1.4 mm. A raised square mesh with a node at every intersection. The lowest-profile texture we make and the one that disturbs existing muscle memory least — but it is a dry-hand surface, with no channels to move moisture.",
-        ],
-      },
-      {
-        heading: "Choosing between the top two",
-        paragraphs: [
-          "Most people are deciding between Nebula and Venom. The rule is simple: if sweat is your problem, Nebula. If pressure or fatigue is your problem, Venom. If neither, Venom is the safer purchase.",
         ],
       },
     ],

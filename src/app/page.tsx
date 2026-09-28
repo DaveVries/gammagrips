@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import { Hero } from "@/components/home/hero";
 import {
+  Assurance,
   Benefits,
   CollectionsShowcase,
   CompatibilityStrip,
   Featured,
   GuidesTeaser,
   PlatformSplit,
-  SocialProof,
   TextureTech,
   TwoSides,
 } from "@/components/home/sections";
@@ -32,7 +32,7 @@ export default function HomePage() {
       <TextureTech />
       <div className="gutter"><div className="shell"><Rule /></div></div>
       <CollectionsShowcase />
-      <SocialProof />
+      <Assurance />
       <CompatibilityStrip />
       <GuidesTeaser />
     </>

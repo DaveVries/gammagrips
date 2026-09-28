@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/logo";
-import { COLLECTIONS, PLATFORMS, PRODUCTS } from "@/data/catalog";
+import { PLATFORMS, PRODUCTS } from "@/data/catalog";
 import { Rule } from "@/components/ui/primitives";
 
 const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] = [
@@ -22,9 +22,8 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
     ],
   },
   {
-    heading: "Designs",
+    heading: "Colourways",
     links: [
-      ...COLLECTIONS.map((c) => ({ label: c.name, href: `/collections/${c.id}` })),
       { label: "Configurator", href: "/customize" },
     ],
   },

@@ -1,4 +1,4 @@
-import { COLLECTIONS, PLATFORMS, PRODUCTS, TEXTURES } from "@/data/catalog";
+import { PLATFORMS, PRODUCTS } from "@/data/catalog";
 
 export interface NavLink {
   label: string;
@@ -48,15 +48,6 @@ export const NAV: NavItem[] = [
           links: gripLinks,
         },
         {
-          heading: "By surface",
-          headingHref: "/guides/grip-texture-comparison",
-          links: TEXTURES.map((t) => ({
-            label: t.name,
-            href: `/controller-grips?texture=${t.id}`,
-            note: `${t.profile} · grip ${t.grip}/5`,
-          })),
-        },
-        {
           heading: "By controller",
           headingHref: "/controller-grips",
           links: PLATFORMS.map((p) => ({
@@ -67,8 +58,8 @@ export const NAV: NavItem[] = [
         },
       ],
       feature: {
-        title: "Not sure which surface?",
-        copy: "Three questions on how your hands behave, and we name the grip.",
+        title: "Not sure which one?",
+        copy: "Two questions — your controller and the look — and we name the grip.",
         href: "/customize",
         cta: "Open the configurator",
         designId: "nebula",
@@ -87,7 +78,7 @@ export const NAV: NavItem[] = [
           links: [
             { label: "Will these fit?", href: "/compatibility" },
             { label: "Fitting a DualSense", href: "/guides/dualsense-grip-installation" },
-            { label: "Choosing a surface", href: "/guides/grip-texture-comparison" },
+            { label: "Choosing a grip", href: "/guides/choosing-a-controller-grip" },
           ],
         },
       ],
@@ -112,7 +103,7 @@ export const NAV: NavItem[] = [
           links: [
             { label: "Will these fit?", href: "/compatibility" },
             { label: "Elite Series 2 notes", href: "/guides/will-these-fit-my-controller" },
-            { label: "Choosing a surface", href: "/guides/grip-texture-comparison" },
+            { label: "Choosing a grip", href: "/guides/choosing-a-controller-grip" },
           ],
         },
       ],
@@ -127,19 +118,14 @@ export const NAV: NavItem[] = [
   },
   {
     label: "Designs",
-    href: "/collections",
+    href: "/controller-grips",
     panel: {
       columns: [
         {
-          heading: "Collections",
-          headingHref: "/collections",
-          links: COLLECTIONS.map((c) => ({
-            label: c.name,
-            href: `/collections/${c.id}`,
-            note: c.tagline,
-          })),
+          heading: "Colourways",
+          headingHref: "/controller-grips",
+          links: gripLinks,
         },
-        { heading: "Designs", headingHref: "/collections", links: gripLinks },
       ],
       feature: {
         title: "Ember",

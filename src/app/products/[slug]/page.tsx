@@ -6,10 +6,8 @@ import {
   PRODUCT_TYPES,
   productBySlug,
 } from "@/data/catalog";
-import { reviewsFor } from "@/data/reviews";
 import { ProductPurchase } from "@/components/product/product-purchase";
 import { shopOpen } from "@/lib/inventory";
-import { Reviews } from "@/components/product/reviews";
 import { ProductGrid } from "@/components/product/product-card";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { GlyphMarker } from "@/components/ui/glyphs";
@@ -62,7 +60,6 @@ export default async function ProductPage({
       : product.platforms[0]
   ) as PlatformId;
 
-  const reviews = reviewsFor(product.slug);
   const typeMeta = PRODUCT_TYPES.find((t) => t.id === product.type)!;
   const related = product.pairsWith
     .map((s) => productBySlug(s)!)
@@ -288,10 +285,17 @@ export default async function ProductPage({
 
           <Rule />
 
-          {/* --- reviews -------------------------------------------------- */}
-          <div className="py-12">
-            <Reviews product={product} reviews={reviews} />
-          </div>
+          {/* No reviews block. Nothing has shipped, so there is nobody to
+              quote — and inventing the quotes is what the EU Omnibus Directive
+              exists to stop. It comes back when there are real ones. */}
+          <section className="py-12">
+            <h2 className="text-[20px] font-bold">Reviews</h2>
+            <p className="mt-2 max-w-[56ch] text-[14px] leading-relaxed text-ink-dim">
+              None yet — the first production run is still being moulded, so
+              nobody owns a pair. Reviews will appear here once grips ship, and
+              we will publish the critical ones alongside the rest.
+            </p>
+          </section>
 
           <Rule />
 
@@ -364,11 +368,6 @@ export default async function ProductPage({
             name: product.name,
             description: product.summary,
             brand: { "@type": "Brand", name: "GammaGrips" },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: product.rating,
-              reviewCount: product.reviewCount,
-            },
             offers: {
               "@type": "Offer",
               price: product.price.toFixed(2),
@@ -400,17 +399,10 @@ function buildFaqs(p: (typeof PRODUCTS)[number]) {
     },
   ];
 
-  {
-    base.unshift({
-      q: "How much bigger will my controller feel?",
-      a: `${p.specs.find((s) => s.label === "Added thickness")?.value ?? "A few millimetres"} on each handle, and ${p.specs.find((s) => s.label === "Added weight")?.value ?? "under 25 g"} in total. If you have small hands or thousands of hours of muscle memory on a bare controller, start with Matte Essential at +0.9 mm.`,
-    });
-  }
-  if (p.texture === "open-cell") {
-    base.push({
-      q: "The cells feel sharp — is that normal?",
-      a: "Yes, for about a week. Freshly moulded cell walls have a crisp edge that rounds off with use. If it is still uncomfortable after a fortnight, the texture is genuinely too aggressive for you — Vector's micro-hex is the one to switch to, and our 60-day window covers the swap.",
-    });
-  }
+  base.unshift({
+    q: "How much bigger will my controller feel?",
+    a: "Enough to notice and not enough to relearn — the shell adds a few millimetres to each handle. We are not publishing the exact figure until the first run is off the tool and measured; a number we made up is worse than no number.",
+  });
+
   return base;
 }

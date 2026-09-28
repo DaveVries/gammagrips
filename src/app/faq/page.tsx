@@ -5,7 +5,7 @@ import { PageShell, AsideCard } from "@/components/site/page-shell";
 export const metadata: Metadata = {
   alternates: { canonical: "/faq" },
   title: "FAQ",
-  description: "Common questions about fit, fitting, surfaces, delivery and returns.",
+  description: "Common questions about fit, fitting, delivery and returns.",
 };
 
 const GROUPS = [
@@ -15,7 +15,7 @@ const GROUPS = [
       ["Which controllers do you make grips for?", "The PS5 DualSense, the DualSense Edge, the Xbox Wireless Controller (including the 2016 Xbox One refresh with a 3.5 mm jack) and the Xbox Elite Series 2. Each is a separate mould and they are not interchangeable. The compatibility checker identifies yours in two questions."],
       ["Will a DualSense grip fit a DualSense Edge?", "No. The Edge has a rear paddle module and our Edge shells are cut around it. A standard DualSense shell will not seat correctly on an Edge, and vice versa."],
       ["Do they cover the ports or the paddles?", "No. Every shell is cut around the USB-C port, both triggers, the headphone jack and — on the Edge and Elite Series 2 — the rear module, so stick modules and paddles still come out with the grips on."],
-      ["How much thicker will my controller be?", "Between 1.1 mm and 3.1 mm per handle depending on the surface. Cyber at 1.4 mm and Glacier at 1.1 mm are the least noticeable; Jungle at 3.1 mm is the most."],
+      ["How much thicker will my controller be?", "Enough to notice, not enough to relearn. We are not publishing a figure until the first production run is off the tool and measured — a number we guessed at would be worse than no number, and every colourway uses the same shell so the answer will be the same for all six."],
     ],
   },
   {
@@ -24,15 +24,15 @@ const GROUPS = [
       ["How long does fitting take?", "About two minutes, with no tools and no adhesive. The one step people skip is cleaning the handles first, which is the usual reason a grip later works loose."],
       ["Will it leave residue on my controller?", "No, because there is no adhesive anywhere in the product. It is held by the shape of the mould. You can remove and refit it as often as you like."],
       ["A grip is lifting at one edge. Is it faulty?", "Nine times out of ten it is skin oil on the controller. Take the grip off, wash both the handle and the inside of the shell with warm water and washing-up liquid, dry completely and refit. If it still lifts at the same edge, email us — that is a moulding fault and we replace it."],
-      ["Can I wash them?", "Yes. Dishwasher safe on a normal cycle, top rack, or warm water and washing-up liquid with a brush. Open-cell surfaces need it every two to three weeks under heavy use — the cells collect skin oil and go slick once they load up."],
+      ["Can I wash them?", "Yes — warm water and washing-up liquid with a soft brush, then air dry. Under heavy use every few weeks is sensible: the relief collects skin oil and goes slick once it loads up."],
     ],
   },
   {
     heading: "Choosing",
     items: [
-      ["Which grip should I buy?", "If your hands sweat, Nebula or Ember — they are the only surfaces with channels deep enough to move moisture. For long sessions without sweat, Venom. For joint pain, Jungle. To change as little as possible, Cyber or Glacier."],
-      ["Is the pattern printed on?", "No. Each grip is one mould, so the pattern is the physical relief — what you see is what your hand feels. That is also why design and surface are a single choice here rather than two."],
-      ["Do you restock sold-out combinations?", "Yes. Everything in the range is in continuous production; a sold-out controller variant is a tooling schedule gap, usually two to three weeks."],
+      ["Which grip should I buy?", "Whichever one you want to look at. There is one shell and one surface, so all six grip identically — the only difference is colour. Glacier is the quietest, Venom the loudest."],
+      ["Is the pattern printed on?", "No. The grip is one mould, so the pattern is the physical relief — what you see is what your hand feels, not ink on a surface."],
+      ["Do you restock sold-out combinations?", "Nothing is in stock yet — the first production run is still being moulded, which is why you cannot order today."],
     ],
   },
   {
