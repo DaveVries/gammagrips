@@ -151,7 +151,7 @@ export function TwoSides() {
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-[-10%] inset-y-[-20%] z-0 opacity-40 blur-[90px]"
+          className="pointer-events-none absolute inset-x-0 inset-y-[-20%] z-0 opacity-40 blur-[90px]"
           style={{
             background:
               "radial-gradient(38% 42% at 30% 52%, var(--spill), transparent 70%), radial-gradient(34% 40% at 72% 48%, var(--spill), transparent 72%)",
