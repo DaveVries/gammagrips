@@ -24,7 +24,7 @@ export function Hero() {
   return (
     <section className="gutter pt-6 md:pt-9">
       <div
-        className="shell glass glass-hi cut relative overflow-hidden"
+        className="shell glass glass-hi spotlight cut relative overflow-hidden"
       >
         <div className="ps-rule h-[3px] w-full" />
 
