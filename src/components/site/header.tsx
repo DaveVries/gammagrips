@@ -163,7 +163,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
               <Link
                 href="/account"
                 className={cn(
-                  "tap cut-sm plate relative hidden h-10 w-10 items-center justify-center hover:bg-[var(--color-plate-hi)] sm:flex",
+                  "tap cut-sm plate relative flex h-10 w-10 shrink-0 items-center justify-center hover:bg-[var(--color-plate-hi)]",
                   session && "text-ink",
                 )}
                 aria-label={session ? `Signed in as ${session.email}` : "Sign in"}
@@ -289,7 +289,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
       </header>
 
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
-      <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} session={session} />
     </>
   );
 }

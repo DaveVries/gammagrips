@@ -16,7 +16,15 @@ import { cn } from "@/lib/utils";
  * `.glass` paints a light background over it, so every row rendered near-white
  * on light grey. The drawer is light glass throughout, like the mega menu.
  */
-export function MobileNav({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MobileNav({
+  open,
+  onClose,
+  session,
+}: {
+  open: boolean;
+  onClose: () => void;
+  session?: { email: string; isAdmin: boolean } | null;
+}) {
   const [expanded, setExpanded] = useState<string | null>(null);
 
   useEffect(() => {
@@ -147,6 +155,30 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
           </ul>
 
           <div className="border-t-2 border-[var(--color-plate-edge)] p-3.5">
+            {/* Sign-in and, for staff, the dashboard: the header hides the
+                dashboard button on phones, so the menu is the way in. */}
+            <div className={cn("mb-2.5 grid gap-2", session?.isAdmin ? "grid-cols-2" : "grid-cols-1")}>
+              <Link
+                href="/account"
+                onClick={onClose}
+                className="plate cut-sm press flex h-11 items-center justify-center gap-2 text-[13px] font-bold text-ink"
+              >
+                <svg width="14" height="14" viewBox="0 0 18 18" aria-hidden="true">
+                  <circle cx="9" cy="6" r="3" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                  <path d="M3 16c0-3.3 2.7-5.2 6-5.2s6 1.9 6 5.2" fill="none" stroke="currentColor" strokeWidth="1.8" />
+                </svg>
+                {session ? "Account" : "Sign in"}
+              </Link>
+              {session?.isAdmin && (
+                <Link
+                  href="/admin"
+                  onClick={onClose}
+                  className="cut-sm press flex h-11 items-center justify-center bg-[var(--color-hot)] text-[13px] font-bold uppercase tracking-[0.06em] text-[var(--color-hot-ink)]"
+                >
+                  Dashboard
+                </Link>
+              )}
+            </div>
             <Link
               href="/customize"
               onClick={onClose}
