@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { db } from "@/lib/db";
+import { MeSwitch } from "./me-switch";
 import { TASK_PEOPLE, day, overdue, personName, type Task } from "@/lib/tasks";
 
 export const dynamic = "force-dynamic";
@@ -63,6 +64,7 @@ export default async function AdminTasks({
         <p className="text-[12.5px] text-ink-mute">
           {openAll} open · {TASK_PEOPLE.map((p) => `${p.name} ${openFor(p.id)}`).join(" · ")}
         </p>
+        <div className="ml-auto"><MeSwitch returnTo={here} /></div>
       </div>
 
       {sp.created && <Note>Task added.</Note>}
