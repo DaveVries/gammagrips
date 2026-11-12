@@ -16,6 +16,9 @@ export const dynamic = "force-dynamic";
 export async function POST(req: Request) {
   const form = await req.formData().catch(() => null);
   const email = String(form?.get("email") ?? "").trim().slice(0, 254);
+  /* footer, or notify:<slug> from a product page. */
+  const rawSource = String(form?.get("source") ?? "");
+  const source = /^notify:[a-z0-9-]{1,60}$/.test(rawSource) ? rawSource : "footer";
 
   const back = (status: "ok" | "invalid") =>
     NextResponse.redirect(new URL(`/newsletter?s=${status}`, req.url), 303);
@@ -26,7 +29,7 @@ export async function POST(req: Request) {
     const sql = db();
     /* RETURNING is empty on conflict, so a re-subscribe sends nothing. */
     const fresh = (await sql`
-      insert into subscribers (email, source) values (${email}, 'footer')
+      insert into subscribers (email, source) values (${email}, ${source})
       on conflict (email) do nothing
       returning id
     `) as unknown[];

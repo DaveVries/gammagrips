@@ -6,6 +6,7 @@ import type { PlatformId, Product } from "@/lib/types";
 import { PLATFORMS, PRODUCTS, designById, platformById, textureById } from "@/data/catalog";
 import { ProductVisual } from "@/components/product/product-visual";
 import { GripPhoto, DesignSwatch } from "@/components/product/grip-photo";
+import { NotifyMe } from "@/components/product/notify-me";
 import { Badge, Button, Price, Well } from "@/components/ui/primitives";
 import { QtyStepper } from "@/components/cart/cart-drawer";
 import { useCart } from "@/lib/cart";
@@ -120,6 +121,7 @@ export function ProductPurchase({
                 </Well>
               )}
             </div>
+            {soldOut && <NotifyMe slug={product.slug} name={product.name} />}
           </div>
         </div>
 
@@ -330,8 +332,8 @@ export function ProductPurchase({
           {!shopOpen && (
             <p className="plate-in cut-sm mt-3 p-3 text-[13px] leading-relaxed text-ink-dim">
               The first production run is still being moulded, so nothing is for
-              sale yet. Everything on this page is accurate — join the list in
-              the footer and we will tell you when it ships.
+              sale yet. Everything on this page is accurate — leave your email
+              under the photos and we will tell you when it ships.
             </p>
           )}
           {shopOpen && soldOut && (
