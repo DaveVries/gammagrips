@@ -220,7 +220,7 @@ export function Logo({
     <Link
       href="/"
       className={cn(
-        "inline-flex items-center gap-2 sm:gap-2.5 text-ink transition-opacity hover:opacity-85",
+        "inline-flex items-center gap-2.5 text-ink transition-opacity hover:opacity-85",
         className,
       )}
       aria-label="GammaGrips — home"
@@ -231,10 +231,8 @@ export function Logo({
           height={17}
           bg={bg}
           className={cn(
-            "h-[12px] w-auto shrink-0 sm:h-[17px]",
-            /* Four 44px touch targets share the row on phones, so the wordmark
-               only fits from 390px; below that the mark stands alone. */
-            compactUntilSm && "hidden min-[390px]:block",
+            "h-[13.5px] w-auto shrink-0 sm:h-[17px]",
+            compactUntilSm && "hidden xs:block",
           )}
         />
       )}

@@ -11,6 +11,7 @@ import { useCart } from "@/lib/cart";
 import { cn } from "@/lib/utils";
 import { SearchOverlay } from "@/components/site/search-overlay";
 import { MobileNav } from "@/components/site/mobile-nav";
+import { MobileDock } from "@/components/site/mobile-dock";
 
 const COLS: Record<number, string> = { 1: "grid-cols-2", 2: "grid-cols-2", 3: "grid-cols-3", 4: "grid-cols-4" };
 
@@ -73,19 +74,8 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
       >
         <div className="gutter">
           <div className="shell flex h-[62px] items-center gap-2">
-            <button
-              type="button"
-              onClick={() => setMobileOpen(true)}
-              className="tap cut-sm plate flex h-10 w-10 shrink-0 items-center justify-center lg:hidden"
-              aria-label="Open menu"
-              aria-expanded={mobileOpen}
-            >
-              <svg width="16" height="16" viewBox="0 0 18 18" aria-hidden="true">
-                <path d="M2 4h14M2 9h14M2 14h14" stroke="currentColor" strokeWidth="2" />
-              </svg>
-            </button>
 
-            <Logo className="min-w-0 shrink overflow-hidden sm:mr-3" compactUntilSm />
+            <Logo className="mr-2 min-w-0 shrink sm:mr-3" />
 
             {/* --- nav as bevelled tabs; the active one is pressed in ------ */}
             <nav aria-label="Main" className="hidden lg:block">
@@ -151,7 +141,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
               {session?.isAdmin && (
                 <Link
                   href="/admin"
-                  className="tap cut-sm hidden h-10 items-center gap-1.5 bg-[var(--color-hot)] px-3 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-hot-ink)] sm:flex"
+                  className="tap cut-sm hidden h-10 items-center gap-1.5 bg-[var(--color-hot)] px-3 text-[11px] font-bold uppercase tracking-[0.06em] text-[var(--color-hot-ink)] lg:flex"
                 >
                   <svg width="13" height="13" viewBox="0 0 18 18" aria-hidden="true">
                     <path d="M2 4h14M2 9h14M2 14h9" stroke="currentColor" strokeWidth="2.2" />
@@ -163,7 +153,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
               <Link
                 href="/account"
                 className={cn(
-                  "tap cut-sm plate relative flex h-10 w-10 shrink-0 items-center justify-center hover:bg-[var(--color-plate-hi)]",
+                  "tap cut-sm plate relative hidden h-10 w-10 shrink-0 items-center justify-center hover:bg-[var(--color-plate-hi)] lg:flex",
                   session && "text-ink",
                 )}
                 aria-label={session ? `Signed in as ${session.email}` : "Sign in"}
@@ -183,7 +173,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
               <button
                 type="button"
                 onClick={() => cart.setOpen(true)}
-                className="tap cut-sm plate flex h-10 items-center gap-2 px-3 hover:bg-[var(--color-plate-hi)]"
+                className="tap cut-sm plate hidden h-10 items-center gap-2 px-3 hover:bg-[var(--color-plate-hi)] lg:flex"
                 aria-label={`Cart, ${cart.count} item${cart.count === 1 ? "" : "s"}`}
               >
                 <svg width="15" height="15" viewBox="0 0 18 18" aria-hidden="true">
@@ -195,8 +185,6 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
                   className={cn(
                     "min-w-[20px] px-1 text-center text-[11px] font-bold tabular-nums",
                     cart.count > 0 ? "bg-[var(--color-blk-green)] px-1.5 text-[var(--color-on-blk-green)]" : "text-ink-mute",
-                    /* An empty cart's "0" costs phones the room the logo needs. */
-                    (!cart.ready || cart.count === 0) && "hidden sm:inline",
                   )}
                 >
                   {cart.ready ? cart.count : 0}
@@ -292,6 +280,13 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
 
       {searchOpen && <SearchOverlay onClose={() => setSearchOpen(false)} />}
       <MobileNav open={mobileOpen} onClose={() => setMobileOpen(false)} session={session} />
+      <MobileDock
+        pathname={pathname}
+        cartCount={cart.ready ? cart.count : 0}
+        onCart={() => cart.setOpen(true)}
+        onMenu={() => setMobileOpen(true)}
+        session={session}
+      />
     </>
   );
 }

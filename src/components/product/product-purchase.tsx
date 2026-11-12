@@ -405,9 +405,10 @@ export function ProductPurchase({
           Safari's floating URL bar, which otherwise sit on top of it. */}
       <div
         className={cn(
-          "glass safe-b fixed inset-x-0 bottom-0 z-40 rounded-none border-x-0 border-b-0 px-3 pt-2",
-          "transition-transform duration-300 ease-[var(--ease-out)] lg:hidden",
-          showStickyBuy ? "translate-y-0" : "pointer-events-none translate-y-full",
+          /* Floats just above the phone dock rather than under it. */
+          "glass fixed inset-x-3 bottom-[calc(max(0.75rem,env(safe-area-inset-bottom))+4.25rem)] z-40 rounded-[var(--radius-md)] px-3 py-2",
+          "transition-[transform,opacity] duration-300 ease-[var(--ease-out)] lg:hidden",
+          showStickyBuy ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0",
         )}
         aria-hidden={!showStickyBuy}
       >
