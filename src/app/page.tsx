@@ -12,6 +12,7 @@ import {
   TwoSides,
 } from "@/components/home/sections";
 import { Rule } from "@/components/ui/primitives";
+import { shopOpen } from "@/lib/inventory";
 
 /* Title and description come from the root layout; the home page only needs
    to claim the origin as its canonical. */
@@ -19,10 +20,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
-export default function HomePage() {
+export default async function HomePage() {
+  const open = await shopOpen();
   return (
     <>
-      <Hero />
+      <Hero shopOpen={open} />
       <PlatformSplit />
       <div className="gutter"><div className="shell"><Rule /></div></div>
       <Featured />

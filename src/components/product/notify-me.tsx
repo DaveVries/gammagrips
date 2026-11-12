@@ -1,13 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 
 /**
  * "Notify me when available", directly under the product photos. The footer
  * signup was the only way to leave an address, and nobody scrolls that far on
  * a phone. Same list, same endpoint; the source records which grip they wanted.
  */
-export function NotifyMe({ slug, name }: { slug: string; name: string }) {
+export function NotifyMe({
+  slug = "launch",
+  name,
+  title = "Notify me when available",
+  className = "mt-2",
+}: {
+  /** Recorded as notify:<slug>; the home page uses "launch". */
+  slug?: string;
+  /** Product name for the confirmation; omitted on the home page. */
+  name?: string;
+  title?: string;
+  className?: string;
+}) {
+  const id = useId();
   const [state, setState] = useState<"idle" | "sending" | "done" | "invalid">("idle");
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
@@ -24,22 +37,22 @@ export function NotifyMe({ slug, name }: { slug: string; name: string }) {
 
   if (state === "done") {
     return (
-      <p className="plate-in cut-sm mt-2 p-3 text-[13.5px] leading-relaxed" role="status">
+      <p className={`plate-in cut-sm p-3 text-[13.5px] leading-relaxed ${className}`} role="status">
         <strong>You&apos;re on the list.</strong>{" "}
-        <span className="text-ink-dim">We&apos;ll email you when the {name} is available.</span>
+        <span className="text-ink-dim">We&apos;ll email you when {name ? `the ${name} is` : "GammaGrips are"} available.</span>
       </p>
     );
   }
 
   return (
-    <form onSubmit={submit} action="/api/newsletter" method="post" className="plate-in cut-sm mt-2 p-3">
+    <form onSubmit={submit} action="/api/newsletter" method="post" className={`plate-in cut-sm p-3 ${className}`}>
       <input type="hidden" name="source" value={`notify:${slug}`} />
-      <label htmlFor="notify-email" className="mb-2 block text-[13.5px] font-bold">
-        Notify me when available
+      <label htmlFor={id} className="mb-2 block text-[13.5px] font-bold">
+        {title}
       </label>
       <div className="flex gap-2">
         <input
-          id="notify-email"
+          id={id}
           name="email"
           type="email"
           required

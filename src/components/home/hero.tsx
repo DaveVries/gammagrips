@@ -5,6 +5,7 @@ import { useState } from "react";
 import { DESIGNS, PRODUCTS, designById, textureById } from "@/data/catalog";
 import { DesignSwatch } from "@/components/product/grip-photo";
 import { ProductStage } from "@/components/product/product-shot";
+import { NotifyMe } from "@/components/product/notify-me";
 import { ButtonLink } from "@/components/ui/primitives";
 import { cn, money } from "@/lib/utils";
 
@@ -15,7 +16,7 @@ const ORDER = ["nebula", "venom", "ember", "cyber", "jungle", "glacier"];
  * and no layout shift — an autorotating carousel would be unreadable and never
  * behaves on mobile.
  */
-export function Hero() {
+export function Hero({ shopOpen = true }: { shopOpen?: boolean }) {
   const [id, setId] = useState("nebula");
   const design = designById(id)!;
   const product = PRODUCTS.find((p) => p.designs[0] === id)!;
@@ -38,6 +39,11 @@ export function Hero() {
         <div className="relative z-[1] grid items-center gap-5 p-4 sm:gap-8 sm:p-9 lg:grid-cols-12 lg:gap-10 lg:p-12">
         {/* --- copy -------------------------------------------------------- */}
         <div className="order-2 min-w-0 lg:order-1 lg:col-span-5" data-reveal>
+          {/* On a phone the product shot comes first, so the signup goes
+              straight under it — before the headline, not a scroll away. */}
+          {!shopOpen && (
+            <NotifyMe title="Get notified when we launch" className="mb-5 lg:hidden" />
+          )}
           <p className="label mb-5 inline-flex items-center gap-2 text-ink-mute">
             <span className="ps-rule inline-block h-[3px] w-10" />
             CONTROLLER GRIPS
@@ -63,6 +69,10 @@ export function Hero() {
               Find my grip
             </ButtonLink>
           </div>
+
+          {!shopOpen && (
+            <NotifyMe title="Get notified when we launch" className="mt-5 hidden max-w-md lg:block" />
+          )}
 
           <dl className="mt-6 flex max-w-md flex-wrap items-baseline gap-x-5 gap-y-2 border-t border-plate-edge pt-4 sm:mt-10 sm:grid sm:grid-cols-3 sm:gap-0 sm:pt-6">
             {[
