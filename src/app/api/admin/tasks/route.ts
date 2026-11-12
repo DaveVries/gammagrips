@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { currentSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { isPerson, personName } from "@/lib/tasks";
+import { cookies } from "next/headers";
+import { ME_COOKIE, isPerson, personName } from "@/lib/tasks";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,8 +19,22 @@ export async function POST(req: Request) {
   if (!form) return back(req, "/admin/tasks");
 
   const sql = db();
-  const me = session.email;
+  const jar = await cookies();
   const action = String(form.get("action") ?? "");
+
+  /* "I'm Toon / I'm Dave": remembered per device for a year. */
+  if (action === "me") {
+    const person = String(form.get("person") ?? "");
+    if (isPerson(person)) {
+      jar.set(ME_COOKIE, person, {
+        httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 365 * 86_400,
+      });
+    }
+    return back(req, safeReturn(String(form.get("return") ?? "")) ?? "/admin/tasks");
+  }
+
+  const picked = jar.get(ME_COOKIE)?.value;
+  const me = isPerson(picked) ? picked : session.email;
   const id = Number(form.get("id"));
   const text = (k: string, max: number) => String(form.get(k) ?? "").trim().slice(0, max);
   const due = text("due_on", 10);

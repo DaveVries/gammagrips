@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { MeSwitch } from "../me-switch";
 import { TASK_PEOPLE, day, overdue, personName, when, who, type Task, type TaskUpdate } from "@/lib/tasks";
 
 export const dynamic = "force-dynamic";
@@ -52,6 +53,7 @@ export default async function TaskDetail({
           {task.due_on && <> · <span className={late ? "font-bold text-[var(--color-hot)]" : ""}>{late ? "overdue " : "due "}{day(task.due_on)}</span></>}
           {" · "}added by {who(task.created_by)} {when(task.created_at)}
         </span>
+        <div className="ml-auto"><MeSwitch returnTo={`/admin/tasks/${task.id}`} /></div>
       </div>
 
       {sp.saved && (

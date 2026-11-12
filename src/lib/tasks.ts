@@ -33,8 +33,13 @@ export type TaskUpdate = {
   created_at: string;
 };
 
-/** Short author label: the part of the email before the @. */
-export const who = (email: string) => email.split("@")[0];
+/** Which of us is on this device. The admin login is shared, so the session
+ *  email cannot tell us apart; a cookie set from the Tasks tab does. */
+export const ME_COOKIE = "gg_task_me";
+
+/** Author label: a person id becomes their name; an email (older rows, or a
+ *  device that never picked) shows the part before the @. */
+export const who = (author: string) => (isPerson(author) ? personName(author) : author.split("@")[0]);
 
 export const when = (d: string | Date) =>
   new Date(d).toLocaleString("en-GB", {
