@@ -85,7 +85,7 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
               </svg>
             </button>
 
-            <Logo className="mr-2 min-w-0 shrink sm:mr-3" compactUntilSm />
+            <Logo className="min-w-0 shrink overflow-hidden sm:mr-3" compactUntilSm />
 
             {/* --- nav as bevelled tabs; the active one is pressed in ------ */}
             <nav aria-label="Main" className="hidden lg:block">
@@ -195,6 +195,8 @@ export function Header({ session }: { session?: { email: string; isAdmin: boolea
                   className={cn(
                     "min-w-[20px] px-1 text-center text-[11px] font-bold tabular-nums",
                     cart.count > 0 ? "bg-[var(--color-blk-green)] px-1.5 text-[var(--color-on-blk-green)]" : "text-ink-mute",
+                    /* An empty cart's "0" costs phones the room the logo needs. */
+                    (!cart.ready || cart.count === 0) && "hidden sm:inline",
                   )}
                 >
                   {cart.ready ? cart.count : 0}
