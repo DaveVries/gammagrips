@@ -186,7 +186,7 @@ export function MobileNav({
             >
               ▶ Find my grip
             </Link>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-3 gap-2">
               <Link
                 href="/compatibility"
                 onClick={onClose}
@@ -200,6 +200,13 @@ export function MobileNav({
                 className="plate cut-sm press flex h-10 items-center justify-center text-[13px] font-bold text-ink"
               >
                 Guides
+              </Link>
+              <Link
+                href="/partners"
+                onClick={onClose}
+                className="plate cut-sm press flex h-10 items-center justify-center text-[13px] font-bold text-ink"
+              >
+                In store
               </Link>
             </div>
           </div>

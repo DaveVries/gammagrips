@@ -13,6 +13,7 @@ const STATIC: [string, number][] = [
   ["/compatibility", 0.7],
   ["/guides", 0.6],
   ["/shop", 0.5],
+  ["/partners", 0.5],
   ["/faq", 0.4],
   ["/contact", 0.4],
   ["/shipping", 0.3],

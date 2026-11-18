@@ -34,6 +34,7 @@ const COLUMNS: { heading: string; links: { label: string; href: string }[] }[] =
       { label: "Returns & refunds", href: "/returns" },
       { label: "FAQ", href: "/faq" },
       { label: "Fitting guides", href: "/guides" },
+      { label: "Entrusted Partners", href: "/partners" },
       { label: "Contact us", href: "/contact" },
       { label: "Track an order", href: "/account" },
     ],

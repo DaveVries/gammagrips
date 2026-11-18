@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
     ["/admin/products", "Products"],
     ["/admin/stock", "Stock"],
     ["/admin/tasks", "Tasks"],
+    ["/admin/partners", "Partners"],
   ] as const;
 
   return (
